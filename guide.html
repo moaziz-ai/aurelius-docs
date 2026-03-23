@@ -3,1458 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurelius Auctions - Complete Implementation Guide V1.1</title>
+    <title>Aurelius Auctions — Implementation Guide V2.0</title>
     <style>
+        :root {
+            --primary: #1565c0;
+            --primary-light: #e3f2fd;
+            --success: #2e7d32;
+            --success-light: #e8f5e8;
+            --warning: #f57c00;
+            --warning-light: #fff3e0;
+            --danger: #c62828;
+            --danger-light: #ffebee;
+            --purple: #7b1fa2;
+            --purple-light: #f3e5f5;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #eee;
+            --gray-300: #ddd;
+            --gray-400: #bbb;
+            --gray-500: #999;
+            --gray-600: #666;
+            --gray-700: #444;
+            --gray-800: #333;
+            --gray-900: #111;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #fff; color: #333; line-height: 1.6; font-size: 14px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 48px 32px; }
-        .header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 2px solid #dee2e6; }
-        .header h1 { font-size: 28px; font-weight: 600; color: #111; margin-bottom: 4px; letter-spacing: -0.5px; }
-        .header .subtitle { font-size: 16px; color: #666; font-weight: 400; }
-        .header .meta { font-size: 12px; color: #999; margin-top: 16px; font-family: 'SF Mono', 'Consolas', monospace; }
-        .blueprint-note { background: #e3f2fd; border: 1px solid #90caf9; padding: 16px 20px; margin-bottom: 32px; border-radius: 4px; font-size: 13px; color: #1565c0; }
-        .blueprint-note a { color: #0d47a1; }
-        .toc { margin-bottom: 48px; padding: 24px; background: #fafafa; border: 1px solid #e5e5e5; }
-        .toc h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; color: #666; }
-        .toc ul { list-style: none; columns: 2; column-gap: 32px; }
-        .toc li { padding: 6px 0; font-size: 14px; border-bottom: 1px solid #eee; }
-        .toc a { color: #333; text-decoration: none; }
-        .toc a:hover { color: #000; }
-        .section { margin-bottom: 56px; page-break-inside: avoid; }
-        .section h2 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #ddd; }
-        .section h3 { font-size: 15px; font-weight: 600; color: #222; margin: 24px 0 12px 0; }
-        .section h4 { font-size: 13px; font-weight: 600; color: #444; margin: 16px 0 8px 0; }
-        .section p { margin-bottom: 12px; color: #444; }
-        .section ul, .section ol { margin: 0 0 16px 24px; color: #444; }
-        .section li { margin-bottom: 4px; }
-        .cross-ref { display: inline-block; margin: 8px 0 16px 0; padding: 6px 14px; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 12px; color: #555; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
-        .cross-ref:hover { background: #e8f4fd; border-color: #90caf9; color: #1565c0; }
-        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
-        thead tr { background: #fafafa; }
-        th { padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; border-bottom: 2px solid #ddd; }
-        td { padding: 10px 14px; border-bottom: 1px solid #eee; color: #444; }
-        tr:hover td { background: #fafafa; }
-        code { font-family: 'SF Mono', 'Consolas', monospace; background: #f5f5f5; padding: 2px 6px; font-size: 12px; border-radius: 3px; }
-        .key-points { background: #f8f9fa; padding: 16px 20px; margin: 16px 0; border-left: 3px solid #adb5bd; }
-        .key-points h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #666; margin-bottom: 12px; }
-        .key-points ul { margin-left: 20px; color: #444; }
-        .key-points li { margin-bottom: 6px; font-size: 13px; }
-        .callout { background: #fff3e0; border: 1px solid #ffe0b2; padding: 12px 16px; margin: 12px 0; border-radius: 4px; font-size: 13px; color: #e65100; }
-        .callout-blue { background: #e3f2fd; border: 1px solid #90caf9; color: #1565c0; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
-        .stat-card { background: #fafafa; border: 1px solid #e5e5e5; padding: 16px; text-align: center; }
-        .stat-card .num { font-size: 24px; font-weight: 600; color: #111; }
-        .stat-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-top: 4px; }
-        .tag-list { font-size: 12px; color: #555; margin: 8px 0; }
-        .tag-list code { background: #e8f5e8; color: #2e7d32; margin: 2px; display: inline-block; }
-        .opt-table td:first-child { font-weight: 600; white-space: nowrap; }
-        .document-footer { margin-top: 64px; padding-top: 24px; border-top: 2px solid #dee2e6; font-size: 12px; color: #666; }
-        .document-footer p { margin-bottom: 4px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; background: #fff; color: var(--gray-800); line-height: 1.7; font-size: 15px; }
+        .container { max-width: 960px; margin: 0 auto; padding: 48px 32px; }
+        
+        /* Header */
+        .doc-header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 3px solid var(--primary); }
+        .doc-header h1 { font-size: 32px; font-weight: 700; color: var(--gray-900); margin-bottom: 4px; letter-spacing: -0.5px; }
+        .doc-header .subtitle { font-size: 18px; color: var(--gray-600); font-weight: 400; margin-bottom: 16px; }
+        .doc-header .meta { font-size: 13px; color: var(--gray-500); font-family: 'SF Mono', 'Consolas', monospace; }
+        
+        /* V2 Badge & Notes */
+        .v2-badge { display: inline-block; padding: 2px 10px; background: var(--success-light); color: var(--success); font-size: 12px; font-weight: 600; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        .v2-banner { background: var(--primary-light); border: 1px solid #90caf9; border-left: 4px solid var(--primary); padding: 16px 20px; margin-bottom: 32px; border-radius: 0 4px 4px 0; }
+        .v2-banner strong { color: var(--primary); }
+        .v2-banner p { font-size: 14px; color: var(--gray-700); margin-bottom: 4px; }
+        .v2-change { background: var(--warning-light); border-left: 3px solid var(--warning); padding: 12px 16px; margin: 16px 0; font-size: 14px; }
+        .v2-removed { background: var(--danger-light); border-left: 3px solid var(--danger); padding: 12px 16px; margin: 16px 0; font-size: 14px; }
+        .v2-question { background: #fff9c4; border-left: 3px solid #f9a825; padding: 12px 16px; margin: 16px 0; font-size: 14px; }
+        
+        /* TOC */
+        .toc { margin-bottom: 48px; padding: 24px 28px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 4px; }
+        .toc h2 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; color: var(--gray-600); }
+        .toc ol { margin-left: 20px; columns: 2; column-gap: 32px; }
+        .toc li { padding: 4px 0; font-size: 14px; }
+        .toc a { color: var(--primary); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+        
+        /* Sections */
+        .section { margin-bottom: 56px; }
+        .section h2 { font-size: 22px; font-weight: 600; color: var(--gray-900); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 2px solid var(--gray-300); }
+        .section h3 { font-size: 17px; font-weight: 600; color: var(--gray-800); margin: 24px 0 12px 0; }
+        .section h4 { font-size: 14px; font-weight: 600; color: var(--gray-700); margin: 16px 0 8px 0; }
+        .section p { margin-bottom: 12px; }
+        .section ul, .section ol { margin: 8px 0 16px 24px; }
+        .section li { margin-bottom: 6px; }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 16px 0 24px 0; font-size: 13px; }
+        thead tr { background: var(--gray-50); }
+        th { padding: 10px 14px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-600); border-bottom: 2px solid var(--gray-300); }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--gray-200); color: var(--gray-700); }
+        tr:hover { background: var(--gray-50); }
+        
+        /* Cross-refs */
+        .cross-ref { display: inline-block; margin: 8px 0; padding: 6px 14px; background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 4px; font-size: 13px; color: var(--gray-600); text-decoration: none; transition: all 0.2s; }
+        .cross-ref:hover { background: var(--primary-light); border-color: #90caf9; color: var(--primary); }
+        
+        /* Code */
+        code { font-family: 'SF Mono', 'Consolas', monospace; background: var(--gray-100); padding: 2px 6px; font-size: 13px; border-radius: 3px; }
+        
+        /* Info boxes */
+        .info-box { padding: 16px 20px; margin: 16px 0; border-radius: 4px; font-size: 14px; }
+        .info-box.blue { background: var(--primary-light); border-left: 3px solid var(--primary); }
+        .info-box.green { background: var(--success-light); border-left: 3px solid var(--success); }
+        .info-box.orange { background: var(--warning-light); border-left: 3px solid var(--warning); }
+        .info-box.purple { background: var(--purple-light); border-left: 3px solid var(--purple); }
+        
+        /* Tags */
+        .tag { display: inline-block; padding: 2px 8px; background: var(--gray-100); border: 1px solid var(--gray-300); border-radius: 3px; font-size: 12px; font-family: monospace; margin: 2px; }
+        
+        /* Footer */
+        .doc-footer { margin-top: 64px; padding-top: 24px; border-top: 3px solid var(--gray-300); font-size: 13px; color: var(--gray-500); }
+        .doc-footer p { margin-bottom: 4px; }
+        
         @media (max-width: 768px) {
             .container { padding: 24px 16px; }
-            .toc ul { columns: 1; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .toc ol { columns: 1; }
             table { font-size: 12px; }
             th, td { padding: 8px 10px; }
         }
-        @media print { .section { page-break-inside: avoid; } .container { padding: 0; } }
+        @media print {
+            .section { page-break-inside: avoid; }
+            .container { padding: 0; max-width: 100%; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Aurelius Auctions</h1>
+        <div class="doc-header">
+            <h1>Aurelius Auctions <span class="v2-badge">V2 SOP</span></h1>
             <p class="subtitle">Complete Implementation Guide — Shopify Platform</p>
-            <p class="meta">v1.1 / February 2026 / Updated with Shopify Blueprint Specs / Prepared by Axeed Group Technology</p>
+            <p class="meta">Version 2.0 / March 2026 / Axeed Group Technology</p>
         </div>
 
-        <div class="blueprint-note">
-            📘 This guide references the <strong>Aurelius Shopify Blueprint v1</strong> for complete technical specifications including full Shopify Flow definitions, webhook payloads, API endpoints, and form field mappings.
+        <div class="v2-banner">
+            <p><strong>🔄 Updated to SOP V2 (05.03.2026)</strong></p>
+            <p>Key changes: <strong>Click & Sign</strong> for all document signing · <strong>Telos</strong> for inventory/financial/strongroom · <strong>KYC by Nomos only</strong> · <strong>CEO approves before KYC</strong></p>
+            <p>See <a href="flowchart.html" target="_blank">System Flowchart</a> for visual workflow diagrams.</p>
         </div>
 
         <div class="toc">
-            <h3>Table of Contents</h3>
-            <ul>
-                <li><a href="#executive-summary">1. Executive Summary</a></li>
-                <li><a href="#project-overview">2. Project Overview</a></li>
-                <li><a href="#business-requirements">3. Business Requirements</a></li>
-                <li><a href="#tech-stack">4. Technology Stack</a></li>
-                <li><a href="#client-onboarding">5. Section 1: Client Onboarding</a></li>
-                <li><a href="#vendor-onboarding">6. Section 2: Vendor Onboarding</a></li>
-                <li><a href="#item-consignment">7. Section 3: Item Consignment</a></li>
-                <li><a href="#item-release">8. Section 4: Item Release</a></li>
-                <li><a href="#auction-prep">9. Section 5: Auction Preparation</a></li>
-                <li><a href="#auction-exec">10. Section 6: Auction Execution</a></li>
-                <li><a href="#handover-aurelius">11. Section 7: Handover to Aurelius</a></li>
-                <li><a href="#handover-buyer">12. Section 8: Handover to Buyer</a></li>
-                <li><a href="#handover-vendor">13. Section 9: Handover to Vendor</a></li>
-                <li><a href="#complaint-mgmt">14. Section 10: Complaint Management</a></li>
-                <li><a href="#auction-tracker">15. Section 11: Auction Tracker Setup</a></li>
-                <li><a href="#notification-system">16. Notification System</a></li>
-                <li><a href="#implementation-steps">17. Step-by-Step Implementation</a></li>
-                <li><a href="#testing-checklist">18. Testing Checklist</a></li>
-                <li><a href="#v1-v2-matrix">19. V1 vs V2 Feature Matrix</a></li>
-                <li><a href="#appendix-a">20. Appendix A: Flow Summary</a></li>
-                <li><a href="#appendix-b">21. Appendix B: Email Registry</a></li>
-                <li><a href="#appendix-c">22. Appendix C: Tag Taxonomy</a></li>
-                <li><a href="#appendix-d">23. Appendix D: Optimizations</a></li>
-                <li><a href="#appendix-e">24. Appendix E: Timeline</a></li>
-            </ul>
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#exec-summary">Executive Summary</a></li>
+                <li><a href="#project-overview">Project Overview</a></li>
+                <li><a href="#business-requirements">Business Requirements</a></li>
+                <li><a href="#tech-stack">Technology Stack</a></li>
+                <li><a href="#client-onboarding">Section 1: Client Onboarding</a></li>
+                <li><a href="#vendor-onboarding">Section 2: Vendor Onboarding</a></li>
+                <li><a href="#item-consignment">Section 3: Item Consignment</a></li>
+                <li><a href="#item-release">Section 4: Item Release</a></li>
+                <li><a href="#auction-prep">Section 5: Auction Preparation</a></li>
+                <li><a href="#auction-exec">Section 6: Auction Execution</a></li>
+                <li><a href="#handover-aurelius">Section 7: Handover to Aurelius</a></li>
+                <li><a href="#handover-buyer">Section 8: Handover to Buyer</a></li>
+                <li><a href="#handover-vendor">Section 9: Handover to Vendor</a></li>
+                <li><a href="#complaint-mgmt">Section 10: Complaint Management</a></li>
+                <li><a href="#auction-tracker">Section 11: Auction Tracker Setup</a></li>
+                <li><a href="#notifications">Notification System</a></li>
+                <li><a href="#implementation">Implementation Timeline</a></li>
+                <li><a href="#testing">Testing Checklist</a></li>
+            </ol>
         </div>
 
-        <!-- Section 1: Executive Summary -->
-        <div class="section" id="executive-summary">
+        <!-- 1. Executive Summary -->
+        <div class="section" id="exec-summary">
             <h2>1. Executive Summary</h2>
-            <p>This document provides complete implementation instructions for the Aurelius Auctions Shopify Platform based on the CEO-approved SOP version 1 (dated 12.02.2026). The system enables luxury auction management through a unified Shopify-powered platform that handles client and vendor onboarding, item consignment, comprehensive auction execution, and post-auction settlement across 11 distinct workflow sections.</p>
-            <p>The V1 implementation leverages a single Shopify store with clients and vendors differentiated through tags and metafields, not separate stores. The system includes automated KYC processing with Idenfo API for identity screening, separate KYC forms for comprehensive data collection, UAE PASS digital signing integration, and a complete auction management system with eBay-style bidding functionality.</p>
-
-            <div class="stats-grid">
-                <div class="stat-card"><div class="num">64</div><div class="label">Shopify Flows</div></div>
-                <div class="stat-card"><div class="num">14</div><div class="label">Scheduled Jobs</div></div>
-                <div class="stat-card"><div class="num">70</div><div class="label">Email Templates</div></div>
-                <div class="stat-card"><div class="num">10</div><div class="label">Forms</div></div>
-                <div class="stat-card"><div class="num">111</div><div class="label">Metafields</div></div>
-                <div class="stat-card"><div class="num">60</div><div class="label">Tags</div></div>
-                <div class="stat-card"><div class="num">~350</div><div class="label">AED/Month</div></div>
+            <p>This document provides complete implementation instructions for the Aurelius Auctions Shopify Platform based on the <strong>SOP V2 (dated 05.03.2026)</strong>. The system enables luxury auction management through a unified Shopify-powered platform across 11 distinct workflow sections.</p>
+            
+            <div class="info-box blue">
+                <strong>Platform Stats:</strong> ~63 Shopify Flows · ~70 email templates · 10 forms · ~105 metafields · ~60 tags · ~AED 350/month + Click & Sign subscription
             </div>
+
+            <h3>V2 Key Changes</h3>
+            <table>
+                <thead><tr><th>Change</th><th>Details</th><th>Impact</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Click & Sign</strong></td><td>Replaces UAE PASS for all document signing</td><td>Sections 2, 3, 7, 8, 9</td></tr>
+                    <tr><td><strong>Telos</strong></td><td>New entity for inventory, financial, strongroom operations</td><td>Sections 1-9</td></tr>
+                    <tr><td><strong>KYC by Nomos only</strong></td><td>KYC handled entirely by Nomos manual vetting</td><td>Sections 1, 2</td></tr>
+                    <tr><td><strong>CEO before KYC</strong></td><td>CEO approves leads before KYC vetting begins</td><td>Sections 1, 2</td></tr>
+                    <tr><td><strong>AE primary for consignment</strong></td><td>AE replaces CAC as primary in Item Consignment</td><td>Section 3</td></tr>
+                    <tr><td><strong>Nomos R&W removed</strong></td><td>Click & Sign handles document integrity</td><td>Sections 2, 3</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- Section 2: Project Overview -->
+        <!-- 2. Project Overview -->
         <div class="section" id="project-overview">
             <h2>2. Project Overview</h2>
             <a class="cross-ref" href="flowchart.html#overview" target="_blank">🔄 View Flowchart: System Overview</a>
-
-            <h3>2.1 What We Are Building</h3>
-            <p>A comprehensive auction management platform that enables:</p>
+            
+            <h3>What We Are Building</h3>
             <ul>
-                <li>Client and vendor onboarding with dual KYC verification (form collection + Idenfo screening)</li>
-                <li>Item consignment workflow with expert authentication and valuation</li>
-                <li>Complete auction preparation including catalog creation and marketing coordination</li>
-                <li>Live auction execution with real-time bidding and Buy Now options</li>
-                <li>Multi-phase item handover processes (to Aurelius, to buyers, to vendors)</li>
-                <li>Comprehensive complaint management system</li>
-                <li>Auction tracker setup and management workflow</li>
-                <li>Automated payment processing and settlement</li>
-                <li>Digital document signing via UAE PASS integration</li>
+                <li>Client and vendor onboarding with CEO pre-approval and Nomos KYC verification</li>
+                <li>Item consignment with expert authentication and valuation</li>
+                <li>Complete auction preparation, execution, and settlement</li>
+                <li>Multi-phase item handover processes</li>
+                <li>Digital document signing via <strong>Click & Sign</strong></li>
+                <li><strong>Telos</strong>-managed inventory, financial operations, and strongroom management</li>
             </ul>
 
-            <h3>2.2 Business Model</h3>
-            <p><strong>Auction Structure:</strong> Multi-day online auctions with starting prices set by expert evaluation, Buy Now prices at approximately 2x starting price, and incremental bidding over auction duration.</p>
-            <p><strong>Revenue Streams:</strong></p>
-            <ul>
-                <li>Seller's premium: Percentage commission from successful sales</li>
-                <li>Buyer's premium: Additional fee charged to winning bidders</li>
-                <li>Authentication services: Expert verification and certification</li>
-                <li>Consignment fees: Item handling and storage charges</li>
-            </ul>
-            <p><strong>Contract Parameters:</strong></p>
-            <ul>
-                <li>Auction duration: Typically 5–7 days per auction</li>
-                <li>Starting bids: Expert-determined based on authentication and valuation</li>
-                <li>Buy Now pricing: Approximately 2x starting bid price</li>
-                <li>Authentication: Mandatory for all luxury items</li>
-                <li>Settlement: T+3 business days post-auction</li>
-                <li>Item handover windows: 15 days before to 1 day before auction start</li>
-                <li>Payment deadlines: 2 business days, escalating to 7 business days</li>
-                <li>Collection deadlines: 7 working days with escalation procedures</li>
-            </ul>
-        </div>
-
-        <!-- Section 3: Business Requirements -->
-        <div class="section" id="business-requirements">
-            <h2>3. Business Requirements</h2>
-
-            <h3>3.1 Confirmed Parameters</h3>
-            <p><strong>Stakeholder Roles:</strong></p>
-            <ul>
-                <li><strong>AE</strong> (Auction Executive): Primary operational role</li>
-                <li><strong>CEO:</strong> Final approval authority and periodic client list review</li>
-                <li><strong>CAC</strong> (Chief Accountant): Item consignment primary responsibility, financial oversight</li>
-                <li><strong>Nomos:</strong> KYC and compliance processing, escalation handling</li>
-                <li><strong>External Consultants:</strong> Brand specialists and auction experts for authentication</li>
-                <li><strong>BTP</strong> (By The People): External marketing agency with detailed process introduction</li>
-                <li><strong>GCEO:</strong> Group CEO collaboration for auction tracker setup</li>
-            </ul>
-
-            <p><strong>Timing Frameworks:</strong></p>
-            <ul>
-                <li>Free ticket request forms close 30 days before auction</li>
-                <li>Item handover window: 15 days before to 1 day before auction start</li>
-                <li>Brand specialist reverification day before auction start</li>
-                <li>Payment tracking: 2 business days, then 7 business days</li>
-                <li>Collection deadlines: 7 working days with escalation procedures</li>
-            </ul>
-
-            <h3>3.2 Key Personnel</h3>
+            <h3>Contract Parameters (V2)</h3>
             <table>
-                <thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead>
+                <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
                 <tbody>
-                    <tr><td>Ravi Tharoor</td><td><code>rt@aureliusauctions.com</code></td><td>Head of Aurelius</td></tr>
-                    <tr><td>Ahmed Salim Ahmed</td><td><code>asa@axeed.com</code></td><td>Operations Lead</td></tr>
-                    <tr><td>Abdulla Al Shaibani</td><td><code>am@axeed.com</code></td><td>CEO</td></tr>
-                    <tr><td>Saleh Al Nahdi</td><td><code>sb@axeed.com</code></td><td>Head of Compliance</td></tr>
-                    <tr><td>Samuel Ismail</td><td><code>si@axeed.com</code></td><td>Arc Genesis GM</td></tr>
+                    <tr><td>Item handover window</td><td><strong>14 days</strong> before to 1 day before auction</td></tr>
+                    <tr><td>Payment deadlines</td><td>2 business days → 7 business days</td></tr>
+                    <tr><td>Buyer collection</td><td><strong>5 business days</strong> → <strong>10 business days</strong></td></tr>
+                    <tr><td>Vendor return</td><td><strong>10 business days</strong> → <strong>20 business days</strong></td></tr>
+                    <tr><td>Free ticket forms close</td><td>30 days before auction</td></tr>
                 </tbody>
             </table>
-            <p><strong>External Partners:</strong> Brand Specialists, Auction Experts, BTP (Marketing), Idenfo (Identity Screening), UAE PASS (Digital Signatures)</p>
         </div>
 
-        <!-- Section 4: Technology Stack -->
+        <!-- 3. Business Requirements -->
+        <div class="section" id="business-requirements">
+            <h2>3. Business Requirements</h2>
+            
+            <h3>Stakeholder Roles (V2)</h3>
+            <table>
+                <thead><tr><th>Role</th><th>Responsibilities</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>AE</strong> (Auction Executive)</td><td>Primary operational role, item consignment lead</td></tr>
+                    <tr><td><strong>CEO</strong></td><td>Pre-approval of leads, final approval for items and releases</td></tr>
+                    <tr><td><strong>Telos</strong> <span class="v2-badge">NEW</span></td><td>Inventory management, auction tracking, strongroom operations, financial processing, handover receipt signing</td></tr>
+                    <tr><td><strong>Nomos</strong></td><td>KYC and compliance processing, escalation handling</td></tr>
+                    <tr><td><strong>External Consultants</strong></td><td>Brand specialists and auction experts for authentication</td></tr>
+                    <tr><td><strong>BTP</strong></td><td>External marketing agency</td></tr>
+                    <tr><td><strong>GCEO</strong></td><td>Group CEO — auction tracker setup, marketing approval</td></tr>
+                </tbody>
+            </table>
+
+            <div class="info-box green">
+                <strong>Note:</strong> KYC is handled entirely by Nomos manual vetting. Document signing is handled by Click & Sign.
+            </div>
+        </div>
+
+        <!-- 4. Technology Stack -->
         <div class="section" id="tech-stack">
             <h2>4. Technology Stack</h2>
             <a class="cross-ref" href="flowchart.html#integrations" target="_blank">🔄 View Flowchart: Technology Integration Architecture</a>
-
+            
             <table>
-                <thead><tr><th>Component</th><th>Tool</th><th>Integration Method</th></tr></thead>
+                <thead><tr><th>Component</th><th>Tool</th><th>Integration</th><th>V2 Status</th></tr></thead>
                 <tbody>
-                    <tr><td>Core Platform</td><td>Shopify Plus</td><td>Native</td></tr>
-                    <tr><td>Form Collection</td><td>Powerful Form Builder</td><td>Shopify App</td></tr>
-                    <tr><td>Identity Screening</td><td>Idenfo</td><td>Direct REST API</td></tr>
-                    <tr><td>Internal Automation</td><td>Shopify Flow</td><td>Native (64 flows + 14 scheduled)</td></tr>
-                    <tr><td>File Storage</td><td>DropBox</td><td>Direct REST API</td></tr>
-                    <tr><td>Spreadsheets</td><td>Google Sheets</td><td>Apps Script Webhook</td></tr>
-                    <tr><td>Digital Signatures</td><td>UAE PASS</td><td>Deep Links (V1)</td></tr>
-                    <tr><td>SMS/WhatsApp</td><td>Twilio / WhatsApp Business</td><td>Zapier (5 zaps only)</td></tr>
-                    <tr><td>Auction Bidding</td><td>Custom Shopify App</td><td>Shopify Functions</td></tr>
-                    <tr><td>Payment</td><td>Shopify Payments</td><td>Native</td></tr>
+                    <tr><td>Core Platform</td><td>Shopify Plus</td><td>Native</td><td>✅ Unchanged</td></tr>
+                    <tr><td>Form Collection</td><td>Powerful Form Builder</td><td>Shopify App</td><td>✅ Unchanged</td></tr>
+                    <tr><td>Automation</td><td>Shopify Flow</td><td>Native (~63 flows)</td><td>✅ Updated</td></tr>
+                    <tr><td>File Storage</td><td>DropBox</td><td>Direct REST API</td><td>✅ Unchanged</td></tr>
+                    <tr><td>Spreadsheets</td><td>Google Sheets</td><td>Apps Script Webhook</td><td>✅ Unchanged</td></tr>
+                    <tr><td><strong>Digital Signatures</strong></td><td><strong>Click & Sign</strong></td><td><strong>API/Platform</strong></td><td><span class="v2-badge">NEW</span></td></tr>
+                    <tr><td>SMS/WhatsApp</td><td>Twilio</td><td>Zapier (5 zaps)</td><td>✅ Unchanged</td></tr>
+                    <tr><td>Bidding</td><td>Custom App</td><td>Shopify Functions</td><td>✅ Unchanged</td></tr>
+
                 </tbody>
             </table>
-
-            <div class="key-points">
-                <h4>Integration Principle Hierarchy</h4>
-                <ul>
-                    <li><strong>1. Shopify Native</strong> — use if the feature exists natively</li>
-                    <li><strong>2. Shopify Flow</strong> — use for all internal automations, status changes, tagging, internal emails</li>
-                    <li><strong>3. Direct REST API</strong> — use for DropBox, Idenfo, Google Sheets (via Apps Script)</li>
-                    <li><strong>4. Deep Links</strong> — use for UAE PASS (V1)</li>
-                    <li><strong>5. Zapier</strong> — use ONLY for SMS/WhatsApp where no direct API is available</li>
-                </ul>
-            </div>
         </div>
 
-        <!-- Section 5: Client Onboarding -->
+        <!-- Sections 1-4 -->
         <div class="section" id="client-onboarding">
-            <h2>5. Section 1: Client Onboarding Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section1" target="_blank">🔄 View Flowchart: Client Onboarding Flow</a>
-
-            <h3>5.1 Process Overview</h3>
-            <p>Clients are prospects who wish to participate in auctions as bidders and buyers. The onboarding process includes dual KYC verification (comprehensive form collection AND Idenfo screening), document collection, and account approval with CEO periodic review capability.</p>
-            <ol>
-                <li>Client signs up via AA website (self-registration) OR lead received by AE</li>
-                <li>If self-registration, CEO periodically reviews client list and removes unwelcome sign-ups</li>
-                <li>AE verifies lead details and explains Aurelius process</li>
-                <li>Initial qualification assessment against guidelines</li>
-                <li>If qualified, AE creates Client Account in Shopify with basic details</li>
-                <li>Client receives welcome email with password setup link</li>
-                <li>Client completes KYC data collection form (personal info, financial standings, occupation, sources of fund/wealth)</li>
-                <li>Client uploads identity documents for Idenfo screening</li>
-                <li>Nomos receives both KYC form data and processes Idenfo identity screening</li>
-                <li>Idenfo performs sanctions, PEP, and document verification screening</li>
-                <li>If approved, CEO receives approval request from Nomos</li>
-                <li>Upon CEO approval, AE updates client account and enables auction participation</li>
-                <li>Client receives onboarding completion notification</li>
-                <li>Any rejected clients must have tickets refunded</li>
-            </ol>
-
-            <h3>⚡ Shopify Flow Automations (7 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 1.1: Tag Self-Registered Client</td><td><code>customer/create</code> with <code>Self-Registered</code> tag</td><td>Add <code>Client</code> + <code>CEO-Review-Required</code> tags, set metafields, send welcome email + CEO notification</td></tr>
-                    <tr><td>Flow 1.2: Tag AE-Created Client</td><td><code>customer/create</code> with <code>AE-Created</code> tag</td><td>Add <code>Client</code> tag, set metafields, send welcome + password setup email</td></tr>
-                    <tr><td>Flow 1.3: Client KYC Form Complete</td><td><code>client_kyc_form_status</code> → <code>Complete</code></td><td>Add <code>KYC-Form-Complete</code> tag, notify Nomos, trigger Idenfo screening</td></tr>
-                    <tr><td>Flow 1.4: Idenfo Result → Client</td><td><code>client_idenfo_status</code> changed</td><td>Branch on Passed/Failed/Manual-Review, tag accordingly, notify Nomos</td></tr>
-                    <tr><td>Flow 1.5: Nomos Approves Client KYC</td><td>Tag <code>KYC-Approved</code> added</td><td>Add <code>Awaiting-CEO-Approval</code>, notify CEO</td></tr>
-                    <tr><td>Flow 1.6: CEO Approves Client</td><td>Tag <code>CEO-Approved</code> added</td><td>Set <code>Active</code> stage, enable bidding, add <code>Active-Bidder</code>, notify client + AE</td></tr>
-                    <tr><td>Flow 1.7: CEO Rejects Client</td><td>Tag <code>CEO-Rejected</code> added</td><td>Set <code>Rejected</code> stage, disable bidding, flag ticket refund, notify AE + CAC</td></tr>
-                </tbody>
-            </table>
-            <div class="callout callout-blue">📘 See Blueprint §3.2 for full flow definitions with all metafield assignments and error states.</div>
-
-            <h3>📧 Email Templates (9 templates: E1.1–E1.9)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th><th>Trigger</th></tr></thead>
-                <tbody>
-                    <tr><td>E1.1</td><td>Client Welcome (Self-Reg)</td><td>Client</td><td>Flow 1.1</td></tr>
-                    <tr><td>E1.2</td><td>Client Welcome (AE)</td><td>Client</td><td>Flow 1.2</td></tr>
-                    <tr><td>E1.3</td><td>KYC Form Required</td><td>Client</td><td>Flow 1.1/1.2</td></tr>
-                    <tr><td>E1.4</td><td>KYC Form Complete (Internal)</td><td>Nomos</td><td>Flow 1.3</td></tr>
-                    <tr><td>E1.5</td><td>Idenfo Result (Internal)</td><td>Nomos</td><td>Flow 1.4</td></tr>
-                    <tr><td>E1.6</td><td>CEO Approval Request</td><td>CEO</td><td>Flow 1.5</td></tr>
-                    <tr><td>E1.7</td><td>Account Activated</td><td>Client</td><td>Flow 1.6</td></tr>
-                    <tr><td>E1.8</td><td>Client Rejected (Internal)</td><td>AE, CAC</td><td>Flow 1.7</td></tr>
-                    <tr><td>E1.9</td><td>CEO Review Reminder</td><td>CEO</td><td>Weekly scheduled</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Form: Client KYC Data Collection (F1.1 — 17 fields)</h3>
-            <p>Collected via Powerful Form Builder. Key fields: Full Legal Name, DOB, Nationality, Emirates ID/Passport, Address, Phone, Email, Occupation, Employer, Annual Income Range, Source of Funds, Source of Wealth, Bank Name, Investment Experience, Risk Tolerance, PEP Declaration, T&amp;C Acceptance.</p>
-            <p>On submit: Sets <code>client_kyc_form_status</code> = <code>Complete</code>, uploads docs to DropBox, triggers Idenfo screening.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Client</code> <code>Self-Registered</code> <code>AE-Created</code> <code>CEO-Review-Required</code> <code>KYC-Form-Complete</code> <code>Idenfo-Passed</code> <code>Idenfo-Failed</code> <code>Idenfo-Manual-Review</code> <code>KYC-Approved</code> <code>Awaiting-CEO-Approval</code> <code>CEO-Approved</code> <code>CEO-Rejected</code> <code>Active-Bidder</code>
+            <h2>5. Section 1: Client Onboarding <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section1" target="_blank">🔄 View Flowchart: Client Onboarding</a>
+            
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> CEO approves lead BEFORE KYC. KYC by Nomos only. Telos CC'd on KYC approval. Shopify creates accounts.
             </div>
 
-            <h3>📊 Key Metafields</h3>
-            <p><code>client_registration_source</code>, <code>client_kyc_form_status</code>, <code>client_idenfo_status</code>, <code>client_onboarding_stage</code>, <code>client_bidding_enabled</code>, <code>client_approval_date</code>, <code>client_ticket_refund_required</code> + 15 KYC data fields (M-C10 through M-C22)</p>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O1.1</td><td>Recommend</td><td>Automated weekly digest email with new self-registered clients and one-click approve/reject in admin dashboard</td></tr>
-                    <tr><td>O1.2</td><td>Consider</td><td>All clients self-register; AE sends pre-filled registration link instead of manually creating accounts</td></tr>
-                    <tr><td>O1.3</td><td>Recommend</td><td>Trigger Idenfo automatically when form is submitted (already designed this way in blueprint)</td></tr>
-                    <tr><td>O1.4</td><td>Recommend</td><td>Automate ticket refund via Shopify order cancellation + refund when CEO-Rejected tag applied</td></tr>
-                </tbody>
-            </table>
-
-            <h3>5.2 Shopify Configuration for Clients</h3>
-            <ul>
-                <li>Customer Type: "Client" (stored in customer tags)</li>
-                <li>KYC Form Status: Separate tracking for form completion</li>
-                <li>Idenfo Screening Status: Separate tracking for identity verification</li>
-                <li>CEO Review Status: Periodic review flag for self-registered clients</li>
-                <li>Approval Level: CEO approval flag</li>
-                <li>Document Status: Form Builder integration for uploads</li>
-                <li>Bidding Permissions: Enabled after full approval</li>
-            </ul>
-
-            <h3>5.3 Dual KYC System Implementation</h3>
-            <p><strong>KYC Data Collection Form</strong> (Powerful Form Builder): Personal information, financial standings, occupation details, sources of funds/wealth, risk assessment questionnaire.</p>
-            <p><strong>Idenfo Identity Screening</strong> (Direct API): Document types (Passport, Emirates ID, Trade License), identity verification, sanctions screening, PEP screening, response handling (Pass/Fail/Review).</p>
-            <div class="callout">Critical Distinction: The KYC form collects comprehensive customer data for business assessment, while Idenfo performs technical identity document verification and compliance screening. Both are required for complete onboarding.</div>
+            <h3>Process Flow</h3>
+            <ol>
+                <li>AE receives lead → checks guidelines → introduces Aurelius</li>
+                <li>Client interested → <strong>AE emails CEO requesting approval</strong></li>
+                <li><strong>CEO approves/rejects</strong> (pre-KYC in V2)</li>
+                <li>If approved → Shopify creates Client Account → welcome email + password</li>
+                <li>AE uploads KYC documents to DropBox</li>
+                <li>Shopify notifies AE and Nomos</li>
+                <li>Nomos conducts vetting (may request additional documents)</li>
+                <li>KYC approved → Nomos emails AE (CC: CEO, <strong>Telos</strong>)</li>
+                <li>AE updates client details → Active Client</li>
+            </ol>
+            <p><em>Self-registration path: Client signs up via AA website → CEO periodically reviews and removes unwelcome sign-ups (tickets must be refunded).</em></p>
         </div>
 
-        <!-- Section 6: Vendor Onboarding -->
         <div class="section" id="vendor-onboarding">
-            <h2>6. Section 2: Vendor Onboarding Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section2" target="_blank">🔄 View Flowchart: Vendor Onboarding Flow</a>
+            <h2>6. Section 2: Vendor Onboarding <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section2" target="_blank">🔄 View Flowchart: Vendor Onboarding</a>
 
-            <h3>6.1 Process Overview</h3>
-            <p>Vendors are individuals or entities who consign items for auction. The process includes enhanced KYC with dual verification system, document verification, and Vendor Consignment Agreement execution via UAE PASS. The completion notification includes detailed explanation of Item Consignment process and BTP introduction.</p>
-            <ol>
-                <li>Lead received by AE (marketing, referral, walk-in)</li>
-                <li>AE verifies details and explains vendor process</li>
-                <li>Initial qualification against vendor guidelines</li>
-                <li>If qualified, AE creates Vendor Account in Shopify</li>
-                <li>Vendor receives welcome email with password setup</li>
-                <li>Vendor completes comprehensive KYC data collection form</li>
-                <li>Vendor uploads identity documents for Idenfo screening</li>
-                <li>Nomos reviews KYC form data and processes via Idenfo screening</li>
-                <li>Upon KYC approval, CEO receives vendor approval request</li>
-                <li>CEO approves vendor for onboarding</li>
-                <li>AE uploads Vendor Consignment Agreement to vendor portal</li>
-                <li>Vendor signs agreement using UAE PASS digital signature</li>
-                <li>Nomos verifies signed document (checks Representation &amp; Warranties unchanged)</li>
-                <li>CEO signs agreement via UAE PASS</li>
-                <li>Final signed agreement uploaded to vendor portal</li>
-                <li>Vendor receives onboarding completion notification with BTP introduction</li>
-            </ol>
-
-            <h3>⚡ Shopify Flow Automations (7 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 2.1: Tag New Vendor</td><td><code>customer/create</code> with <code>Vendor-New</code> tag</td><td>Add <code>Vendor</code> tag, set metafields, send welcome email, create DropBox folder</td></tr>
-                    <tr><td>Flow 2.2: Vendor KYC Form Complete</td><td><code>vendor_kyc_form_status</code> → <code>Complete</code></td><td>Add <code>KYC-Form-Complete</code>, notify Nomos, trigger Idenfo</td></tr>
-                    <tr><td>Flow 2.3: Vendor KYC Approved</td><td>Tag <code>KYC-Approved</code> added</td><td>Add <code>Awaiting-CEO-Approval</code>, notify CEO</td></tr>
-                    <tr><td>Flow 2.4: CEO Approves Vendor</td><td>Tag <code>CEO-Approved</code> added</td><td>Set <code>Agreement</code> stage, add <code>Agreement-Pending</code>, notify AE to upload VCA</td></tr>
-                    <tr><td>Flow 2.5: Vendor Signs Agreement</td><td><code>vendor_agreement_status</code> → <code>Vendor-Signed</code></td><td>Add <code>Agreement-Verification-Pending</code>, notify Nomos to verify R&amp;W</td></tr>
-                    <tr><td>Flow 2.6: Agreement Verified → CEO Sign</td><td>Tag <code>Agreement-Verified</code> added</td><td>Notify CEO with UAE PASS deep link</td></tr>
-                    <tr><td>Flow 2.7: Vendor Fully Onboarded</td><td><code>vendor_agreement_status</code> → <code>Complete</code></td><td>Set <code>Active</code>, add <code>Active-Vendor</code>, send enhanced completion email with BTP intro</td></tr>
-                </tbody>
-            </table>
-            <div class="callout callout-blue">📘 See Blueprint §4.2 for full flow definitions.</div>
-
-            <h3>📧 Email Templates (7 templates: E2.1–E2.7)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th><th>Trigger</th></tr></thead>
-                <tbody>
-                    <tr><td>E2.1</td><td>Vendor Welcome</td><td>Vendor</td><td>Flow 2.1</td></tr>
-                    <tr><td>E2.2</td><td>Vendor KYC Required</td><td>Vendor</td><td>Flow 2.1</td></tr>
-                    <tr><td>E2.3</td><td>Vendor CEO Approval</td><td>CEO</td><td>Flow 2.3</td></tr>
-                    <tr><td>E2.4</td><td>Upload Agreement (Internal)</td><td>AE</td><td>Flow 2.4</td></tr>
-                    <tr><td>E2.5</td><td>Sign Agreement</td><td>Vendor</td><td>Flow 2.4</td></tr>
-                    <tr><td>E2.6</td><td>Verify Agreement (Internal)</td><td>Nomos</td><td>Flow 2.5</td></tr>
-                    <tr><td>E2.7</td><td>Onboarding Complete + BTP</td><td>Vendor</td><td>Flow 2.7</td></tr>
-                </tbody>
-            </table>
-            <p><strong>E2.7 Content:</strong> Explains Item Consignment process, introduces BTP as marketing partner, overview of photography/description coordination, timeline expectations, BTP contact info, next steps.</p>
-
-            <h3>📋 Form: Vendor KYC Data Collection (F2.1 — 23 fields)</h3>
-            <p>All fields from Client KYC (F1.1) plus: Business/Trade License (conditional), Business Registration Number, Authorized Signatory Details, Previous Auction Experience, Item Categories of Interest, Estimated Items for Consignment.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Vendor</code> <code>Vendor-New</code> <code>Agreement-Pending</code> <code>Agreement-Verification-Pending</code> <code>Agreement-Verified</code> <code>Active-Vendor</code>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> CEO approves lead BEFORE KYC. Click & Sign for VCA signing. Nomos R&W verification removed. Telos CC'd on approval.
             </div>
 
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O2.1</td><td>Consider</td><td>Use DocuSign or similar for multi-party VCA signing with automatic verification</td></tr>
-                    <tr><td>O2.2</td><td>Recommend</td><td>Automate PDF text comparison in custom app — hash R&amp;W section before and after signing</td></tr>
-                    <tr><td>O2.3</td><td>Consider</td><td>Separate BTP introduction meeting/call step tracked as its own status</td></tr>
-                </tbody>
-            </table>
+            <h3>Process Flow</h3>
+            <ol>
+                <li>AE receives lead → checks guidelines → introduces Aurelius</li>
+                <li>Vendor interested → <strong>AE emails CEO requesting approval</strong></li>
+                <li><strong>CEO approves/rejects</strong> (pre-KYC in V2)</li>
+                <li>If approved → Shopify creates Vendor Account → welcome email + password</li>
+                <li>AE uploads KYC documents to DropBox</li>
+                <li>Nomos conducts vetting → approves (CC: CEO, <strong>Telos</strong>)</li>
+                <li><strong>Click & Sign</strong> configures VCA → Vendor signs → CEO signs</li>
+                <li>Click & Sign notifies all parties → AE uploads signed VCA</li>
+                <li>Shopify notifies Vendor: onboarding complete + BTP introduction</li>
+            </ol>
         </div>
 
-        <!-- Section 7: Item Consignment -->
         <div class="section" id="item-consignment">
-            <h2>7. Section 3: Item Consignment Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section3" target="_blank">🔄 View Flowchart: Item Consignment Flow</a>
+            <h2>7. Section 3: Item Consignment <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section3" target="_blank">🔄 View Flowchart: Item Consignment</a>
 
-            <div class="callout"><strong>MAJOR CHANGE:</strong> Primary responsibility has shifted from GDMM to CAC. Terminology updated from "Item Consignment Request" to "Item Consignment Form".</div>
-
-            <h3>7.1 Process Overview</h3>
-            <ol>
-                <li>Vendor uploads Item Consignment Form via portal (one item per form)</li>
-                <li>CAC receives notification and performs preliminary evaluation (primary responsibility)</li>
-                <li>If suitable, CAC schedules viewing appointment with vendor</li>
-                <li>CAC views item and discusses buy-now price with vendor</li>
-                <li>CAC contacts Brand Specialists and Auction Experts for availability</li>
-                <li>External Consultants evaluate item authenticity and provide starting price</li>
-                <li>If authentic, vendor signs Item Consignment Form via UAE PASS</li>
-                <li>Nomos verifies signed form (checks R&amp;W unchanged)</li>
-                <li>CEO signs form via UAE PASS</li>
-                <li>Item added to inventory with "Consigned" status</li>
-                <li>CAC coordinates physical item collection and updates inventory</li>
-            </ol>
-
-            <h3>⚡ Shopify Flow Automations (6 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 3.1: New Item Consignment</td><td><code>product/create</code> with <code>Consignment-New</code> tag</td><td>Set metafields, notify CAC, create DropBox folder</td></tr>
-                    <tr><td>Flow 3.2: Item Viewing Scheduled</td><td>Tag <code>Viewing-Scheduled</code> added</td><td>Update status, notify vendor</td></tr>
-                    <tr><td>Flow 3.3: Item Authenticated</td><td><code>item_authentication_status</code> → <code>Verified</code></td><td>Add <code>Authentication-Complete</code>, notify vendor for UAE PASS signing, notify BTP for photoshoot</td></tr>
-                    <tr><td>Flow 3.4: Vendor Signed Form</td><td><code>item_form_signed_vendor</code> = <code>true</code></td><td>Add <code>Form-Vendor-Signed</code>, notify Nomos to verify R&amp;W</td></tr>
-                    <tr><td>Flow 3.5: Form Verified</td><td>Tag <code>Form-Nomos-Verified</code> added</td><td>Notify CEO with UAE PASS deep link</td></tr>
-                    <tr><td>Flow 3.6: Item Fully Consigned</td><td><code>item_form_signed_ceo</code> = <code>true</code></td><td>Set <code>Consigned</code> status, notify CAC for collection, notify vendor, update Google Sheets</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (8 templates: E3.1–E3.8)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E3.1</td><td>New Consignment (Internal)</td><td>CAC</td></tr>
-                    <tr><td>E3.2</td><td>Viewing Scheduled</td><td>Vendor</td></tr>
-                    <tr><td>E3.3</td><td>Item Authenticated</td><td>Vendor</td></tr>
-                    <tr><td>E3.4</td><td>BTP Photoshoot</td><td>BTP</td></tr>
-                    <tr><td>E3.5</td><td>Verify ICF (Internal)</td><td>Nomos</td></tr>
-                    <tr><td>E3.6</td><td>CEO Sign ICF</td><td>CEO</td></tr>
-                    <tr><td>E3.7</td><td>Item Consigned</td><td>Vendor</td></tr>
-                    <tr><td>E3.8</td><td>Collect Item (Internal)</td><td>CAC</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Form: Item Consignment Form (F3.1 — 12 fields)</h3>
-            <p>Key fields: Item Name, Category (Watches/Jewelry/Art/Collectibles/Other), Brand, Model/Reference, Year, Description (min 100 chars), Condition, Provenance, Photos (min 3, max 20MB each), Supporting Documents, Vendor Expected Price, R&amp;W Acceptance.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Consignment-New</code> <code>Consignment-Pending</code> <code>Viewing-Scheduled</code> <code>Authentication-Complete</code> <code>Form-Vendor-Signed</code> <code>Form-Nomos-Verified</code> <code>Fully-Consigned</code>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> AE is primary (was CAC). CEO approval gate before evaluation. Click & Sign for ICF signing. Telos manages inventory. One item per request. Buy/Rent Now Price. External Consultant unified role.
             </div>
 
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O3.1</td><td>Consider</td><td>Specialist availability calendar instead of CAC manually contacting brand specialists</td></tr>
-                    <tr><td>O3.2</td><td>Recommend</td><td>Record buy-now price discussion outcome in metafield with vendor acknowledgment</td></tr>
-                    <tr><td>O3.3</td><td>Recommend</td><td>Set minimum photo requirements (resolution, angles) in form validation</td></tr>
-                </tbody>
-            </table>
+            <h3>Process Flow</h3>
+            <ol>
+                <li>Vendor submits Item Consignment Request (<strong>one item per request</strong>)</li>
+                <li>AE performs preliminary evaluation</li>
+                <li>If suitable → AE schedules viewing → Vendor books appointment</li>
+                <li>AE views item, discusses <strong>Buy/Rent Now Price</strong></li>
+                <li><strong>CEO approves item</strong> (NEW gate in V2)</li>
+                <li>External Consultant evaluates → starting price + authenticity report</li>
+                <li>If authentic → <strong>Click & Sign</strong>: Vendor signs ICF → CEO signs ICF</li>
+                <li>Click & Sign notifies CEO, AE, <strong>Telos</strong>, Vendor</li>
+                <li><strong>Telos</strong> adds item to Inventory → status = "Consigned"</li>
+            </ol>
         </div>
 
-        <!-- Section 8: Item Release -->
         <div class="section" id="item-release">
-            <h2>8. Section 4: Item Release Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section4" target="_blank">🔄 View Flowchart: Item Release Flow</a>
+            <h2>8. Section 4: Item Release <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section4" target="_blank">🔄 View Flowchart: Item Release</a>
 
-            <div class="callout"><strong>KEY CHANGES:</strong> CEO approval gate required for all releases. Invoice management for applicable fees. 7-day payment tracking with Nomos escalation. No UAE PASS signing for release.</div>
-
-            <h3>8.1 Process Overview</h3>
-            <ol>
-                <li>Vendor submits Item Release Request in Vendor Portal</li>
-                <li>AE receives notification and negotiates with vendor</li>
-                <li>If negotiations fail, AE emails CEO requesting approval</li>
-                <li>CEO approves/rejects release</li>
-                <li>If approved, AE notifies vendor (CC: AE, CAC)</li>
-                <li>CAC checks for applicable fees → invoices vendor</li>
-                <li>7-day payment window; if unpaid → escalate to Nomos</li>
-            </ol>
-
-            <h3>⚡ Shopify Flow Automations (7 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 4.1: Release Requested</td><td><code>release_request_date</code> set</td><td>Add <code>Release-Requested</code>, notify AE</td></tr>
-                    <tr><td>Flow 4.2: Negotiation Failed → CEO</td><td><code>release_negotiation_status</code> → <code>Failed</code></td><td>Add <code>CEO-Approval-Pending</code>, notify CEO</td></tr>
-                    <tr><td>Flow 4.3: CEO Approves Release</td><td><code>release_ceo_approved</code> = <code>true</code></td><td>Set <code>Released</code>, notify vendor (CC: AE, CAC), notify CAC to check fees</td></tr>
-                    <tr><td>Flow 4.4: CEO Rejects Release</td><td>Tag <code>Release-CEO-Rejected</code> added</td><td>Reset negotiation, notify AE to re-negotiate</td></tr>
-                    <tr><td>Flow 4.5: Invoice Sent</td><td><code>release_invoice_sent_date</code> set</td><td>Calculate 7-day deadline, schedule reminders at day 3 and 6</td></tr>
-                    <tr><td>Flow 4.6: Payment Overdue</td><td>Daily scheduled check</td><td>Escalate to Nomos, add <code>Payment-Overdue</code></td></tr>
-                    <tr><td>Flow 4.7: Payment Received</td><td><code>release_payment_received</code> = <code>true</code></td><td>Add <code>Release-Complete</code>, notify AE, update Google Sheets</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (6 templates: E4.1–E4.6)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E4.1</td><td>Release Request (Internal)</td><td>AE</td></tr>
-                    <tr><td>E4.2</td><td>Release CEO Request</td><td>CEO</td></tr>
-                    <tr><td>E4.3</td><td>Release Approved</td><td>Vendor, CC: AE, CAC</td></tr>
-                    <tr><td>E4.4</td><td>Release Rejected (Internal)</td><td>AE</td></tr>
-                    <tr><td>E4.5</td><td>Check Fees (Internal)</td><td>CAC</td></tr>
-                    <tr><td>E4.6</td><td>Payment Overdue (Internal)</td><td>Nomos, AE, CAC</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Form: Item Release Request (F4.1 — 4 fields)</h3>
-            <p>Fields: Item Selection (vendor's consigned items only), Reason for Release (min 20 chars), Preferred Collection Date, Acknowledgment checkbox.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Release-Requested</code> <code>CEO-Approval-Pending</code> <code>Release-CEO-Approved</code> <code>Release-CEO-Rejected</code> <code>Invoice-Sent</code> <code>Payment-Overdue</code> <code>Release-Complete</code>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> Telos invoices vendor (was CAC). Telos tracks payment + escalates to Nomos. CEO negotiation loop added.
             </div>
 
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O4.1</td><td>Recommend</td><td>Add structured negotiation notes field with outcome tracking per attempt</td></tr>
-                    <tr><td>O4.2</td><td>Recommend</td><td>Add 48-hour auto-reminder to CEO if no decision made on release approval</td></tr>
-                    <tr><td>O4.3</td><td>Consider</td><td>Auto-generate invoice from VCA fee schedule when CEO approves release</td></tr>
-                </tbody>
-            </table>
+            <h3>Process Flow</h3>
+            <ol>
+                <li>Vendor submits release request → AE emails CEO</li>
+                <li>CEO approves/rejects → if No, CEO negotiates with Vendor</li>
+                <li>If fees apply → <strong>Telos</strong> invoices Vendor → 7-day payment window</li>
+                <li>If not paid → <strong>Telos</strong> escalates to Nomos</li>
+                <li>If paid → <strong>Telos</strong> confirms → status = "Released"</li>
+            </ol>
         </div>
 
-        <!-- Section 9: Auction Preparation -->
+        <!-- Sections 5-11 -->
         <div class="section" id="auction-prep">
-            <h2>9. Section 5: Auction Preparation Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section5" target="_blank">🔄 View Flowchart: Auction Preparation Flow</a>
-
-            <h3>9.1 Process Overview</h3>
-            <p>Auction Preparation combines catalog creation, marketing coordination, free ticket management, vendor notifications based on item locations, and brand specialist reverification.</p>
-            <ol>
-                <li>CEO &amp; GCEO select items → create auction collection</li>
-                <li>BTP prepares marketing materials → CEO reviews → GCEO approves → marketing begins</li>
-                <li>CAC updates statuses to "Cataloged", updates Auction Tracker</li>
-                <li>CEO provides coverage ticket price → CAC updates tracker</li>
-                <li>Vendor Free Ticket Request system (forms close 30 days before auction)</li>
-                <li>CAC compiles invitees → AE sends to CEO for approval → assign free tickets</li>
-                <li>Location-based vendor notifications (immovable / at vendor / mixed)</li>
-                <li>Handover window opens 15 days before auction</li>
-                <li>Brand specialist reverification day before auction</li>
-            </ol>
-
-            <h3>⚡ Shopify Flow Automations (8 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 5.1: Items Cataloged</td><td>Products added to <code>Auction-Collection</code></td><td>Set <code>Cataloged</code> status, notify BTP, update Google Sheets, trigger vendor notifications</td></tr>
-                    <tr><td>Flow 5.2: Marketing CEO Approved</td><td><code>auction_marketing_ceo_approved</code> = <code>true</code></td><td>Notify GCEO for review</td></tr>
-                    <tr><td>Flow 5.3: Marketing GCEO Approved</td><td><code>auction_marketing_gceo_approved</code> = <code>true</code></td><td>Notify BTP to begin campaign, set <code>Marketing</code> status</td></tr>
-                    <tr><td>Flow 5.4: Close Free Ticket Requests</td><td>Scheduled daily (30 days before auction)</td><td>Close form, notify CAC to compile invitees</td></tr>
-                    <tr><td>Flow 5.5: Location-Based Vendor Notifications</td><td>Triggered by Flow 5.1</td><td>Send E5.5a/b/c based on item locations per vendor</td></tr>
-                    <tr><td>Flow 5.6: Handover Window Opens</td><td>Scheduled daily (15 days before)</td><td>Add <code>Handover-Window-Active</code> tags, notify vendors</td></tr>
-                    <tr><td>Flow 5.7: Brand Specialist Reverification</td><td>Scheduled daily (1 day before)</td><td>Notify brand specialists, close handover window</td></tr>
-                    <tr><td>Flow 5.8: Free Tickets CEO Approved</td><td><code>free_ticket_invitees_approved</code> = <code>true</code></td><td>Check if invitees are registered clients, assign tickets, notify clients</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (11 templates: E5.1–E5.9 + E5.5a/b/c)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E5.1</td><td>Marketing Draft Request</td><td>BTP, CC: CEO, AE, CAC</td></tr>
-                    <tr><td>E5.2</td><td>GCEO Review Request</td><td>GCEO</td></tr>
-                    <tr><td>E5.3</td><td>Begin Marketing</td><td>BTP</td></tr>
-                    <tr><td>E5.4</td><td>Ticket Form Closed (Internal)</td><td>CAC</td></tr>
-                    <tr><td>E5.5a</td><td>Vendor Notification (Immovable)</td><td>Vendor</td></tr>
-                    <tr><td>E5.5b</td><td>Vendor Notification (At Vendor)</td><td>Vendor</td></tr>
-                    <tr><td>E5.5c</td><td>Vendor Notification (Mixed)</td><td>Vendor</td></tr>
-                    <tr><td>E5.6</td><td>Handover Window Open</td><td>Vendor</td></tr>
-                    <tr><td>E5.7</td><td>Reverification Request</td><td>Brand Specialists</td></tr>
-                    <tr><td>E5.8</td><td>Free Ticket Granted</td><td>Client</td></tr>
-                    <tr><td>E5.9</td><td>Tickets Available</td><td>Client</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Form: Free Ticket Request (F5.1 — 7 fields)</h3>
-            <p>Fields: Vendor Name (auto), Invitee Full Name, Email, Phone, Relationship to Vendor, Number of Tickets (1-4), Notes. Auto-closes 30 days before auction.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Cataloged-{auction_id}</code> <code>Auction-Collection</code> <code>Tickets-Form-Closed</code> <code>Handover-Window-Active</code> <code>Reverification-Day</code>
+            <h2>9. Section 5: Auction Preparation <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section5" target="_blank">🔄 View Flowchart: Auction Preparation</a>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> Telos manages tracker/inventory/statuses/free tickets. Handover window 14 days (was 15). Telos CC'd on catalog + marketing.
             </div>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O5.1</td><td>Recommend</td><td>Ensure <code>item_location</code> metafield is always accurate for automated vendor notifications</td></tr>
-                    <tr><td>O5.2</td><td>Consider</td><td>Add 24-hour grace period with warning before free ticket form closes</td></tr>
-                    <tr><td>O5.3</td><td>Recommend</td><td>Automate coverage ticket price calculation in Apps Script and present to CEO for approval</td></tr>
-                    <tr><td>O5.4</td><td>Consider</td><td>Parallel CEO + GCEO marketing review to reduce calendar time</td></tr>
-                </tbody>
-            </table>
+            <p>CEO + GCEO create catalog → BTP marketing → GCEO approval → Telos status management → vendor notifications → free tickets → reverification.</p>
         </div>
 
-        <!-- Section 10: Auction Execution -->
         <div class="section" id="auction-exec">
-            <h2>10. Section 6: Auction Execution Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section6" target="_blank">🔄 View Flowchart: Auction Execution Flow</a>
-
-            <h3>10.1 Process Overview</h3>
-            <p>Complete live auction: launch → bidding → sale processing → payment tracking (2-day/7-day) → Certificate of Ownership (CEO + buyer sign via UAE PASS) → vendor payout → auction close → unsold items → handover workflows.</p>
-
-            <h3>⚡ Shopify Flow Automations (10 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 6.1: Auction Live</td><td><code>auction_status</code> → <code>Live</code></td><td>Notify all active clients, AE, CAC; tag items <code>Auction-Live</code></td></tr>
-                    <tr><td>Flow 6.2: Item Sold</td><td><code>item_sale_price</code> set</td><td>Set <code>Sold</code>, calculate payment deadlines, notify buyer + AE + CAC</td></tr>
-                    <tr><td>Flow 6.3: 2-Day Payment Follow-up</td><td>Daily scheduled</td><td>Set <code>Late-2Day</code>, reminder to buyer, notify CAC (CC: AE)</td></tr>
-                    <tr><td>Flow 6.4: 7-Day Payment Escalation</td><td>Daily scheduled</td><td>Set <code>Late-7Day</code>, add <code>Payment-Overdue</code>, notify AE + CAC + Nomos</td></tr>
-                    <tr><td>Flow 6.5: Payment Received</td><td><code>item_payment_status</code> → <code>Received</code></td><td>Remove <code>Payment-Overdue</code>, add <code>Payment-Received</code>, begin certificate process</td></tr>
-                    <tr><td>Flow 6.6: CEO Signs Certificate</td><td><code>item_certificate_status</code> → <code>CEO-Signed</code></td><td>Upload to buyer portal, send buyer UAE PASS deep link</td></tr>
-                    <tr><td>Flow 6.7: Certificate Complete</td><td><code>item_certificate_status</code> → <code>Complete</code></td><td>Upload to DropBox + portal, add <code>Certificate-Complete</code>, begin handover to buyer</td></tr>
-                    <tr><td>Flow 6.8: Vendor Payout</td><td><code>item_vendor_payout_date</code> set</td><td>Set <code>Settled</code>, update Google Sheets</td></tr>
-                    <tr><td>Flow 6.9: Auction Closed</td><td><code>auction_status</code> → <code>Closed</code></td><td>Notify bidders, mark unsold items, trigger vendor handover for unsold, handle immovable items</td></tr>
-                    <tr><td>Flow 6.10: Auction Completed</td><td><code>auction_status</code> → <code>Completed</code></td><td>Update tracker with final prices, send summary to CEO/AE/CAC</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (11 templates: E6.1–E6.11)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E6.1</td><td>Auction Live</td><td>All active clients</td></tr>
-                    <tr><td>E6.2</td><td>Item Won</td><td>Buyer</td></tr>
-                    <tr><td>E6.3</td><td>Item Sold (Internal)</td><td>AE, CAC</td></tr>
-                    <tr><td>E6.4</td><td>Payment Reminder 2-Day</td><td>Buyer</td></tr>
-                    <tr><td>E6.5</td><td>Payment Late (Internal)</td><td>CAC, CC: AE</td></tr>
-                    <tr><td>E6.6</td><td>Payment Overdue Nomos</td><td>AE, CAC, Nomos</td></tr>
-                    <tr><td>E6.7</td><td>Payment Confirmed</td><td>Buyer</td></tr>
-                    <tr><td>E6.8</td><td>Sign Certificate</td><td>Buyer</td></tr>
-                    <tr><td>E6.9</td><td>Certificate Complete</td><td>Buyer</td></tr>
-                    <tr><td>E6.10</td><td>Auction Closed</td><td>All bidders</td></tr>
-                    <tr><td>E6.11</td><td>Auction Summary</td><td>CEO, AE, CAC</td></tr>
-                </tbody>
-            </table>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Auction-Live</code> <code>Sold</code> <code>Unsold</code> <code>Payment-Received</code> <code>Payment-Overdue</code> <code>Certificate-Complete</code> <code>Settled</code> <code>Currently-Live</code>
+            <h2>10. Section 6: Auction Execution <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section6" target="_blank">🔄 View Flowchart: Auction Execution</a>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> Telos handles all financial ops (payment tracking, fee deduction, vendor payouts, status management). Certificate of Ownership moved to Section 8.
             </div>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O6.1</td><td>Recommend</td><td>Automate inventory updates — when order paid in Shopify, auto-populate selling price, date, buyer ID</td></tr>
-                    <tr><td>O6.2</td><td>Consider</td><td>Pre-sign CEO portion of Certificate at auction creation; only buyer signs per sale</td></tr>
-                    <tr><td>O6.3</td><td>Recommend</td><td>Automate unsold item date management — archive dates in notes metafield, clear active dates</td></tr>
-                    <tr><td>O6.4</td><td>Recommend</td><td>Auto-calculate vendor payout in custom app: <code>sale_price × (1 - fee_percentage)</code></td></tr>
-                    <tr><td>O6.5</td><td>Recommend</td><td>Add <code>Immovable</code> flag check in all handover flows to skip physical handover automatically</td></tr>
-                </tbody>
-            </table>
+            <p>Launch → bidding → sale → 2/7-day payment tracking → Telos processes payments → fee deduction → vendor payout → unsold item handling.</p>
         </div>
 
-        <!-- Section 11: Handover to Aurelius -->
         <div class="section" id="handover-aurelius">
-            <h2>11. Section 7: Item Handover to Aurelius Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section7" target="_blank">🔄 View Flowchart: Item Handover to Aurelius Flow</a>
-
-            <h3>11.1 Process Overview</h3>
-            <p>Vendor-to-Aurelius item transfer: handover window opens 15 days before auction → vendor books appointment → reminder system (5-day, 1-day) → AE inspects item → both sign handover form → item to strongroom. Missed deadlines → CEO/GCEO cancellation decision → Nomos penalties.</p>
-
-            <h3>⚡ Shopify Flow Automations (7 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 7.1: Handover Window Notification</td><td>Triggered by Flow 5.6</td><td>Notify vendors with items at "Vendor" location, add <code>Awaiting-Handover</code></td></tr>
-                    <tr><td>Flow 7.2: Vendor Books Appointment</td><td><code>handover_appointment_scheduled</code> set</td><td>Confirm to vendor, notify AE + CAC</td></tr>
-                    <tr><td>Flow 7.3: 5-Day Reminder</td><td>Daily scheduled (5 days before)</td><td>Send reminder with item list to vendors without <code>Appointment-Scheduled</code></td></tr>
-                    <tr><td>Flow 7.4: 1-Day Urgent</td><td>Daily scheduled (1 day before)</td><td>AE follow-up, vendor final reminder (CC: Nomos)</td></tr>
-                    <tr><td>Flow 7.5: Handover Missed</td><td>Daily scheduled (auction day)</td><td>Add <code>Handover-Missed</code>, notify CEO for cancellation discussion with GCEO</td></tr>
-                    <tr><td>Flow 7.6: Item Cancelled</td><td>Tag <code>Item-Cancelled</code> added</td><td>Remove from collection, set <code>Cancelled</code>, notify Nomos for penalties</td></tr>
-                    <tr><td>Flow 7.7: Handover Complete</td><td>Tag <code>Handover-Complete</code> added</td><td>Set location to <code>Strongroom</code>, upload forms to DropBox + portal, update inventory</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (7 templates: E7.1–E7.7)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E7.1</td><td>Handover Window Open</td><td>Vendor</td></tr>
-                    <tr><td>E7.2</td><td>Appointment Confirmed</td><td>Vendor</td></tr>
-                    <tr><td>E7.3</td><td>5-Day Reminder</td><td>Vendor</td></tr>
-                    <tr><td>E7.4</td><td>1-Day Urgent</td><td>Vendor, CC: Nomos</td></tr>
-                    <tr><td>E7.5</td><td>Handover Missed (Internal)</td><td>CEO</td></tr>
-                    <tr><td>E7.6</td><td>Item Cancelled</td><td>Vendor</td></tr>
-                    <tr><td>E7.7</td><td>Handover Complete</td><td>Vendor</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Forms</h3>
-            <p><strong>Form F7.1: Handover Appointment Booking (6 fields)</strong> — Vendor Name (auto), Items for Handover (multi-select from consigned), Preferred Date (within window), Time Slot, Special Instructions, Number of Items (auto-calculated).</p>
-            <p><strong>Form F7.2: Item Handover Form (10 fields)</strong> — AE fills inspection result (Match/No Match), condition notes, discrepancies; both AE and vendor sign.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Awaiting-Handover</code> <code>Appointment-Scheduled</code> <code>First-Reminder-Sent</code> <code>Final-Reminder-Sent</code> <code>Handover-Missed</code> <code>Handover-Complete</code> <code>Item-Cancelled</code>
+            <h2>11. Section 7: Handover to Aurelius <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section7" target="_blank">🔄 View Flowchart: Handover to Aurelius</a>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> Click & Sign for handover receipts. Telos signs receipts + manages strongroom. 10/5/1-day reminders. 14-day window.
             </div>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O7.1</td><td>Consider</td><td>Consolidate to 2 reminders (7 days and 1 day) instead of 4-level system</td></tr>
-                    <tr><td>O7.2</td><td>Recommend</td><td>Add 24-hour auto-escalation to GCEO if CEO doesn't respond on cancellation</td></tr>
-                    <tr><td>O7.3</td><td>Recommend</td><td>Define clear inspection mismatch outcomes: accept with variance note, reject and return, or hold</td></tr>
-                </tbody>
-            </table>
+            <p>Vendor books appointment → AE inspects → Click & Sign receipt (Vendor + Telos sign) → Telos places in strongroom.</p>
         </div>
 
-        <!-- Section 12: Handover to Buyer -->
         <div class="section" id="handover-buyer">
-            <h2>12. Section 8: Item Handover to Buyer Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section8" target="_blank">🔄 View Flowchart: Item Handover to Buyer Flow</a>
-
-            <h3>12.1 Process Overview</h3>
-            <p>Aurelius-to-buyer transfer: CAC notifies buyer → 7 working days standard window → reminder if missed → 14 working days extended → CEO consultation if missed → collection: AE fills handover form → buyer signs → docs uploaded → item removed from strongroom.</p>
-
-            <h3>⚡ Shopify Flow Automations (4 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 8.1: Buyer Collection Notification</td><td>Flow 6.7 (certificate complete)</td><td>Calculate 7/14-day deadlines, send buyer email, add <code>Ready-For-Collection</code></td></tr>
-                    <tr><td>Flow 8.2: 7-Day Buyer Reminder</td><td>Daily scheduled</td><td>Set <code>Reminded</code>, send reminder, add <code>7-Day-Reminder-Sent</code></td></tr>
-                    <tr><td>Flow 8.3: 14-Day CEO Consultation</td><td>Daily scheduled</td><td>Set <code>Overdue</code>, notify CEO, add <code>CEO-Consultation-Required</code></td></tr>
-                    <tr><td>Flow 8.4: Buyer Collected Item</td><td>Tag <code>Collection-Complete</code> added</td><td>Set location to <code>Buyer</code>, upload forms, notify buyer</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (4 templates: E8.1–E8.4)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E8.1</td><td>Collect Item</td><td>Buyer</td></tr>
-                    <tr><td>E8.2</td><td>7-Day Buyer Reminder</td><td>Buyer</td></tr>
-                    <tr><td>E8.3</td><td>14-Day Escalation (Internal)</td><td>CEO</td></tr>
-                    <tr><td>E8.4</td><td>Collection Complete</td><td>Buyer</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Form: Buyer Item Handover Form (F8.1 — 8 fields)</h3>
-            <p>AE fills: Item condition at handover, AE signature/date. Buyer fills: Acknowledgment, signature/date. System auto-fills: Item Name, Certificate ref, Buyer Name.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Ready-For-Collection</code> <code>7-Day-Reminder-Sent</code> <code>CEO-Consultation-Required</code> <code>Collection-Complete</code>
+            <h2>12. Section 8: Handover to Buyer <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section8" target="_blank">🔄 View Flowchart: Handover to Buyer</a>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> 5/10 business days (was 7/14). Click & Sign for receipts + Acknowledgement of Obligation. Telos signs. Certificate of Ownership — manual CEO sign. Agent path + External Consultant re-registration.
             </div>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O8.1</td><td>Consider</td><td>Single 14-day deadline with reminder at 7 days — simpler to track</td></tr>
-                    <tr><td>O8.2</td><td>Recommend</td><td>Define standard CEO options: extend 7 days, apply storage fee, alternative delivery</td></tr>
-                </tbody>
-            </table>
+            <p>Payment confirmed → Agent required? → Certificate/AoO → Buyer collects (5/10-day window) → Click & Sign receipt → Telos removes from strongroom.</p>
         </div>
 
-        <!-- Section 13: Handover to Vendor -->
         <div class="section" id="handover-vendor">
-            <h2>13. Section 9: Item Handover to Vendor Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section9" target="_blank">🔄 View Flowchart: Item Handover to Vendor Flow</a>
-
-            <h3>13.1 Process Overview</h3>
-            <p>Return of unsold items: CAC notifies vendors → 7 working days to collect → if missed, invoice applicable fees → collection: AE fills handover form → vendor signs → item returned, location updated to "Vendor".</p>
-
-            <h3>⚡ Shopify Flow Automations (3 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 9.1: Unsold Items Notification</td><td>Flow 6.9 (auction closed)</td><td>Group by vendor, calculate deadline, send vendor email, add <code>Unsold-Awaiting-Collection</code></td></tr>
-                    <tr><td>Flow 9.2: Vendor Collection Overdue</td><td>Daily scheduled</td><td>Set <code>Overdue</code>, add <code>Collection-Overdue</code>, notify CAC to generate invoice</td></tr>
-                    <tr><td>Flow 9.3: Vendor Collected Item</td><td>Tag <code>Vendor-Handover-Complete</code> added</td><td>Set location to <code>Vendor</code>, set <code>Returned</code>, upload forms, update inventory</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (3 templates: E9.1–E9.3)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E9.1</td><td>Unsold Items Notification</td><td>Vendor</td></tr>
-                    <tr><td>E9.2</td><td>Collection Overdue</td><td>Vendor</td></tr>
-                    <tr><td>E9.3</td><td>Vendor Return Complete</td><td>Vendor</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Form: Vendor Item Handover Form (F9.1 — 8 fields)</h3>
-            <p>Same structure as Buyer Handover Form (F8.1) with vendor instead of buyer.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Unsold-Awaiting-Collection</code> <code>Collection-Overdue</code> <code>Vendor-Handover-Complete</code>
+            <h2>13. Section 9: Handover to Vendor <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section9" target="_blank">🔄 View Flowchart: Handover to Vendor</a>
+            <div class="v2-change">
+                <strong>🔄 V2 Changes:</strong> 10/20 business days (was 7). Click & Sign for receipts. Telos signs, invoices, manages strongroom.
             </div>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O9.1</td><td>Recommend</td><td>Define fee schedule in VCA and automate invoice generation</td></tr>
-                    <tr><td>O9.2</td><td>Consider</td><td>Define 30-day maximum retention with escalating daily storage fees</td></tr>
-                </tbody>
-            </table>
+            <p>AE notifies vendors → 10/20-day collection window → Telos invoices fees → Click & Sign receipt → Telos removes from strongroom.</p>
         </div>
 
-        <!-- Section 14: Complaint Management -->
         <div class="section" id="complaint-mgmt">
-            <h2>14. Section 10: Complaint Management Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section10" target="_blank">🔄 View Flowchart: Complaint Management Flow</a>
-
-            <h3>14.1 Process Overview</h3>
-            <p>Client/vendor raises complaint → AE takes note → AE emails CEO with standardized subject (CC: all parties) → AE attempts resolution → if resolved, email CEO → if not resolved within 72h, auto-escalate to CEO → CEO intervenes.</p>
-            <p><strong>Standardized Subject Format:</strong> <code>[Client/Vendor] Complaint: [Name], [Type], [Product/Service]</code></p>
-            <p><strong>Complaint Types:</strong> Product Defect, Service Issue, Payment Dispute, Delivery Problem, Documentation Error, Process Violation</p>
-
-            <h3>⚡ Shopify Flow Automations (3 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 10.1: Complaint Registered</td><td>Tag <code>Complaint-*</code> added</td><td>Set <code>Open</code>, notify AE, schedule 72h escalation</td></tr>
-                    <tr><td>Flow 10.2: Complaint Resolved</td><td><code>complaint_status</code> → <code>Resolved</code></td><td>Set resolution date, add <code>Complaint-Resolved</code>, notify CEO (CC: all parties)</td></tr>
-                    <tr><td>Flow 10.3: 72-Hour Escalation</td><td>Daily scheduled</td><td>Set <code>Escalated</code>, add <code>CEO-Escalation</code>, urgent notify CEO</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (3 templates: E10.1–E10.3)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E10.1</td><td>Complaint Registered (Internal)</td><td>AE</td></tr>
-                    <tr><td>E10.2</td><td>Complaint Resolved (Internal)</td><td>CEO, CC: all parties</td></tr>
-                    <tr><td>E10.3</td><td>Complaint Escalation (Internal)</td><td>CEO</td></tr>
-                </tbody>
-            </table>
-
-            <h3>📋 Form: Complaint Form (F10.1 — 6 fields)</h3>
-            <p>Fields: Complaint Type (dropdown), Description, Item Reference, Attachments, Contact Preference, Urgency Level.</p>
-
-            <h3>🏷️ Key Tags</h3>
-            <div class="tag-list">
-                <code>Complaint-{Type}</code> <code>Complaint-Resolved</code> <code>CEO-Escalation</code>
-            </div>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O10.1</td><td>Recommend</td><td>Use Shopify customer metafields + admin dashboard for tracking (not just email-based)</td></tr>
-                    <tr><td>O10.2</td><td>Consider</td><td>Use business hours only for 72h escalation timer</td></tr>
-                    <tr><td>O10.3</td><td>Recommend</td><td>Use <code>Complaint-{Type}-{ID}</code> with unique IDs for multiple complaints per customer</td></tr>
-                </tbody>
-            </table>
+            <h2>14. Section 10: Complaint Management <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section10" target="_blank">🔄 View Flowchart: Complaint Management</a>
+            <p>Largely unchanged from V1. Standardized email subject format. AE → CEO escalation. 72-hour auto-escalation kept as implementation enhancement.</p>
         </div>
 
-        <!-- Section 15: Auction Tracker Setup -->
         <div class="section" id="auction-tracker">
-            <h2>15. Section 11: New Auction Tracker Setup Flow</h2>
-            <a class="cross-ref" href="flowchart.html#section11" target="_blank">🔄 View Flowchart: Auction Tracker Setup Flow</a>
-
-            <h3>15.1 Process Overview</h3>
-            <p>CEO discusses with GCEO → fill template Auction Tracker → set all statuses to "Tentative" → establish parameters: Auction Start/End Date/Time, Ticket Launch Date/Time, Targeted/Maximum Tickets.</p>
-            <p><strong>Auction Status Lifecycle:</strong> <code>Tentative → Preparing → Marketing → Live → Closed → Completed</code> (with <code>On Hold</code> possible from any state)</p>
-
-            <h3>⚡ Shopify Flow Automations (2 flows)</h3>
-            <table>
-                <thead><tr><th>Flow</th><th>Trigger</th><th>Action Summary</th></tr></thead>
-                <tbody>
-                    <tr><td>Flow 11.1: New Auction Created</td><td>Collection created with <code>Auction-Collection</code> tag</td><td>Set all metafields to initial values, <code>Tentative</code> status, notify AE + CAC, create Google Sheets tracker</td></tr>
-                    <tr><td>Flow 11.2: Auction Status Changes</td><td><code>auction_status</code> changed</td><td>Update tracker, send notifications based on new status, trigger preparation if <code>Preparing</code></td></tr>
-                </tbody>
-            </table>
-
-            <h3>📧 Email Templates (1 template: E11.1)</h3>
-            <table>
-                <thead><tr><th>ID</th><th>Name</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>E11.1</td><td>New Auction Planning (Internal)</td><td>AE, CAC</td></tr>
-                </tbody>
-            </table>
-
-            <h3>💡 Optimization Recommendations</h3>
-            <table class="opt-table">
-                <thead><tr><th>ID</th><th>Priority</th><th>Recommendation</th></tr></thead>
-                <tbody>
-                    <tr><td>O11.2</td><td>Consider</td><td>V2 — move tracker entirely into Shopify admin app for single source of truth</td></tr>
-                </tbody>
-            </table>
+            <h2>15. Section 11: Auction Tracker Setup <span class="v2-badge">V2</span></h2>
+            <a class="cross-ref" href="flowchart.html#section11" target="_blank">🔄 View Flowchart: Auction Tracker Setup</a>
+            <p>Unchanged from V1. CEO + GCEO → fill template → statuses = "Tentative". Lifecycle: Tentative → Preparing → Marketing → Live → Closed → Completed (+ On Hold).</p>
         </div>
 
-        <!-- Section 16: Notification System -->
-        <div class="section" id="notification-system">
+        <!-- Notification System -->
+        <div class="section" id="notifications">
             <h2>16. Notification System</h2>
-
-            <h3>16.1 Enhanced Notification Framework</h3>
-            <p><strong>Shopify Flow Internal Notifications:</strong> Staff workflow updates, customer onboarding progression, item consignment/release status, auction alerts, handover coordination, complaint escalation.</p>
-            <p><strong>Direct API Integration Notifications:</strong> DropBox file upload confirmations, Google Sheets updates via Apps Script, Idenfo screening results.</p>
-            <p><strong>Zapier External Service Notifications (5 zaps only):</strong></p>
+            <h3>Channels</h3>
             <table>
-                <thead><tr><th>#</th><th>Zap</th><th>Channel</th></tr></thead>
+                <thead><tr><th>Channel</th><th>Method</th><th>Sections</th></tr></thead>
                 <tbody>
-                    <tr><td>S1</td><td>Auction Live</td><td>SMS/WhatsApp</td></tr>
-                    <tr><td>S2</td><td>Item Won</td><td>SMS</td></tr>
-                    <tr><td>S3</td><td>Payment Reminder</td><td>SMS</td></tr>
-                    <tr><td>S4</td><td>Collection Ready</td><td>SMS</td></tr>
-                    <tr><td>S5</td><td>Handover Reminder</td><td>SMS</td></tr>
+                    <tr><td>Shopify Flow</td><td>Internal notifications</td><td>All 11</td></tr>
+                    <tr><td>Click & Sign</td><td>Signing notifications</td><td>2, 3, 7, 8, 9</td></tr>
+                    <tr><td>DropBox API</td><td>Upload confirmations</td><td>All</td></tr>
+                    <tr><td>Google Sheets</td><td>Tracker updates</td><td>3-11</td></tr>
+                    <tr><td>Zapier SMS/WhatsApp</td><td>5 external zaps</td><td>6, 7, 8</td></tr>
                 </tbody>
             </table>
 
-            <h3>16.2 Automated Reminder Systems</h3>
+            <h3>Timeline-Based Reminders</h3>
             <ul>
-                <li>Item handover window: 15 days, 5 days, 1 day before auction</li>
+                <li>Handover window: 14d, 10d, 5d, 1d before auction</li>
                 <li>Payment deadlines: 2 business days, 7 business days</li>
-                <li>Buyer collection: 7 working days, 14 working days</li>
-                <li>Vendor collection: 7 working days</li>
-                <li>Free ticket form closure: 30 days before auction</li>
+                <li>Buyer collection: 5 business days, 10 business days</li>
+                <li>Vendor return: 10 business days, 20 business days</li>
+                <li>Free ticket forms: 30 days before auction</li>
                 <li>Complaint escalation: 72 hours</li>
             </ul>
         </div>
 
-        <!-- Section 17: Implementation Steps -->
-        <div class="section" id="implementation-steps">
-            <h2>17. Step-by-Step Implementation</h2>
-            <div class="callout callout-blue">See Appendix E for the complete 5-phase, 10-week implementation timeline.</div>
-
-            <h3>Week 1–2: Platform Foundation</h3>
-            <ul>
-                <li>Shopify store setup (aurelius-auctions.myshopify.com)</li>
-                <li>Customer metafield schema (36 client + 14 vendor fields)</li>
-                <li>Product metafield schema (48 item fields)</li>
-                <li>Collection metafield schema (13 auction fields)</li>
-                <li>Tag taxonomy implementation (60 tags)</li>
-                <li>KYC forms (F1.1, F2.1) via Powerful Form Builder</li>
-                <li>Website self-registration functionality</li>
-            </ul>
-
-            <h3>Week 3–4: Core Integrations</h3>
-            <ul>
-                <li>Custom App: Aurelius Engine skeleton</li>
-                <li>Idenfo API integration (direct REST)</li>
-                <li>DropBox API integration (direct REST)</li>
-                <li>Google Sheets Apps Script webhook receiver</li>
-                <li>UAE PASS deep link generator</li>
-                <li>Zapier SMS/WhatsApp (5 zaps)</li>
-            </ul>
-
-            <h3>Week 5–6: Workflow Development</h3>
-            <ul>
-                <li>Shopify Flows: Sections 1–4 (27 flows)</li>
-                <li>Shopify Flows: Sections 5–6 (18 flows)</li>
-                <li>Forms: F3.1, F4.1, F5.1</li>
-                <li>Email templates: All 70</li>
-            </ul>
-
-            <h3>Week 7–8: Advanced Features</h3>
-            <ul>
-                <li>Custom App: Bidding system with increment logic</li>
-                <li>Shopify Flows: Sections 7–11 (19 flows)</li>
-                <li>Scheduled task runner (14 cron jobs)</li>
-                <li>Forms: F7.1, F7.2, F8.1, F9.1, F10.1</li>
-                <li>Portal pages: 20 customer-facing + 10 admin</li>
-            </ul>
-
-            <h3>Week 9–10: Testing &amp; Launch</h3>
-            <ul>
-                <li>Integration testing (all 64 flows)</li>
-                <li>UAT with internal team</li>
-                <li>Mock auction run-through</li>
-                <li>Production deployment</li>
-                <li>Team training</li>
-            </ul>
+        <!-- Implementation -->
+        <div class="section" id="implementation">
+            <h2>17. Implementation Timeline</h2>
+            <table>
+                <thead><tr><th>Phase</th><th>Weeks</th><th>Key Activities</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>1. Foundation</strong></td><td>1-2</td><td>Shopify setup, metafields, tags, KYC forms</td></tr>
+                    <tr><td><strong>2. Integrations</strong></td><td>3-4</td><td>Custom app, DropBox, Sheets, <strong>Click & Sign</strong>, Zapier, <strong>Telos integration</strong></td></tr>
+                    <tr><td><strong>3. Workflows</strong></td><td>5-6</td><td>Shopify Flows (Sections 1-6), forms, email templates</td></tr>
+                    <tr><td><strong>4. Advanced</strong></td><td>7-8</td><td>Bidding system, Flows (Sections 7-11), scheduled tasks, portal</td></tr>
+                    <tr><td><strong>5. Launch</strong></td><td>9-10</td><td>Integration testing, UAT, mock auction, deployment, training</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- Section 18: Testing Checklist -->
-        <div class="section" id="testing-checklist">
+        <!-- Testing -->
+        <div class="section" id="testing">
             <h2>18. Testing Checklist</h2>
-            <p>All items must pass before production deployment.</p>
-
-            <h3>Section 1: Client Onboarding</h3>
+            <h3>Critical V2 Tests</h3>
             <ul>
-                <li>Client can self-register via AA website</li>
-                <li>CEO periodic review of self-registered clients functions</li>
-                <li>Dual KYC system: Form collection AND Idenfo screening work independently</li>
-                <li>All 7 Shopify Flows (1.1–1.7) execute correctly</li>
-                <li>All 9 email templates (E1.1–E1.9) send correctly</li>
-                <li>All client metafields populate correctly</li>
-            </ul>
-
-            <h3>Section 2: Vendor Onboarding</h3>
-            <ul>
-                <li>Vendor registration and dual KYC process works</li>
-                <li>VCA signing via UAE PASS deep links functions</li>
-                <li>PDF comparison workflow detects R&amp;W changes</li>
-                <li>All 7 Shopify Flows (2.1–2.7) execute correctly</li>
-                <li>All 7 email templates (E2.1–E2.7) send correctly</li>
-                <li>E2.7 includes BTP introduction content</li>
-            </ul>
-
-            <h3>Section 3: Item Consignment</h3>
-            <ul>
-                <li>CAC receives notifications (not GDMM)</li>
-                <li>Expert authentication and valuation works</li>
-                <li>Item Consignment Form terminology used throughout</li>
-                <li>All 6 Shopify Flows (3.1–3.6) execute correctly</li>
-                <li>All 8 email templates (E3.1–E3.8) send correctly</li>
-            </ul>
-
-            <h3>Section 4: Item Release</h3>
-            <ul>
-                <li>CEO approval gate functions for all releases</li>
-                <li>Invoice generation and 7-day payment tracking works</li>
-                <li>Nomos escalation triggers correctly</li>
-                <li>All 7 Shopify Flows (4.1–4.7) execute correctly</li>
-            </ul>
-
-            <h3>Section 5: Auction Preparation</h3>
-            <ul>
-                <li>Free ticket forms close 30 days before auction</li>
-                <li>Location-based vendor notifications work (3 variants)</li>
-                <li>Handover window (15d–1d) notifications work</li>
-                <li>Brand specialist reverification scheduling works</li>
-                <li>All 8 Shopify Flows (5.1–5.8) execute correctly</li>
-            </ul>
-
-            <h3>Section 6: Auction Execution</h3>
-            <ul>
-                <li>Live auction notifications work</li>
-                <li>2-day and 7-day payment tracking works</li>
-                <li>Certificate of ownership UAE PASS workflow functions</li>
-                <li>Vendor payout processing works</li>
-                <li>Unsold item management works</li>
-                <li>All 10 Shopify Flows (6.1–6.10) execute correctly</li>
-            </ul>
-
-            <h3>Sections 7–11</h3>
-            <ul>
-                <li>Section 7: Vendor appointment booking, reminders, penalties — all 7 flows</li>
-                <li>Section 8: 7-day and 14-day timeline monitoring — all 4 flows</li>
-                <li>Section 9: 7-day collection monitoring, fee invoicing — all 3 flows</li>
-                <li>Section 10: Standardized subjects, 72h escalation — all 3 flows</li>
-                <li>Section 11: Tracker creation, "Tentative" status — all 2 flows</li>
-            </ul>
-
-            <h3>Integration Tests</h3>
-            <ul>
-                <li>All 64 Shopify Flows execute without errors</li>
-                <li>Direct DropBox API works</li>
-                <li>Direct Idenfo API handles all response types</li>
-                <li>Google Sheets API via Apps Script works</li>
-                <li>All 5 Zapier zaps (SMS/WhatsApp only) function</li>
-                <li>All 14 scheduled cron jobs run correctly</li>
-                <li>All timing frameworks and deadline management work</li>
+                <li>☐ CEO lead approval comes BEFORE KYC (Sections 1, 2)</li>
+                <li>☐ Click & Sign works for all document types (VCA, ICF, Handover Receipts, AoO)</li>
+                <li>☐ Telos receives all notifications and updates inventory correctly</li>
+                <li>☐ Telos signs handover receipts via Click & Sign (Sections 7, 8, 9)</li>
+                <li>☐ Telos invoicing and 7-day payment tracking works (Sections 4, 9)</li>
+                <li>☐ KYC handled by Nomos manual vetting only</li>
+                <li>☐ AE is primary for Item Consignment (not CAC)</li>
+                <li>☐ One item per consignment request enforced</li>
+                <li>☐ CEO approval gate before External Consultant evaluation (Section 3)</li>
+                <li>☐ Certificate of Ownership — manual CEO sign (Section 8)</li>
+                <li>☐ Buyer collection: 5/10 business days (Section 8)</li>
+                <li>☐ Vendor return: 10/20 business days (Section 9)</li>
+                <li>☐ Handover window: 14 days (Section 7)</li>
             </ul>
         </div>
 
-        <!-- Section 19: V1 vs V2 -->
-        <div class="section" id="v1-v2-matrix">
-            <h2>19. V1 vs V2 Feature Matrix</h2>
-
-            <h3>V1 Features (Current)</h3>
-            <ul>
-                <li>11-section workflow matching CEO-approved SOP</li>
-                <li>64 Shopify Flows + 14 scheduled jobs</li>
-                <li>Direct APIs: DropBox, Idenfo, Google Sheets</li>
-                <li>UAE PASS via deep links</li>
-                <li>Zapier for SMS/WhatsApp only (5 zaps)</li>
-                <li>Custom bidding app with increment logic</li>
-                <li>70 email templates, 10 forms, 111 metafields</li>
-            </ul>
-
-            <h3>V2 Enhancements (Future)</h3>
-            <ul>
-                <li>Full UAE PASS direct API (replacing deep links)</li>
-                <li>Direct SMS/WhatsApp API (eliminating Zapier completely)</li>
-                <li>Google Drive migration (replacing DropBox)</li>
-                <li>AI-powered risk scoring for KYC</li>
-                <li>Tracker moved to Shopify admin app</li>
-                <li>Blockchain document integrity verification</li>
-            </ul>
-        </div>
-
-        <!-- Appendix A -->
-        <div class="section" id="appendix-a">
-            <h2>20. Appendix A: Shopify Flow Automations Summary</h2>
-            <div class="callout callout-blue">📘 See Blueprint for complete flow definitions with triggers, conditions, and actions.</div>
-
-            <table>
-                <thead><tr><th>#</th><th>Flow ID</th><th>Name</th><th>Section</th><th>Trigger</th><th>Sched?</th></tr></thead>
-                <tbody>
-                    <tr><td>1</td><td>Flow 1.1</td><td>Tag Self-Registered Client</td><td>1</td><td><code>customer/create</code></td><td>No</td></tr>
-                    <tr><td>2</td><td>Flow 1.2</td><td>Tag AE-Created Client</td><td>1</td><td><code>customer/create</code></td><td>No</td></tr>
-                    <tr><td>3</td><td>Flow 1.3</td><td>Client KYC Form Complete</td><td>1</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>4</td><td>Flow 1.4</td><td>Idenfo Result → Client</td><td>1</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>5</td><td>Flow 1.5</td><td>Nomos Approves Client KYC</td><td>1</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>6</td><td>Flow 1.6</td><td>CEO Approves Client</td><td>1</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>7</td><td>Flow 1.7</td><td>CEO Rejects Client</td><td>1</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>8</td><td>Flow 2.1</td><td>Tag New Vendor</td><td>2</td><td><code>customer/create</code></td><td>No</td></tr>
-                    <tr><td>9</td><td>Flow 2.2</td><td>Vendor KYC Form Complete</td><td>2</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>10</td><td>Flow 2.3</td><td>Vendor KYC Approved</td><td>2</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>11</td><td>Flow 2.4</td><td>CEO Approves Vendor</td><td>2</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>12</td><td>Flow 2.5</td><td>Vendor Signs Agreement</td><td>2</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>13</td><td>Flow 2.6</td><td>Agreement Verified → CEO Sign</td><td>2</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>14</td><td>Flow 2.7</td><td>Vendor Fully Onboarded</td><td>2</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>15</td><td>Flow 3.1</td><td>New Item Consignment</td><td>3</td><td><code>product/create</code></td><td>No</td></tr>
-                    <tr><td>16</td><td>Flow 3.2</td><td>Item Viewing Scheduled</td><td>3</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>17</td><td>Flow 3.3</td><td>Item Authenticated</td><td>3</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>18</td><td>Flow 3.4</td><td>Vendor Signed Consignment Form</td><td>3</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>19</td><td>Flow 3.5</td><td>Consignment Form Verified</td><td>3</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>20</td><td>Flow 3.6</td><td>Item Fully Consigned</td><td>3</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>21</td><td>Flow 4.1</td><td>Item Release Requested</td><td>4</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>22</td><td>Flow 4.2</td><td>Release Negotiation Failed</td><td>4</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>23</td><td>Flow 4.3</td><td>CEO Approves Release</td><td>4</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>24</td><td>Flow 4.4</td><td>CEO Rejects Release</td><td>4</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>25</td><td>Flow 4.5</td><td>Release Invoice Sent</td><td>4</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>26</td><td>Flow 4.6</td><td>Release Payment Overdue</td><td>4</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>27</td><td>Flow 4.7</td><td>Release Payment Received</td><td>4</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>28</td><td>Flow 5.1</td><td>Items Cataloged for Auction</td><td>5</td><td><code>collection/update</code></td><td>No</td></tr>
-                    <tr><td>29</td><td>Flow 5.2</td><td>Marketing CEO Approved</td><td>5</td><td>Collection metafield</td><td>No</td></tr>
-                    <tr><td>30</td><td>Flow 5.3</td><td>Marketing GCEO Approved</td><td>5</td><td>Collection metafield</td><td>No</td></tr>
-                    <tr><td>31</td><td>Flow 5.4</td><td>Close Free Ticket Requests</td><td>5</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>32</td><td>Flow 5.5</td><td>Notify Vendors of Cataloged Items</td><td>5</td><td>Triggered by 5.1</td><td>No</td></tr>
-                    <tr><td>33</td><td>Flow 5.6</td><td>Handover Window Opens</td><td>5</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>34</td><td>Flow 5.7</td><td>Schedule Reverification</td><td>5</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>35</td><td>Flow 5.8</td><td>Free Tickets CEO Approved</td><td>5</td><td>Collection metafield</td><td>No</td></tr>
-                    <tr><td>36</td><td>Flow 6.1</td><td>Auction Live</td><td>6</td><td>Collection metafield</td><td>No</td></tr>
-                    <tr><td>37</td><td>Flow 6.2</td><td>Item Sold</td><td>6</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>38</td><td>Flow 6.3</td><td>2-Day Payment Follow-up</td><td>6</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>39</td><td>Flow 6.4</td><td>7-Day Payment Escalation</td><td>6</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>40</td><td>Flow 6.5</td><td>Payment Received</td><td>6</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>41</td><td>Flow 6.6</td><td>CEO Signs Certificate</td><td>6</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>42</td><td>Flow 6.7</td><td>Certificate Complete</td><td>6</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>43</td><td>Flow 6.8</td><td>Vendor Payout</td><td>6</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>44</td><td>Flow 6.9</td><td>Auction Closed</td><td>6</td><td>Collection metafield</td><td>No</td></tr>
-                    <tr><td>45</td><td>Flow 6.10</td><td>Auction Completed</td><td>6</td><td>Collection metafield</td><td>No</td></tr>
-                    <tr><td>46</td><td>Flow 7.1</td><td>Notify Vendors — Handover Window</td><td>7</td><td>Triggered by 5.6</td><td>No</td></tr>
-                    <tr><td>47</td><td>Flow 7.2</td><td>Handover Appointment Booked</td><td>7</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>48</td><td>Flow 7.3</td><td>5-Day Handover Reminder</td><td>7</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>49</td><td>Flow 7.4</td><td>1-Day Handover Urgent</td><td>7</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>50</td><td>Flow 7.5</td><td>Handover Deadline Missed</td><td>7</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>51</td><td>Flow 7.6</td><td>Item Cancelled from Auction</td><td>7</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>52</td><td>Flow 7.7</td><td>Item Handover Complete</td><td>7</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>53</td><td>Flow 8.1</td><td>Notify Buyer — Collect Item</td><td>8</td><td>Triggered by 6.7</td><td>No</td></tr>
-                    <tr><td>54</td><td>Flow 8.2</td><td>Buyer 7-Day Reminder</td><td>8</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>55</td><td>Flow 8.3</td><td>Buyer 14-Day Escalation</td><td>8</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>56</td><td>Flow 8.4</td><td>Buyer Collected Item</td><td>8</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>57</td><td>Flow 9.1</td><td>Unsold Items — Vendor Notification</td><td>9</td><td>Triggered by 6.9</td><td>No</td></tr>
-                    <tr><td>58</td><td>Flow 9.2</td><td>Vendor Collection Overdue</td><td>9</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>59</td><td>Flow 9.3</td><td>Vendor Collected Unsold Item</td><td>9</td><td><code>product/update</code></td><td>No</td></tr>
-                    <tr><td>60</td><td>Flow 10.1</td><td>Complaint Registered</td><td>10</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>61</td><td>Flow 10.2</td><td>Complaint Resolved</td><td>10</td><td><code>customer/update</code></td><td>No</td></tr>
-                    <tr><td>62</td><td>Flow 10.3</td><td>Complaint Auto-Escalation</td><td>10</td><td>Scheduled daily</td><td>Yes</td></tr>
-                    <tr><td>63</td><td>Flow 11.1</td><td>New Auction Tracker</td><td>11</td><td>Collection created</td><td>No</td></tr>
-                    <tr><td>64</td><td>Flow 11.2</td><td>Auction Status Update</td><td>11</td><td>Collection metafield</td><td>No</td></tr>
-                </tbody>
-            </table>
-            <p><strong>Summary:</strong> 64 flows total (50 event-driven + 14 scheduled daily/weekly checks)</p>
-        </div>
-
-        <!-- Appendix B -->
-        <div class="section" id="appendix-b">
-            <h2>21. Appendix B: Email Template Registry</h2>
-            <div class="callout callout-blue">📘 See Blueprint §16 for full template specifications and content requirements.</div>
-
-            <table>
-                <thead><tr><th>#</th><th>ID</th><th>Name</th><th>Type</th><th>Trigger</th><th>Recipient</th></tr></thead>
-                <tbody>
-                    <tr><td>1</td><td>E1.1</td><td>Client Welcome (Self-Reg)</td><td>Custom</td><td>Flow 1.1</td><td>Client</td></tr>
-                    <tr><td>2</td><td>E1.2</td><td>Client Welcome (AE)</td><td>Custom</td><td>Flow 1.2</td><td>Client</td></tr>
-                    <tr><td>3</td><td>E1.3</td><td>KYC Form Required</td><td>Custom</td><td>Flow 1.1/1.2</td><td>Client/Vendor</td></tr>
-                    <tr><td>4</td><td>E1.4</td><td>KYC Form Complete</td><td>Internal</td><td>Flow 1.3</td><td>Nomos</td></tr>
-                    <tr><td>5</td><td>E1.5</td><td>Idenfo Result</td><td>Internal</td><td>Flow 1.4</td><td>Nomos</td></tr>
-                    <tr><td>6</td><td>E1.6</td><td>CEO Approval Request</td><td>Internal</td><td>Flow 1.5</td><td>CEO</td></tr>
-                    <tr><td>7</td><td>E1.7</td><td>Account Activated</td><td>Custom</td><td>Flow 1.6</td><td>Client</td></tr>
-                    <tr><td>8</td><td>E1.8</td><td>Client Rejected</td><td>Internal</td><td>Flow 1.7</td><td>AE, CAC</td></tr>
-                    <tr><td>9</td><td>E1.9</td><td>CEO Review Reminder</td><td>Internal</td><td>Weekly</td><td>CEO</td></tr>
-                    <tr><td>10</td><td>E2.1</td><td>Vendor Welcome</td><td>Custom</td><td>Flow 2.1</td><td>Vendor</td></tr>
-                    <tr><td>11</td><td>E2.2</td><td>Vendor KYC Required</td><td>Custom</td><td>Flow 2.1</td><td>Vendor</td></tr>
-                    <tr><td>12</td><td>E2.3</td><td>Vendor CEO Approval</td><td>Internal</td><td>Flow 2.3</td><td>CEO</td></tr>
-                    <tr><td>13</td><td>E2.4</td><td>Upload Agreement</td><td>Internal</td><td>Flow 2.4</td><td>AE</td></tr>
-                    <tr><td>14</td><td>E2.5</td><td>Sign Agreement</td><td>Custom</td><td>Flow 2.4</td><td>Vendor</td></tr>
-                    <tr><td>15</td><td>E2.6</td><td>Verify Agreement</td><td>Internal</td><td>Flow 2.5</td><td>Nomos</td></tr>
-                    <tr><td>16</td><td>E2.7</td><td>Onboarding Complete + BTP</td><td>Custom</td><td>Flow 2.7</td><td>Vendor</td></tr>
-                    <tr><td>17</td><td>E3.1</td><td>New Consignment</td><td>Internal</td><td>Flow 3.1</td><td>CAC</td></tr>
-                    <tr><td>18</td><td>E3.2</td><td>Viewing Scheduled</td><td>Custom</td><td>Flow 3.2</td><td>Vendor</td></tr>
-                    <tr><td>19</td><td>E3.3</td><td>Item Authenticated</td><td>Custom</td><td>Flow 3.3</td><td>Vendor</td></tr>
-                    <tr><td>20</td><td>E3.4</td><td>BTP Photoshoot</td><td>Internal</td><td>Flow 3.3</td><td>BTP</td></tr>
-                    <tr><td>21</td><td>E3.5</td><td>Verify ICF</td><td>Internal</td><td>Flow 3.4</td><td>Nomos</td></tr>
-                    <tr><td>22</td><td>E3.6</td><td>CEO Sign ICF</td><td>Internal</td><td>Flow 3.5</td><td>CEO</td></tr>
-                    <tr><td>23</td><td>E3.7</td><td>Item Consigned</td><td>Custom</td><td>Flow 3.6</td><td>Vendor</td></tr>
-                    <tr><td>24</td><td>E3.8</td><td>Collect Item</td><td>Internal</td><td>Flow 3.6</td><td>CAC</td></tr>
-                    <tr><td>25</td><td>E4.1</td><td>Release Request</td><td>Internal</td><td>Flow 4.1</td><td>AE</td></tr>
-                    <tr><td>26</td><td>E4.2</td><td>Release CEO Request</td><td>Internal</td><td>Flow 4.2</td><td>CEO</td></tr>
-                    <tr><td>27</td><td>E4.3</td><td>Release Approved</td><td>Custom</td><td>Flow 4.3</td><td>Vendor, CC: AE, CAC</td></tr>
-                    <tr><td>28</td><td>E4.4</td><td>Release Rejected</td><td>Internal</td><td>Flow 4.4</td><td>AE</td></tr>
-                    <tr><td>29</td><td>E4.5</td><td>Check Fees</td><td>Internal</td><td>Flow 4.3</td><td>CAC</td></tr>
-                    <tr><td>30</td><td>E4.6</td><td>Payment Overdue</td><td>Internal</td><td>Flow 4.6</td><td>Nomos, AE, CAC</td></tr>
-                    <tr><td>31</td><td>E5.1</td><td>Marketing Draft Request</td><td>Internal</td><td>Flow 5.1</td><td>BTP, CC: CEO, AE, CAC</td></tr>
-                    <tr><td>32</td><td>E5.2</td><td>GCEO Review Request</td><td>Internal</td><td>Flow 5.2</td><td>GCEO</td></tr>
-                    <tr><td>33</td><td>E5.3</td><td>Begin Marketing</td><td>Internal</td><td>Flow 5.3</td><td>BTP</td></tr>
-                    <tr><td>34</td><td>E5.4</td><td>Ticket Form Closed</td><td>Internal</td><td>Flow 5.4</td><td>CAC</td></tr>
-                    <tr><td>35</td><td>E5.5a</td><td>Vendor Notif (Immovable)</td><td>Custom</td><td>Flow 5.5</td><td>Vendor</td></tr>
-                    <tr><td>36</td><td>E5.5b</td><td>Vendor Notif (At Vendor)</td><td>Custom</td><td>Flow 5.5</td><td>Vendor</td></tr>
-                    <tr><td>37</td><td>E5.5c</td><td>Vendor Notif (Mixed)</td><td>Custom</td><td>Flow 5.5</td><td>Vendor</td></tr>
-                    <tr><td>38</td><td>E5.6</td><td>Handover Window Open</td><td>Custom</td><td>Flow 5.6</td><td>Vendor</td></tr>
-                    <tr><td>39</td><td>E5.7</td><td>Reverification Request</td><td>Internal</td><td>Flow 5.7</td><td>Brand Specialists</td></tr>
-                    <tr><td>40</td><td>E5.8</td><td>Free Ticket Granted</td><td>Custom</td><td>Flow 5.8</td><td>Client</td></tr>
-                    <tr><td>41</td><td>E5.9</td><td>Tickets Available</td><td>Custom</td><td>Auction prep</td><td>Client</td></tr>
-                    <tr><td>42</td><td>E6.1</td><td>Auction Live</td><td>Custom</td><td>Flow 6.1</td><td>All clients</td></tr>
-                    <tr><td>43</td><td>E6.2</td><td>Item Won</td><td>Custom</td><td>Flow 6.2</td><td>Buyer</td></tr>
-                    <tr><td>44</td><td>E6.3</td><td>Item Sold</td><td>Internal</td><td>Flow 6.2</td><td>AE, CAC</td></tr>
-                    <tr><td>45</td><td>E6.4</td><td>Payment Reminder 2-Day</td><td>Custom</td><td>Flow 6.3</td><td>Buyer</td></tr>
-                    <tr><td>46</td><td>E6.5</td><td>Payment Late</td><td>Internal</td><td>Flow 6.3</td><td>CAC, CC: AE</td></tr>
-                    <tr><td>47</td><td>E6.6</td><td>Payment Overdue Nomos</td><td>Internal</td><td>Flow 6.4</td><td>AE, CAC, Nomos</td></tr>
-                    <tr><td>48</td><td>E6.7</td><td>Payment Confirmed</td><td>Custom</td><td>Flow 6.5</td><td>Buyer</td></tr>
-                    <tr><td>49</td><td>E6.8</td><td>Sign Certificate</td><td>Custom</td><td>Flow 6.6</td><td>Buyer</td></tr>
-                    <tr><td>50</td><td>E6.9</td><td>Certificate Complete</td><td>Custom</td><td>Flow 6.7</td><td>Buyer</td></tr>
-                    <tr><td>51</td><td>E6.10</td><td>Auction Closed</td><td>Custom</td><td>Flow 6.9</td><td>All bidders</td></tr>
-                    <tr><td>52</td><td>E6.11</td><td>Auction Summary</td><td>Internal</td><td>Flow 6.10</td><td>CEO, AE, CAC</td></tr>
-                    <tr><td>53</td><td>E7.1</td><td>Handover Window Open</td><td>Custom</td><td>Flow 7.1</td><td>Vendor</td></tr>
-                    <tr><td>54</td><td>E7.2</td><td>Appointment Confirmed</td><td>Custom</td><td>Flow 7.2</td><td>Vendor</td></tr>
-                    <tr><td>55</td><td>E7.3</td><td>5-Day Reminder</td><td>Custom</td><td>Flow 7.3</td><td>Vendor</td></tr>
-                    <tr><td>56</td><td>E7.4</td><td>1-Day Urgent</td><td>Custom</td><td>Flow 7.4</td><td>Vendor, CC: Nomos</td></tr>
-                    <tr><td>57</td><td>E7.5</td><td>Handover Missed</td><td>Internal</td><td>Flow 7.5</td><td>CEO</td></tr>
-                    <tr><td>58</td><td>E7.6</td><td>Item Cancelled</td><td>Custom</td><td>Flow 7.6</td><td>Vendor</td></tr>
-                    <tr><td>59</td><td>E7.7</td><td>Handover Complete</td><td>Custom</td><td>Flow 7.7</td><td>Vendor</td></tr>
-                    <tr><td>60</td><td>E8.1</td><td>Collect Item</td><td>Custom</td><td>Flow 8.1</td><td>Buyer</td></tr>
-                    <tr><td>61</td><td>E8.2</td><td>7-Day Buyer Reminder</td><td>Custom</td><td>Flow 8.2</td><td>Buyer</td></tr>
-                    <tr><td>62</td><td>E8.3</td><td>14-Day Escalation</td><td>Internal</td><td>Flow 8.3</td><td>CEO</td></tr>
-                    <tr><td>63</td><td>E8.4</td><td>Collection Complete</td><td>Custom</td><td>Flow 8.4</td><td>Buyer</td></tr>
-                    <tr><td>64</td><td>E9.1</td><td>Unsold Items Notification</td><td>Custom</td><td>Flow 9.1</td><td>Vendor</td></tr>
-                    <tr><td>65</td><td>E9.2</td><td>Collection Overdue</td><td>Custom</td><td>Flow 9.2</td><td>Vendor</td></tr>
-                    <tr><td>66</td><td>E9.3</td><td>Vendor Return Complete</td><td>Custom</td><td>Flow 9.3</td><td>Vendor</td></tr>
-                    <tr><td>67</td><td>E10.1</td><td>Complaint Registered</td><td>Internal</td><td>Flow 10.1</td><td>AE</td></tr>
-                    <tr><td>68</td><td>E10.2</td><td>Complaint Resolved</td><td>Internal</td><td>Flow 10.2</td><td>CEO, CC: parties</td></tr>
-                    <tr><td>69</td><td>E10.3</td><td>Complaint Escalation</td><td>Internal</td><td>Flow 10.3</td><td>CEO</td></tr>
-                    <tr><td>70</td><td>E11.1</td><td>New Auction Planning</td><td>Internal</td><td>Flow 11.1</td><td>AE, CAC</td></tr>
-                </tbody>
-            </table>
-            <p><strong>Total: 70 email templates</strong> (30 customer-facing, 40 internal) + 5 SMS/WhatsApp templates via Zapier</p>
-        </div>
-
-        <!-- Appendix C -->
-        <div class="section" id="appendix-c">
-            <h2>22. Appendix C: Tag Taxonomy</h2>
-            <div class="callout callout-blue">📘 See Blueprint §14 for complete tag lifecycle (applied when / removed when).</div>
-
-            <h3>Customer Tags (24)</h3>
-            <table>
-                <thead><tr><th>#</th><th>Tag</th><th>Applies To</th></tr></thead>
-                <tbody>
-                    <tr><td>T-C1</td><td><code>Client</code></td><td>Client</td></tr>
-                    <tr><td>T-C2</td><td><code>Vendor</code></td><td>Vendor</td></tr>
-                    <tr><td>T-C3</td><td><code>Self-Registered</code></td><td>Client</td></tr>
-                    <tr><td>T-C4</td><td><code>AE-Created</code></td><td>Client</td></tr>
-                    <tr><td>T-C5</td><td><code>Vendor-New</code></td><td>Vendor</td></tr>
-                    <tr><td>T-C6</td><td><code>CEO-Review-Required</code></td><td>Client</td></tr>
-                    <tr><td>T-C7</td><td><code>KYC-Form-Complete</code></td><td>Both</td></tr>
-                    <tr><td>T-C8</td><td><code>Idenfo-Passed</code></td><td>Both</td></tr>
-                    <tr><td>T-C9</td><td><code>Idenfo-Failed</code></td><td>Both</td></tr>
-                    <tr><td>T-C10</td><td><code>Idenfo-Manual-Review</code></td><td>Both</td></tr>
-                    <tr><td>T-C11</td><td><code>KYC-Approved</code></td><td>Both</td></tr>
-                    <tr><td>T-C12</td><td><code>Awaiting-CEO-Approval</code></td><td>Both</td></tr>
-                    <tr><td>T-C13</td><td><code>CEO-Approved</code></td><td>Both</td></tr>
-                    <tr><td>T-C14</td><td><code>CEO-Rejected</code></td><td>Client</td></tr>
-                    <tr><td>T-C15</td><td><code>Active-Bidder</code></td><td>Client</td></tr>
-                    <tr><td>T-C16</td><td><code>Active-Vendor</code></td><td>Vendor</td></tr>
-                    <tr><td>T-C17</td><td><code>Agreement-Pending</code></td><td>Vendor</td></tr>
-                    <tr><td>T-C18</td><td><code>Agreement-Verification-Pending</code></td><td>Vendor</td></tr>
-                    <tr><td>T-C19</td><td><code>Agreement-Verified</code></td><td>Vendor</td></tr>
-                    <tr><td>T-C20</td><td><code>Terms-Accepted</code></td><td>Both</td></tr>
-                    <tr><td>T-C21</td><td><code>Email-Failed</code></td><td>Both</td></tr>
-                    <tr><td>T-C22</td><td><code>Complaint-{Type}</code></td><td>Both</td></tr>
-                    <tr><td>T-C23</td><td><code>Complaint-Resolved</code></td><td>Both</td></tr>
-                    <tr><td>T-C24</td><td><code>CEO-Escalation</code></td><td>Both</td></tr>
-                </tbody>
-            </table>
-
-            <h3>Product Tags (36)</h3>
-            <table>
-                <thead><tr><th>#</th><th>Tag</th></tr></thead>
-                <tbody>
-                    <tr><td>T-P1</td><td><code>Consignment-New</code></td></tr>
-                    <tr><td>T-P2</td><td><code>Consignment-Pending</code></td></tr>
-                    <tr><td>T-P3</td><td><code>Viewing-Scheduled</code></td></tr>
-                    <tr><td>T-P4</td><td><code>Authentication-Complete</code></td></tr>
-                    <tr><td>T-P5</td><td><code>Form-Vendor-Signed</code></td></tr>
-                    <tr><td>T-P6</td><td><code>Form-Nomos-Verified</code></td></tr>
-                    <tr><td>T-P7</td><td><code>Fully-Consigned</code></td></tr>
-                    <tr><td>T-P8</td><td><code>Cataloged-{auction_id}</code></td></tr>
-                    <tr><td>T-P9</td><td><code>Auction-Live</code></td></tr>
-                    <tr><td>T-P10</td><td><code>Sold</code></td></tr>
-                    <tr><td>T-P11</td><td><code>Unsold</code></td></tr>
-                    <tr><td>T-P12</td><td><code>Payment-Received</code></td></tr>
-                    <tr><td>T-P13</td><td><code>Payment-Overdue</code></td></tr>
-                    <tr><td>T-P14</td><td><code>Certificate-Complete</code></td></tr>
-                    <tr><td>T-P15</td><td><code>Release-Requested</code></td></tr>
-                    <tr><td>T-P16</td><td><code>CEO-Approval-Pending</code></td></tr>
-                    <tr><td>T-P17</td><td><code>Release-CEO-Approved</code></td></tr>
-                    <tr><td>T-P18</td><td><code>Release-CEO-Rejected</code></td></tr>
-                    <tr><td>T-P19</td><td><code>Release-Complete</code></td></tr>
-                    <tr><td>T-P20</td><td><code>Invoice-Sent</code></td></tr>
-                    <tr><td>T-P21</td><td><code>Handover-Window-Active</code></td></tr>
-                    <tr><td>T-P22</td><td><code>Awaiting-Handover</code></td></tr>
-                    <tr><td>T-P23</td><td><code>Appointment-Scheduled</code></td></tr>
-                    <tr><td>T-P24</td><td><code>First-Reminder-Sent</code></td></tr>
-                    <tr><td>T-P25</td><td><code>Final-Reminder-Sent</code></td></tr>
-                    <tr><td>T-P26</td><td><code>Handover-Missed</code></td></tr>
-                    <tr><td>T-P27</td><td><code>Handover-Complete</code></td></tr>
-                    <tr><td>T-P28</td><td><code>Item-Cancelled</code></td></tr>
-                    <tr><td>T-P29</td><td><code>Ready-For-Collection</code></td></tr>
-                    <tr><td>T-P30</td><td><code>7-Day-Reminder-Sent</code></td></tr>
-                    <tr><td>T-P31</td><td><code>CEO-Consultation-Required</code></td></tr>
-                    <tr><td>T-P32</td><td><code>Collection-Complete</code></td></tr>
-                    <tr><td>T-P33</td><td><code>Unsold-Awaiting-Collection</code></td></tr>
-                    <tr><td>T-P34</td><td><code>Collection-Overdue</code></td></tr>
-                    <tr><td>T-P35</td><td><code>Vendor-Handover-Complete</code></td></tr>
-                    <tr><td>T-P36</td><td><code>Settled</code></td></tr>
-                </tbody>
-            </table>
-
-            <h3>Collection Tags (4)</h3>
-            <table>
-                <thead><tr><th>#</th><th>Tag</th></tr></thead>
-                <tbody>
-                    <tr><td>T-A1</td><td><code>Auction-Collection</code></td></tr>
-                    <tr><td>T-A2</td><td><code>Tickets-Form-Closed</code></td></tr>
-                    <tr><td>T-A3</td><td><code>Reverification-Day</code></td></tr>
-                    <tr><td>T-A4</td><td><code>Currently-Live</code></td></tr>
-                </tbody>
-            </table>
-            <p><strong>Total: 64 tags</strong> (24 customer + 36 product + 4 collection)</p>
-        </div>
-
-        <!-- Appendix D -->
-        <div class="section" id="appendix-d">
-            <h2>23. Appendix D: Optimization Recommendations</h2>
-            <div class="callout callout-blue">📘 See Blueprint §23 for full details on each recommendation.</div>
-
-            <table>
-                <thead><tr><th>#</th><th>Section</th><th>Recommendation</th><th>Priority</th></tr></thead>
-                <tbody>
-                    <tr><td>O1.1</td><td>1. Client</td><td>Automated weekly digest with approve/reject buttons</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O1.2</td><td>1. Client</td><td>All clients self-register; AE sends pre-filled link</td><td>Consider</td></tr>
-                    <tr><td>O1.3</td><td>1. Client</td><td>Auto-trigger Idenfo on form submission</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O1.4</td><td>1. Client</td><td>Automate ticket refund via Shopify order cancellation</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O2.1</td><td>2. Vendor</td><td>DocuSign for multi-party VCA signing</td><td>Consider</td></tr>
-                    <tr><td>O2.2</td><td>2. Vendor</td><td>Automate R&amp;W hash comparison in custom app</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O2.3</td><td>2. Vendor</td><td>Track BTP intro as separate status step</td><td>Consider</td></tr>
-                    <tr><td>O3.1</td><td>3. Consignment</td><td>Specialist availability calendar</td><td>Consider</td></tr>
-                    <tr><td>O3.2</td><td>3. Consignment</td><td>Record buy-now price in metafield</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O3.3</td><td>3. Consignment</td><td>Minimum photo requirements in form validation</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O4.1</td><td>4. Release</td><td>Structured negotiation notes with outcome tracking</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O4.2</td><td>4. Release</td><td>48-hour CEO auto-reminder</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O4.3</td><td>4. Release</td><td>Auto-generate invoice from VCA fee schedule</td><td>Consider</td></tr>
-                    <tr><td>O5.1</td><td>5. Auction Prep</td><td>Ensure item_location metafield accuracy</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O5.2</td><td>5. Auction Prep</td><td>24-hour grace period for ticket form</td><td>Consider</td></tr>
-                    <tr><td>O5.3</td><td>5. Auction Prep</td><td>Automate coverage ticket price calculation</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O5.4</td><td>5. Auction Prep</td><td>Parallel CEO + GCEO marketing review</td><td>Consider</td></tr>
-                    <tr><td>O6.1</td><td>6. Execution</td><td>Auto-populate inventory on Shopify order payment</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O6.2</td><td>6. Execution</td><td>Pre-sign CEO certificate at auction creation</td><td>Consider</td></tr>
-                    <tr><td>O6.3</td><td>6. Execution</td><td>Automate unsold item date management</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O6.4</td><td>6. Execution</td><td>Auto-calculate vendor payout</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O6.5</td><td>6. Execution</td><td>Immovable flag check in handover flows</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O7.1</td><td>7. Handover AA</td><td>Consolidate to 2 reminders (7d and 1d)</td><td>Consider</td></tr>
-                    <tr><td>O7.2</td><td>7. Handover AA</td><td>24-hour auto-escalation to GCEO</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O7.3</td><td>7. Handover AA</td><td>Define inspection mismatch outcomes</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O8.1</td><td>8. Handover Buyer</td><td>Single 14-day deadline with 7-day reminder</td><td>Consider</td></tr>
-                    <tr><td>O8.2</td><td>8. Handover Buyer</td><td>Define standard CEO options</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O9.1</td><td>9. Handover Vendor</td><td>Define fee schedule in VCA, automate invoicing</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O9.2</td><td>9. Handover Vendor</td><td>30-day max retention with escalating fees</td><td>Consider</td></tr>
-                    <tr><td>O10.1</td><td>10. Complaint</td><td>Metafields + admin dashboard for tracking</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O10.2</td><td>10. Complaint</td><td>Business hours only for 72h escalation</td><td>Consider</td></tr>
-                    <tr><td>O10.3</td><td>10. Complaint</td><td>Unique IDs for multiple complaints per customer</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>O11.2</td><td>11. Tracker</td><td>V2: move tracker to Shopify admin app</td><td>Consider</td></tr>
-                    <tr><td>OX.1</td><td>Cross-Section</td><td>Create shared notification group/alias</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>OX.2</td><td>Cross-Section</td><td>Batch non-urgent CEO approvals into daily digest</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>OX.3</td><td>Cross-Section</td><td>Make Shopify source of truth; Sheets read-only</td><td><strong>Recommend</strong></td></tr>
-                    <tr><td>OX.4</td><td>Cross-Section</td><td>V2: serve docs from DropBox via portal</td><td>Consider</td></tr>
-                    <tr><td>OX.5</td><td>Cross-Section</td><td>Automate PDF text extraction and comparison</td><td><strong>Recommend</strong></td></tr>
-                </tbody>
-            </table>
-            <p><strong>Summary:</strong> 23 Recommend + 15 Consider = 38 total optimization recommendations</p>
-        </div>
-
-        <!-- Appendix E -->
-        <div class="section" id="appendix-e">
-            <h2>24. Appendix E: Implementation Timeline</h2>
-            <div class="callout callout-blue">📘 See Blueprint Appendix B for full phase details.</div>
-
-            <h3>Phase 1: Foundation (Weeks 1–2)</h3>
-            <ul>
-                <li>Shopify store setup</li>
-                <li>Customer metafield schema (36 client + 14 vendor = 50 fields)</li>
-                <li>Product metafield schema (48 item fields)</li>
-                <li>Collection metafield schema (13 auction fields)</li>
-                <li>Tag taxonomy implementation (64 tags)</li>
-                <li>KYC forms via Powerful Form Builder (F1.1: 17 fields, F2.1: 23 fields)</li>
-            </ul>
-
-            <h3>Phase 2: Core Integrations (Weeks 3–4)</h3>
-            <ul>
-                <li>Custom App: Aurelius Engine skeleton</li>
-                <li>Idenfo API integration (direct REST)</li>
-                <li>DropBox API integration (direct REST)</li>
-                <li>Google Sheets Apps Script webhook receiver</li>
-                <li>UAE PASS deep link generator</li>
-                <li>Zapier SMS/WhatsApp (5 zaps)</li>
-            </ul>
-
-            <h3>Phase 3: Workflows (Weeks 5–6)</h3>
-            <ul>
-                <li>Shopify Flows: Sections 1–4 (27 flows)</li>
-                <li>Shopify Flows: Sections 5–6 (18 flows)</li>
-                <li>Vendor portal forms: F3.1, F4.1, F5.1</li>
-                <li>All 70 email templates</li>
-            </ul>
-
-            <h3>Phase 4: Advanced Features (Weeks 7–8)</h3>
-            <ul>
-                <li>Custom App: Bidding system with increment logic</li>
-                <li>Shopify Flows: Sections 7–11 (19 flows)</li>
-                <li>Scheduled task runner (14 cron jobs)</li>
-                <li>Handover/complaint forms: F7.1, F7.2, F8.1, F9.1, F10.1</li>
-                <li>Portal pages: 20 customer-facing + 10 admin</li>
-            </ul>
-
-            <h3>Phase 5: Testing &amp; Launch (Weeks 9–10)</h3>
-            <ul>
-                <li>Integration testing (all 64 flows + 14 scheduled jobs)</li>
-                <li>UAT with internal team</li>
-                <li>Mock auction end-to-end run-through</li>
-                <li>Production deployment</li>
-                <li>Team training</li>
-            </ul>
-        </div>
-
-        <div class="document-footer">
-            <p><strong>Version:</strong> 1.1 (Updated with Shopify Blueprint Specifications)</p>
-            <p><strong>Date:</strong> February 2026</p>
+        <!-- Footer -->
+        <div class="doc-footer">
+            <p><strong>Version:</strong> 2.0 — Updated to SOP V2 (05.03.2026)</p>
+            <p><strong>Date:</strong> March 2026</p>
             <p><strong>Author:</strong> Axeed Group Technology</p>
             <p><strong>Status:</strong> Implementation Ready</p>
-            <p><strong>Stats:</strong> 64 Flows · 70 Emails · 10 Forms · 111 Metafields · 64 Tags · 5 Zapier Zaps · ~AED 350/month</p>
-            <p><strong>Reference:</strong> Aurelius Shopify Blueprint v1.0 + CEO-Approved SOP v1 (12.02.2026)</p>
+            <p><strong>V2 Changes:</strong> Click & Sign · Telos · KYC by Nomos only · CEO before KYC</p>
+            <p><strong>Reference:</strong> <a href="flowchart.html" target="_blank">System Flowchart</a> · <a href="sop-v1-v2-comparison.md">V1 vs V2 Comparison Report</a></p>
         </div>
     </div>
 </body>

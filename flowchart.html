@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurelius Auctions - Complete System Flowchart V1.1</title>
+    <title>Aurelius Auctions - Complete System Flowchart V2.0</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,6 +30,8 @@
         .automation-legend { background: #fff3e0; border: 1px solid #ffe0b2; padding: 16px 20px; margin-bottom: 24px; border-radius: 4px; }
         .automation-legend h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; color: #e65100; }
         .automation-legend p { font-size: 13px; color: #555; margin-bottom: 4px; }
+        .v2-badge { display: inline-block; padding: 2px 8px; background: #e8f5e8; color: #2e7d32; font-size: 11px; font-weight: 600; border-radius: 3px; margin-left: 8px; }
+        .v2-note { background: #e3f2fd; border: 1px solid #90caf9; padding: 12px 16px; margin-bottom: 16px; border-radius: 4px; font-size: 13px; color: #1565c0; }
         table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 13px; }
         thead tr { background: #fafafa; }
         th { padding: 12px 16px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #666; border-bottom: 2px solid #ddd; }
@@ -46,15 +48,20 @@
     <div class="container">
         <div class="header">
             <h1>Aurelius Auctions</h1>
-            <p class="subtitle">Complete System Workflow — 11 Section Implementation</p>
-            <p class="meta">v1.1 / February 2026 / Updated with Shopify Blueprint Specs / 64 Flows · 70 Emails · 10 Forms</p>
+            <p class="subtitle">Complete System Workflow — 11 Section Implementation <span class="v2-badge">V2 SOP</span></p>
+            <p class="meta">v2.0 / March 2026 / SOP V2 (05.03.2026) / Click & Sign · Telos · Nomos KYC · ~63 Flows</p>
+        </div>
+
+        <div class="v2-note">
+            <strong>🔄 V2 Update:</strong> All sections updated to match SOP V2. Key changes: <strong>Click & Sign</strong> for all document signing. <strong>Telos</strong> for inventory/financial/strongroom ops. <strong>KYC by Nomos only</strong>. <strong>CEO approves leads before KYC</strong> in Sections 1 &amp; 2.
         </div>
 
         <div class="automation-legend">
             <h4>Diagram Legend</h4>
             <p>⚡ = <strong>Shopify Flow automated step</strong> (no manual intervention)</p>
-            <p>🔗 = <strong>Direct API integration</strong> (Idenfo, DropBox, Google Sheets)</p>
-            <p>📱 = <strong>UAE PASS deep link</strong> (V1 signing)</p>
+            <p>🔗 = <strong>Direct API integration</strong> (DropBox, Google Sheets)</p>
+            <p>✍️ = <strong>Click & Sign</strong> (V2 document signing)</p>
+            <p>📦 = <strong>Telos</strong> (inventory, financial, strongroom)</p>
             <p>💬 = <strong>Zapier SMS/WhatsApp</strong> (external notification only)</p>
         </div>
         
@@ -62,24 +69,24 @@
             <h3>Complete 11-Section Workflow Architecture</h3>
             <ul>
                 <li><a href="#overview">System Overview</a></li>
-                <li><a href="#section1">Section 1: Client Onboarding (7 flows)</a></li>
-                <li><a href="#section2">Section 2: Vendor Onboarding (7 flows)</a></li>
-                <li><a href="#section3">Section 3: Item Consignment (6 flows)</a></li>
-                <li><a href="#section4">Section 4: Item Release (7 flows)</a></li>
-                <li><a href="#section5">Section 5: Auction Preparation (8 flows)</a></li>
-                <li><a href="#section6">Section 6: Auction Execution (10 flows)</a></li>
-                <li><a href="#section7">Section 7: Item Handover to Aurelius (7 flows)</a></li>
-                <li><a href="#section8">Section 8: Item Handover to Buyer (4 flows)</a></li>
-                <li><a href="#section9">Section 9: Item Handover to Vendor (3 flows)</a></li>
-                <li><a href="#section10">Section 10: Complaint Management (3 flows)</a></li>
-                <li><a href="#section11">Section 11: New Auction Tracker Setup (2 flows)</a></li>
+                <li><a href="#section1">Section 1: Client Onboarding</a></li>
+                <li><a href="#section2">Section 2: Vendor Onboarding</a></li>
+                <li><a href="#section3">Section 3: Item Consignment</a></li>
+                <li><a href="#section4">Section 4: Item Release</a></li>
+                <li><a href="#section5">Section 5: Auction Preparation</a></li>
+                <li><a href="#section6">Section 6: Auction Execution</a></li>
+                <li><a href="#section7">Section 7: Item Handover to Aurelius</a></li>
+                <li><a href="#section8">Section 8: Item Handover to Buyer</a></li>
+                <li><a href="#section9">Section 9: Item Handover to Vendor</a></li>
+                <li><a href="#section10">Section 10: Complaint Management</a></li>
+                <li><a href="#section11">Section 11: New Auction Tracker Setup</a></li>
                 <li><a href="#integrations">Technology Integration Architecture</a></li>
             </ul>
         </div>
 
         <div class="section" id="overview">
-            <h2>System Overview</h2>
-            <p class="section-description">Complete Aurelius Auctions system: 64 Shopify Flows, 70 email templates, 10 forms, 111 metafields, 64 tags, ~AED 350/month.</p>
+            <h2>System Overview <span class="v2-badge">V2</span></h2>
+            <p class="section-description">Complete Aurelius Auctions system: ~63 Shopify Flows, ~70 email templates, 10 forms, Click & Sign signing, Telos operations.</p>
             <a class="cross-ref" target="_blank" href="guide.html#project-overview">📖 See Implementation Guide: Project Overview</a>
             
             <div class="mermaid">
@@ -89,7 +96,7 @@ flowchart TB
         B[Vendors - Consignors]
         C[AE - Auction Executive]
         D[CEO - Final Authority]
-        E[CAC - Chief Accountant]
+        E["📦 Telos - Inventory/Financial/Strongroom"]
         F[Nomos - KYC Compliance]
         G[BTP - Marketing Partner]
         H[External Consultants]
@@ -98,40 +105,39 @@ flowchart TB
     
     subgraph PLATFORM["SHOPIFY CORE PLATFORM"]
         J[Single Shopify Store]
-        K[Customer Accounts · 50 metafields]
-        L[Product Catalog · 48 metafields]
+        K[Customer Accounts]
+        L[Product Catalog]
         M[Order Management]
         N[Payment Processing]
-        O[Collections · 13 metafields]
+        O[Collections]
     end
     
-    subgraph AUTOMATION["⚡ AUTOMATION LAYER — 64 FLOWS"]
-        P[Shopify Flow — 50 event-driven]
-        Q[Scheduled Tasks — 14 daily/weekly]
+    subgraph AUTOMATION["⚡ AUTOMATION LAYER"]
+        P[Shopify Flow — Event-driven]
+        Q[Scheduled Tasks — Daily/Weekly]
         R[Shopify Functions — Bidding Logic]
         S[Custom App — Aurelius Engine]
     end
     
     subgraph EXTERNAL["🔗 EXTERNAL INTEGRATIONS"]
-        U[Idenfo KYC API — Direct REST]
         V[DropBox API — Direct REST]
         W[Google Sheets — Apps Script]
-        X[📱 UAE PASS — Deep Links V1]
+        CS["✍️ Click & Sign — Document Signing"]
         Y[💬 Zapier — 5 SMS/WhatsApp Zaps]
     end
     
     subgraph WORKFLOWS["11-SECTION WORKFLOWS"]
-        Z1["⚡ 1. Client Onboarding — 7 flows"]
-        Z2["⚡ 2. Vendor Onboarding — 7 flows"]
-        Z3["⚡ 3. Item Consignment — 6 flows"]
-        Z4["⚡ 4. Item Release — 7 flows"]
-        Z5["⚡ 5. Auction Prep — 8 flows"]
-        Z6["⚡ 6. Auction Execution — 10 flows"]
-        Z7["⚡ 7. Handover to Aurelius — 7 flows"]
-        Z8["⚡ 8. Handover to Buyer — 4 flows"]
-        Z9["⚡ 9. Handover to Vendor — 3 flows"]
-        Z10["⚡ 10. Complaint Mgmt — 3 flows"]
-        Z11["⚡ 11. Tracker Setup — 2 flows"]
+        Z1["1. Client Onboarding"]
+        Z2["2. Vendor Onboarding"]
+        Z3["3. Item Consignment"]
+        Z4["4. Item Release"]
+        Z5["5. Auction Preparation"]
+        Z6["6. Auction Execution"]
+        Z7["7. Handover to Aurelius"]
+        Z8["8. Handover to Buyer"]
+        Z9["9. Handover to Vendor"]
+        Z10["10. Complaint Mgmt"]
+        Z11["11. Tracker Setup"]
     end
     
     A --> J
@@ -156,10 +162,9 @@ flowchart TB
     Q --> S
     R --> S
     
-    S --> U
     S --> V
     S --> W
-    S --> X
+    S --> CS
     S --> Y
     
     P --> Z1
@@ -182,555 +187,647 @@ flowchart TB
             </div>
             
             <div class="key-points">
-                <h4>V1.1 Architecture — Blueprint Integration</h4>
+                <h4>V2 Architecture Highlights</h4>
                 <ul>
-                    <li><strong>64 Shopify Flows</strong> across 11 sections (50 event-driven + 14 scheduled)</li>
-                    <li><strong>70 email templates</strong> (30 customer-facing, 40 internal) + 5 SMS/WhatsApp</li>
-                    <li><strong>10 forms</strong> via Powerful Form Builder (KYC, consignment, release, tickets, handover, complaint)</li>
-                    <li><strong>111 metafields</strong> (22 client + 14 vendor + 48 item + 13 release/handover + 7 complaint + 13 auction)</li>
-                    <li><strong>64 tags</strong> (24 customer + 36 product + 4 collection)</li>
-                    <li>Direct API: Idenfo, DropBox, Google Sheets (Apps Script). Zapier for SMS/WhatsApp only.</li>
+                    <li><strong>Click & Sign</strong> replaces UAE PASS for all document signing (VCA, ICF, Handover Receipts, Acknowledgement of Obligation)</li>
+                    <li><strong>Telos</strong> manages inventory, auction tracking, strongroom, invoicing, payments, and vendor payouts</li>
+                    <li><strong>KYC</strong> handled entirely by Nomos manual vetting</li>
+                    <li><strong>CEO approves leads before KYC</strong> in Sections 1 & 2 (flow order reversed from V1)</li>
+                    <li>Direct API: DropBox, Google Sheets (Apps Script). Zapier for SMS/WhatsApp only.</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section1">
-            <h2>Section 1: Client Onboarding — 7 Flows · 9 Emails · 1 Form</h2>
-            <p class="section-description">Dual KYC (form + Idenfo screening), website self-registration, CEO periodic review. Flows 1.1–1.7.</p>
+            <h2>Section 1: Client Onboarding <span class="v2-badge">V2</span></h2>
+            <p class="section-description">CEO pre-approval → Nomos KYC vetting. Telos CC'd on approval. Website self-registration.</p>
             <a class="cross-ref" target="_blank" href="guide.html#client-onboarding">📖 See Implementation Guide: Client Onboarding Flow</a>
             
             <div class="mermaid">
 flowchart TD
     A([Lead Received or Self-Registration]) --> B{Registration Source}
     
-    B -->|Self-Registration| C["⚡ Flow 1.1: Auto-tag Self-Registered"]
-    B -->|AE Lead| D["⚡ Flow 1.2: Auto-tag AE-Created"]
+    B -->|Self-Registration| C["⚡ Auto-tag Self-Registered\nCEO Periodic Review"]
+    B -->|AE Lead| D["AE Verifies Lead\nIntroduces Aurelius"]
     
-    C --> E["CEO Periodic Review Required\n📧 E1.1 Welcome + E1.9 Weekly Digest"]
-    D --> F["📧 E1.2 Welcome + Password Setup"]
+    C --> E["CEO Reviews Client List\nRemoves unwelcome sign-ups"]
+    D --> F{Client Interested?}
+    F -->|No| END1([End])
+    F -->|Yes| G["AE Emails CEO\nRequests Approval to Proceed"]
     
-    E --> G["📋 Form F1.1: KYC Data Collection\n17 fields · Powerful Form Builder"]
-    F --> G
+    G --> H{CEO Approves?}
+    H -->|No| I["AE Disables Account\nEmails Client Rejection\n⚠️ Refund Any Tickets"]
+    H -->|Yes| J["CEO Emails AE to Proceed"]
     
-    G --> H["⚡ Flow 1.3: KYC Form Complete\n🔗 Trigger Idenfo API Screening"]
-    H --> I["📧 E1.4 → Nomos: Review Required"]
+    J --> K["Shopify Creates Client Account\n📧 Welcome + Password Setup"]
+    K --> L["Client Sets Password\nLogs into Portal"]
     
-    I --> J["🔗 Idenfo API Direct REST"]
-    J --> K["⚡ Flow 1.4: Idenfo Result\n📧 E1.5 → Nomos"]
+    J --> M["AE Uploads KYC Docs\nto DropBox 🔗"]
+    M --> N["Shopify Notifies AE + Nomos\nForwards All Documents"]
     
-    K --> L{Both KYC Approved?}
+    E --> K
     
-    L -->|No| M["⚡ Flow 1.7: CEO Rejects\n📧 E1.8 → AE, CAC: Refund"]
-    L -->|Yes| N["⚡ Flow 1.5: Nomos Approves\n📧 E1.6 → CEO: Approve?"]
+    N --> O["Nomos Conducts Vetting"]
+    O --> P{Additional Docs?}
+    P -->|Yes| Q["Nomos → AE → Client\nClient Uploads via Portal"]
+    Q --> O
+    P -->|No| R{KYC Approved?}
     
-    N --> O{CEO Approves?}
-    O -->|No| M
-    O -->|Yes| P["⚡ Flow 1.6: CEO Approves\n📧 E1.7 → Client: Active"]
+    R -->|No| S["Nomos Emails AE\nCC: CEO — Rejection"]
+    R -->|Yes| T["Nomos Emails AE\nCC: CEO, 📦 Telos — Approval"]
     
-    M --> Q([Client Rejected])
-    P --> R([Active Bidder ✓])
+    T --> U["AE Updates Client Details"]
+    U --> V([Active Client ✓])
+    
+    I --> END2([Client Rejected])
+    S --> END2
 
     style A fill:#e3f2fd,color:#1565c0
-    style R fill:#e8f5e8,color:#2e7d32
-    style Q fill:#ffebee,color:#c62828
-    style J fill:#f3e5f5,color:#7b1fa2
-    style G fill:#fff3e0,color:#f57c00
+    style V fill:#e8f5e8,color:#2e7d32
+    style END2 fill:#ffebee,color:#c62828
+    style T fill:#e8f5e8,color:#2e7d32
             </div>
             
             <div class="key-points">
-                <h4>Section 1 Automation Summary</h4>
+                <h4>Section 1 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 7 Shopify Flows (1.1–1.7) + 1 scheduled weekly CEO review reminder</li>
-                    <li>📧 9 email templates (E1.1–E1.9): 3 customer-facing, 6 internal</li>
-                    <li>📋 Form F1.1: 17-field KYC form (Powerful Form Builder)</li>
-                    <li>🔗 Direct API: Idenfo screening, DropBox folder creation</li>
-                    <li>🏷️ 14 tags: Client, Self-Registered, AE-Created, KYC-Form-Complete, Idenfo-*, KYC-Approved, CEO-*, Active-Bidder</li>
+                    <li>🔄 <strong>CEO approves BEFORE KYC</strong> (reversed from V1)</li>
+                    <li>✅ <strong>KYC by Nomos</strong> manual vetting only</li>
+                    <li>🆕 <strong>Telos CC'd</strong> on Nomos KYC approval notification</li>
+                    <li>🔄 <strong>Shopify creates</strong> Client Account (system-level, not AE manual)</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section2">
-            <h2>Section 2: Vendor Onboarding — 7 Flows · 7 Emails · 1 Form</h2>
-            <p class="section-description">Dual KYC, VCA signing via UAE PASS, Nomos R&W verification, BTP introduction. Flows 2.1–2.7.</p>
+            <h2>Section 2: Vendor Onboarding <span class="v2-badge">V2</span></h2>
+            <p class="section-description">CEO pre-approval → Nomos KYC → Click & Sign VCA signing (Vendor → CEO). Telos CC'd. BTP introduction.</p>
             <a class="cross-ref" target="_blank" href="guide.html#vendor-onboarding">📖 See Implementation Guide: Vendor Onboarding Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A([Vendor Lead Received]) --> B["⚡ Flow 2.1: Tag New Vendor\n📧 E2.1 Welcome + E2.2 KYC Required\n🔗 Create DropBox Folder"]
-    B --> C["📋 Form F2.1: Vendor KYC\n23 fields · Powerful Form Builder"]
-    C --> D["⚡ Flow 2.2: KYC Form Complete\n🔗 Trigger Idenfo Screening"]
+    A([Vendor Lead Received]) --> B["AE Verifies Lead\nIntroduces Aurelius"]
+    B --> C{Vendor Interested?}
+    C -->|No| END1([End])
+    C -->|Yes| D["AE Emails CEO\nRequests Approval"]
     
-    D --> E["Nomos Reviews Form + Screening"]
-    E --> F{KYC Approved?}
+    D --> E{CEO Approves?}
+    E -->|No| F["AE Disables Account\nEmails Vendor Rejection"]
+    E -->|Yes| G["CEO Emails AE to Proceed"]
     
-    F -->|No| G([Vendor Rejected])
-    F -->|Yes| H["⚡ Flow 2.3: Nomos Approves\n📧 E2.3 → CEO"]
+    G --> H["Shopify Creates Vendor Account\n📧 Welcome + Password Setup"]
+    H --> I["Vendor Sets Password\nLogs into Portal"]
     
-    H --> I{CEO Approves?}
-    I -->|No| G
-    I -->|Yes| J["⚡ Flow 2.4: CEO Approves\n📧 E2.4 → AE: Upload VCA\n📧 E2.5 → Vendor: Sign VCA"]
+    G --> J["AE Uploads KYC Docs\nto DropBox 🔗"]
+    J --> K["Shopify Notifies AE + Nomos\nForwards Documents"]
     
-    J --> K["📱 Vendor Signs VCA via UAE PASS"]
-    K --> L["⚡ Flow 2.5: Vendor Signed\n📧 E2.6 → Nomos: Verify R&W"]
+    K --> L["Nomos Conducts Vetting"]
+    L --> M{Additional Docs?}
+    M -->|Yes| N["Nomos → AE → Vendor Uploads"]
+    N --> L
+    M -->|No| O{KYC Approved?}
     
-    L --> M{R&W Unchanged?}
-    M -->|Changes| N([Manual Review])
-    M -->|OK| O["⚡ Flow 2.6: Verified → CEO Sign\n📱 CEO Signs via UAE PASS"]
+    O -->|No| P["Nomos Emails AE\nCC: CEO — Rejection"]
+    O -->|Yes| Q["Nomos Emails AE\nCC: CEO, 📦 Telos — Approval"]
     
-    O --> P["⚡ Flow 2.7: Fully Onboarded\n📧 E2.7 → Vendor: Active + BTP Intro"]
+    Q --> R["✍️ Click & Sign\nConfigures VCA"]
+    R --> S["Click & Sign Notifies Vendor\nVendor Signs VCA"]
+    S --> T["Click & Sign Notifies CEO\nCEO Signs VCA"]
+    T --> U["✍️ Click & Sign Notifies All\nCEO, AE, Vendor — Signed VCA"]
     
-    P --> Q([Active Vendor ✓])
+    U --> V["AE Uploads Signed VCA\nDropBox 🔗 + Vendor Portal"]
+    V --> W["Shopify Notifies Vendor\nOnboarding Complete + BTP Intro"]
+    
+    W --> X([Active Vendor ✓])
+    F --> END2([Vendor Rejected])
+    P --> END2
 
     style A fill:#e3f2fd,color:#1565c0
-    style Q fill:#e8f5e8,color:#2e7d32
-    style G fill:#ffebee,color:#c62828
-    style K fill:#f3e5f5,color:#7b1fa2
-    style O fill:#f3e5f5,color:#7b1fa2
-    style C fill:#fff3e0,color:#f57c00
+    style X fill:#e8f5e8,color:#2e7d32
+    style END2 fill:#ffebee,color:#c62828
+    style R fill:#f3e5f5,color:#7b1fa2
+    style S fill:#f3e5f5,color:#7b1fa2
+    style T fill:#f3e5f5,color:#7b1fa2
             </div>
             
             <div class="key-points">
-                <h4>Section 2 Automation Summary</h4>
+                <h4>Section 2 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 7 Shopify Flows (2.1–2.7)</li>
-                    <li>📧 7 email templates (E2.1–E2.7): 4 customer-facing, 3 internal</li>
-                    <li>📋 Form F2.1: 23-field Vendor KYC form</li>
-                    <li>📱 2 UAE PASS signing steps (vendor + CEO)</li>
-                    <li>🔗 Direct API: Idenfo, DropBox (folder + VCA upload/download)</li>
+                    <li>🔄 <strong>CEO approves BEFORE KYC</strong> (reversed from V1)</li>
+                    <li>✍️ <strong>Click & Sign</strong> replaces UAE PASS for VCA signing</li>
+                    <li>✅ <strong>KYC by Nomos</strong> manual vetting only</li>
+                    <li>❌ <strong>Nomos R&W verification removed</strong> — Click & Sign handles document integrity</li>
+                    <li>🆕 <strong>Telos CC'd</strong> on KYC approval</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section3">
-            <h2>Section 3: Item Consignment — 6 Flows · 8 Emails · 1 Form</h2>
-            <p class="section-description">CAC primary responsibility. Item Consignment Form (not Request). Expert authentication. Flows 3.1–3.6.</p>
+            <h2>Section 3: Item Consignment <span class="v2-badge">V2</span></h2>
+            <p class="section-description">AE primary (was CAC). CEO approval gate. External Consultant evaluation. Click & Sign ICF signing. Telos manages inventory. One item per request.</p>
             <a class="cross-ref" target="_blank" href="guide.html#item-consignment">📖 See Implementation Guide: Item Consignment Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A(["📋 Vendor Submits Form F3.1\nItem Consignment Form · 12 fields"]) --> B["⚡ Flow 3.1: New Consignment\n📧 E3.1 → CAC\n🔗 Create DropBox Folder"]
-    B --> C[CAC Preliminary Evaluation]
-    C --> D{Suitable?}
+    A(["Vendor Submits Item Consignment Request\n⚠️ One Item Per Request"]) --> B["Shopify Notifies AE"]
+    B --> C["AE Preliminary Evaluation\n🔗 Upload to DropBox"]
+    C --> D{Item Suitable?}
     
-    D -->|No| E([Item Rejected])
-    D -->|Yes| F["⚡ Flow 3.2: Viewing Scheduled\n📧 E3.2 → Vendor"]
+    D -->|No| E["AE Rejects via Shopify\nNotifies Vendor"]
+    D -->|Yes| F["AE Selects Viewing Timeslots"]
     
-    F --> G[CAC Views Item + Discusses Buy-Now]
-    G --> H[External Consultants Evaluate]
+    F --> G["Shopify Notifies Vendor\nPresents Timeslots"]
+    G --> H["Vendor Books Viewing\n📍 Auction House"]
     
-    H --> I{Authentic?}
-    I -->|No| E
-    I -->|Yes| J["⚡ Flow 3.3: Authenticated\n📧 E3.3 → Vendor: Sign via UAE PASS\n📧 E3.4 → BTP: Photoshoot"]
+    H --> I["AE Views Item with Vendor\nDiscusses Buy/Rent Now Price"]
+    I --> J["AE Discusses with CEO"]
     
-    J --> K["📱 Vendor Signs ICF via UAE PASS"]
-    K --> L["⚡ Flow 3.4: Vendor Signed\n📧 E3.5 → Nomos: Verify R&W"]
+    J --> K{CEO Approves Item?}
+    K -->|No| E
+    K -->|Yes| L["AE Selects Authentication Timeslots"]
     
-    L --> M{R&W OK?}
-    M -->|No| N([CEO Review])
-    M -->|Yes| O["⚡ Flow 3.5: Verified\n📧 E3.6 → CEO: Sign via UAE PASS"]
+    L --> M["CEO Emails External Consultant\nRequests Availability"]
+    M --> N["External Consultant\nEmails AE — Available"]
     
-    O --> P["📱 CEO Signs ICF"]
-    P --> Q["⚡ Flow 3.6: Fully Consigned\n📧 E3.7 → Vendor: Consigned\n📧 E3.8 → CAC: Collect Item\n🔗 Update Google Sheets"]
+    N --> O["Shopify Notifies Vendor\nPresents Auth Timeslots"]
+    O --> P["Vendor Books Authentication\n📍 Auction House"]
     
-    Q --> R([Ready for Catalog ✓])
+    P --> Q["External Consultant Evaluates\nStarting Price + Authenticity Report"]
+    Q --> R["AE Uploads Report to DropBox 🔗"]
+    
+    R --> S{Item Authentic?}
+    S -->|No| T["AE → BTP\nPhotoshoots & Descriptions"]
+    S -->|Yes| U["✍️ Click & Sign\nConfigures ICF"]
+    
+    U --> V["Vendor Signs ICF"]
+    V --> W["CEO Signs ICF"]
+    W --> X["✍️ Click & Sign Notifies\nCEO, AE, 📦 Telos, Vendor"]
+    
+    X --> Y["AE Uploads Signed ICF\nDropBox 🔗 + Vendor Portal"]
+    Y --> Z["AE Creates/Updates ICF\nUploads to DropBox"]
+    Z --> AA["📦 Telos Adds to Inventory\nStatus = Consigned"]
+    
+    AA --> BB([Item Consigned ✓])
 
     style A fill:#fff3e0,color:#f57c00
-    style R fill:#e8f5e8,color:#2e7d32
+    style BB fill:#e8f5e8,color:#2e7d32
     style E fill:#ffebee,color:#c62828
-    style K fill:#f3e5f5,color:#7b1fa2
-    style P fill:#f3e5f5,color:#7b1fa2
+    style U fill:#f3e5f5,color:#7b1fa2
+    style AA fill:#e3f2fd,color:#1565c0
             </div>
             
             <div class="key-points">
-                <h4>Section 3 Automation Summary</h4>
+                <h4>Section 3 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 6 Shopify Flows (3.1–3.6)</li>
-                    <li>📧 8 email templates (E3.1–E3.8): 3 customer-facing, 5 internal</li>
-                    <li>📋 Form F3.1: 12-field Item Consignment Form</li>
-                    <li>📱 2 UAE PASS signing steps (vendor + CEO)</li>
-                    <li>🔗 Direct API: DropBox (folder, auth report, forms), Google Sheets (tracker)</li>
+                    <li>🔄 <strong>AE is primary</strong> (was CAC in V1)</li>
+                    <li>🆕 <strong>CEO approval gate</strong> before External Consultant evaluation</li>
+                    <li>✍️ <strong>Click & Sign</strong> replaces UAE PASS for ICF signing</li>
+                    <li>📦 <strong>Telos</strong> adds items to inventory, sets status to "Consigned"</li>
+                    <li>❌ <strong>Nomos R&W verification removed</strong></li>
+                    <li>⚠️ <strong>One item per request</strong> enforced</li>
+                    <li>🔄 <strong>"Buy/Rent Now Price"</strong> terminology (was "buy-now price")</li>
+                    <li>🔄 <strong>"External Consultant"</strong> unified role name</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section4">
-            <h2>Section 4: Item Release — 7 Flows · 6 Emails · 1 Form</h2>
-            <p class="section-description">CEO approval gate. Invoice management. 7-day payment tracking with Nomos escalation. Flows 4.1–4.7.</p>
+            <h2>Section 4: Item Release <span class="v2-badge">V2</span></h2>
+            <p class="section-description">CEO approval gate. Telos invoicing. 7-day payment tracking. Telos → Nomos escalation. CEO negotiation loop.</p>
             <a class="cross-ref" target="_blank" href="guide.html#item-release">📖 See Implementation Guide: Item Release Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A(["📋 Vendor Submits Form F4.1\nRelease Request · 4 fields"]) --> B["⚡ Flow 4.1: Release Requested\n📧 E4.1 → AE: Negotiate"]
-    B --> C[AE Negotiates with Vendor]
-    C --> D{Negotiation OK?}
+    A(["Vendor Submits Item Release Request"]) --> B["Shopify Notifies AE"]
+    B --> C["AE Emails CEO\nRequests Release Approval"]
     
-    D -->|Yes| E([Agreement Fulfilled])
-    D -->|No| F["⚡ Flow 4.2: Negotiation Failed\n📧 E4.2 → CEO: Approve Release?"]
+    C --> D{CEO Approves?}
+    D -->|No| E["CEO Negotiates with Vendor\nTo Remain Consigned"]
     
-    F --> G{CEO Approves?}
-    G -->|No| H["⚡ Flow 4.4: Rejected\n📧 E4.4 → AE: Negotiate Again"]
-    G -->|Yes| I["⚡ Flow 4.3: Approved\n📧 E4.3 → Vendor CC: AE, CAC\n📧 E4.5 → CAC: Check Fees"]
+    E --> F{Negotiations OK?}
+    F -->|Yes| G([Agreement Fulfilled])
+    F -->|No| H["AE Negotiates with Vendor"]
+    H --> I{AE Negotiations OK?}
+    I -->|Yes| G
+    I -->|No| C
     
-    H --> C
+    D -->|Yes| J{Applicable Fees?}
     
-    I --> J{Applicable Fees?}
-    J -->|No| K([Release Complete ✓])
-    J -->|Yes| L["⚡ Flow 4.5: Invoice Sent\nSchedule Day 3 + Day 6 Reminders"]
+    J -->|No| K["CEO Emails Vendor\nApproves Release\nCC: AE, 📦 Telos"]
     
-    L --> M{"⚡ Flow 4.6: Daily Check\nPaid Within 7 Days?"}
-    M -->|Yes| N["⚡ Flow 4.7: Payment Received\n🔗 Update Google Sheets"]
-    M -->|No| O["📧 E4.6 → Nomos: Escalate\n+ AE, CAC"]
+    J -->|Yes| L["CEO Emails 📦 Telos\nTo Invoice Vendor"]
+    L --> M["📦 Telos Emails Vendor\nApplicable Invoice"]
     
-    N --> K
-    O --> P([Nomos Escalation])
+    M --> N{"📦 Telos Tracks\nPaid Within 7 Days?"}
+    N -->|Yes| O["📦 Telos Emails CEO\nPayment Confirmed"]
+    N -->|No| P["📦 Telos Elevates\nto Nomos"]
+    
+    O --> Q["📦 Telos Changes Status\nto Released"]
+    K --> R["CEO Emails Vendor\nItem Release Confirmed\nCC: AE, 📦 Telos"]
+    R --> Q
+    
+    Q --> S([Item Released ✓])
 
     style A fill:#fff3e0,color:#f57c00
-    style K fill:#e8f5e8,color:#2e7d32
-    style E fill:#e8f5e8,color:#2e7d32
+    style S fill:#e8f5e8,color:#2e7d32
+    style G fill:#e8f5e8,color:#2e7d32
     style P fill:#ffebee,color:#c62828
+    style L fill:#e3f2fd,color:#1565c0
+    style M fill:#e3f2fd,color:#1565c0
             </div>
             
             <div class="key-points">
-                <h4>Section 4 Automation Summary</h4>
+                <h4>Section 4 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 7 Shopify Flows (4.1–4.7) + 1 daily scheduled payment check</li>
-                    <li>📧 6 email templates (E4.1–E4.6)</li>
-                    <li>📋 Form F4.1: 4-field Release Request</li>
-                    <li>Auto-scheduled reminders at Day 3 and Day 6</li>
+                    <li>📦 <strong>Telos invoices vendor</strong> (was CAC)</li>
+                    <li>📦 <strong>Telos tracks payment</strong> and escalates to Nomos</li>
+                    <li>📦 <strong>Telos updates inventory</strong> status to "Released"</li>
+                    <li>🔄 <strong>CEO negotiation loop</strong> added when CEO says No</li>
+                    <li>🔄 <strong>CC: Telos</strong> replaces CC: CAC throughout</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section5">
-            <h2>Section 5: Auction Preparation — 8 Flows · 11 Emails · 1 Form</h2>
-            <p class="section-description">Catalog creation, marketing, free tickets (30d deadline), location-based vendor notifications, reverification. Flows 5.1–5.8.</p>
+            <h2>Section 5: Auction Preparation <span class="v2-badge">V2</span></h2>
+            <p class="section-description">Telos manages tracker/inventory/statuses. Free tickets (30d). Location-based vendor notifications. Handover window 14 days. Reverification.</p>
             <a class="cross-ref" target="_blank" href="guide.html#auction-prep">📖 See Implementation Guide: Auction Preparation Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A([Items Ready for Catalog]) --> B[CEO & GCEO Select Items]
-    B --> C["⚡ Flow 5.1: Items Cataloged\n📧 E5.1 → BTP: Prepare Marketing\n🔗 Update Google Sheets"]
+    A([Items Ready for Catalog]) --> B["CEO & GCEO Select Items\nFrom AA Website Product List"]
+    B --> C["CEO Emails AE + 📦 Telos\nNew Catalog + Auction Logistics"]
+    C --> D["CEO Emails BTP\nPrepare Marketing\nCC: AE, 📦 Telos"]
     
-    C --> D["⚡ Flow 5.5: Vendor Notifications\nBased on Item Locations"]
-    D --> E{"Item Locations?"}
-    E -->|Immovable| F["📧 E5.5a: Auction Selected + Free Tickets"]
-    E -->|At Vendor| G["📧 E5.5b: Handover Window + Free Tickets"]
-    E -->|Mixed| H["📧 E5.5c: Selective Collection + Free Tickets"]
+    C --> E["📦 Telos Updates Tracker\nStatus = Preparing"]
+    E --> F["📦 Telos Updates Items\nStatus = Cataloged"]
+    F --> G["📦 Telos Copies to\nCatalogs Sheet"]
     
-    C --> I[BTP Prepares Marketing]
-    I --> J["⚡ Flow 5.2: CEO Approves\n📧 E5.2 → GCEO"]
-    J --> K["⚡ Flow 5.3: GCEO Approves\n📧 E5.3 → BTP: Begin Campaign"]
+    C --> H["⚡ Vendor Notifications\nBased on Item Locations"]
+    H --> I{Item Locations?}
+    I -->|Immovable| J["Auction Selected + Free Tickets"]
+    I -->|At Vendor| K["Handover Window + Free Tickets"]
+    I -->|Mixed| L["Selective Collection + Free Tickets"]
     
-    C --> L["⚡ Flow 5.4: 30 Days Before\nClose Free Ticket Forms\n📧 E5.4 → CAC: Compile Invitees"]
-    L --> M["⚡ Flow 5.8: CEO Approves Invitees\n📧 E5.8 → Clients: Free Tickets\n📧 E5.9 → Clients: Tickets Available"]
+    D --> M["BTP Prepares Marketing\nEmails CEO (CC: AE, Telos)"]
+    M --> N["GCEO Reviews"]
+    N -->|Approved| O["CEO → BTP: Begin Marketing\nCC: AE, 📦 Telos"]
+    N -->|Changes| P["CEO → BTP: Revisions"]
+    P --> M
     
-    G --> N["⚡ Flow 5.6: 15 Days Before\nHandover Window Opens\n📧 E5.6 → Vendors"]
+    O --> Q["📦 Telos Updates Status\nto Marketing"]
     
-    N --> O["⚡ Flow 5.7: 1 Day Before\nBrand Specialist Reverification\n📧 E5.7 → Specialists"]
+    K --> R["⚡ 14 Days Before\nHandover Window Opens"]
     
-    O --> P([Auction Preparation Complete ✓])
+    C --> S["⚡ 30 Days Before\nFree Ticket Forms Close"]
+    S --> T["AE Compiles Invitees\nCEO Approves"]
+    T --> U["📦 Telos Updates\nFree Ticket Count"]
+    
+    R --> V["⚡ 1 Day Before\nExternal Consultant Reverification"]
+    
+    V --> W([Auction Preparation Complete ✓])
 
     style A fill:#e3f2fd,color:#1565c0
-    style P fill:#e8f5e8,color:#2e7d32
-    style L fill:#fff3e0,color:#f57c00
-    style N fill:#f3e5f5,color:#7b1fa2
+    style W fill:#e8f5e8,color:#2e7d32
+    style E fill:#e3f2fd,color:#1565c0
+    style Q fill:#e3f2fd,color:#1565c0
             </div>
             
             <div class="key-points">
-                <h4>Section 5 Automation Summary</h4>
+                <h4>Section 5 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 8 Shopify Flows (5.1–5.8) + 3 scheduled daily checks (30d, 15d, 1d)</li>
-                    <li>📧 11 email templates (E5.1–E5.9 + E5.5a/b/c): 6 customer-facing, 5 internal</li>
-                    <li>📋 Form F5.1: 7-field Free Ticket Request (auto-closes 30d before)</li>
-                    <li>3-variant location-based vendor notification system</li>
+                    <li>📦 <strong>Telos manages</strong> Auction Tracker, inventory statuses, catalogs sheet</li>
+                    <li>📦 <strong>Telos CC'd</strong> on catalog creation and marketing</li>
+                    <li>🔄 <strong>Handover window 14 days</strong> (was 15 in V1)</li>
+                    <li>📦 <strong>Telos tracks free tickets</strong></li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section6">
-            <h2>Section 6: Auction Execution — 10 Flows · 11 Emails</h2>
-            <p class="section-description">Live auction, 2-day/7-day payment tracking, Certificate of Ownership (dual UAE PASS), vendor payouts, unsold items. Flows 6.1–6.10.</p>
+            <h2>Section 6: Auction Execution <span class="v2-badge">V2</span></h2>
+            <p class="section-description">Telos handles all financial ops: payment tracking, fee deduction, vendor payouts, auction status, inventory updates.</p>
             <a class="cross-ref" target="_blank" href="guide.html#auction-exec">📖 See Implementation Guide: Auction Execution Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A(["⚡ Flow 6.1: Auction Live\n📧 E6.1 → All Clients\n💬 S1: SMS/WhatsApp"]) --> B[Clients Bid]
-    B --> C{Item Won?}
+    A(["AE Launches Auction\nNotifies Clients, AE, 📦 Telos"]) --> B["📦 Telos Changes Status\nto Live"]
+    B --> C[Clients Begin Bidding]
     
-    C -->|Buy-Now/Win| D["⚡ Flow 6.2: Item Sold\n📧 E6.2 → Buyer: Won!\n📧 E6.3 → AE, CAC\n💬 S2: SMS\n🔗 Update Sheets"]
-    C -->|No Winner| E["⚡ Flow 6.9: Auction Closed\nMark Unsold → Handover to Vendor"]
+    C --> D{Item Won?}
+    D -->|Yes| E["Shopify Notifies Buyer, AE\n📦 Telos, Vendor\nRequests Payment"]
+    D -->|No| F["Shopify Notifies AE + 📦 Telos\nUnsold Item"]
     
-    D --> F{"⚡ Flow 6.3: Daily Check\nPaid in 2 Days?"}
-    F -->|Yes| G["⚡ Flow 6.5: Payment Received\n📧 E6.7 → Buyer"]
-    F -->|No| H["📧 E6.4 → Buyer: Reminder\n📧 E6.5 → CAC, CC: AE\n💬 S3: SMS"]
+    E --> G{Paid in 2 Days?}
+    G -->|Yes| H["📦 Telos Updates\nPayment Date + Status = Paid"]
+    G -->|No| I["AE Emails Buyer Follow-up\nCC: 📦 Telos"]
     
-    H --> I{"⚡ Flow 6.4: Daily Check\nPaid in 7 Days?"}
-    I -->|Yes| G
-    I -->|No| J["📧 E6.6 → AE, CAC, Nomos"]
+    I --> J{Paid in 7 Days?}
+    J -->|Yes| H
+    J -->|No| K["Notify AE, 📦 Telos, Nomos\nLate Payment"]
     
-    G --> K["⚡ Flow 6.6: CEO Signs Certificate\n📱 UAE PASS"]
-    K --> L["📧 E6.8 → Buyer: Sign Certificate\n📱 UAE PASS"]
-    L --> M["⚡ Flow 6.7: Certificate Complete\n📧 E6.9 → Buyer: Collect Item"]
+    H --> L["📦 Telos Deducts Auction Fee"]
+    L --> M["📦 Telos Processes Vendor Payout\nStatus = Settled"]
     
-    M --> N["⚡ Flow 6.8: Vendor Payout\n🔗 Update Sheets"]
+    M --> N["📦 Telos Updates\nHammer Price, Sale Date, Buyer ID\nStatus = Sold"]
+    N --> O["📦 Telos Copies to Catalogs\nStatus = Completed"]
     
-    E --> O["📧 E6.10 → All Bidders\n📧 E6.11 → CEO, AE, CAC Summary"]
+    F --> P["📦 Telos Resets Unsold\nMoves Dates to Notes\nStatus = Consigned"]
     
-    M --> P([→ Handover to Buyer])
-    O --> Q([→ Handover to Vendor])
+    E --> Q["Shopify Closes Auction\nNotifies Bidders, AE, 📦 Telos"]
+    Q --> R["📦 Telos Status = Closed\nUpdates Tickets + Bidders"]
+    
+    N --> S([→ Handover to Buyer §8])
+    P --> T([→ Handover to Vendor §9])
 
     style A fill:#e3f2fd,color:#1565c0
-    style P fill:#e8f5e8,color:#2e7d32
-    style Q fill:#fff3e0,color:#f57c00
-    style J fill:#ffebee,color:#c62828
-    style K fill:#f3e5f5,color:#7b1fa2
-    style L fill:#f3e5f5,color:#7b1fa2
+    style S fill:#e8f5e8,color:#2e7d32
+    style T fill:#fff3e0,color:#f57c00
+    style K fill:#ffebee,color:#c62828
+    style H fill:#e3f2fd,color:#1565c0
+    style L fill:#e3f2fd,color:#1565c0
             </div>
             
             <div class="key-points">
-                <h4>Section 6 Automation Summary</h4>
+                <h4>Section 6 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 10 Shopify Flows (6.1–6.10) + 2 daily scheduled payment checks</li>
-                    <li>📧 11 email templates (E6.1–E6.11): 6 customer-facing, 5 internal</li>
-                    <li>💬 3 SMS/WhatsApp templates (S1–S3 via Zapier)</li>
-                    <li>📱 2 UAE PASS signing steps (CEO + buyer for Certificate)</li>
-                    <li>Immovable items: auto-skip physical handover, CAC contacts vendor</li>
+                    <li>📦 <strong>Telos handles all financial ops</strong> — payment tracking, fee deduction, vendor payouts</li>
+                    <li>📦 <strong>Telos manages all status changes</strong> — Live, Sold, Paid, Settled, Closed, Completed</li>
+                    <li>📦 <strong>Telos resets unsold items</strong> — moves dates to notes, clears active fields</li>
+                    <li>❌ <strong>Certificate of Ownership</strong> moved to Section 8 (buyer handover)</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section7">
-            <h2>Section 7: Item Handover to Aurelius — 7 Flows · 7 Emails · 2 Forms</h2>
-            <p class="section-description">Vendor appointment booking, multi-level reminders (5d/1d), inspection, strongroom, penalty enforcement. Flows 7.1–7.7.</p>
+            <h2>Section 7: Item Handover to Aurelius <span class="v2-badge">V2</span></h2>
+            <p class="section-description">Click & Sign for handover receipts. Telos signs + manages strongroom. 10/5/1-day reminders. 14-day window.</p>
             <a class="cross-ref" target="_blank" href="guide.html#handover-aurelius">📖 See Implementation Guide: Item Handover to Aurelius Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A(["⚡ Flow 7.1: 15 Days Before\nNotify Vendors\n📧 E7.1"]) --> B["📋 Form F7.1: Book Appointment\n6 fields · Vendor Portal"]
-    B --> C["⚡ Flow 7.2: Appointment Booked\n📧 E7.2 → Vendor Confirmation"]
+    A(["Handover Window Opens\n14 Days Before Auction"]) --> B["Vendor Books Appointment\nSelects Items + Timeslot"]
+    B --> C["Shopify Notifies AE + 📦 Telos"]
     
     C --> D{Vendor Brings Item?}
     
-    D -->|>5 Days Before| E["⚡ Flow 7.3: 5-Day Reminder\n📧 E7.3 → Vendor\n💬 S5: SMS"]
-    D -->|>1 Day Before| F["⚡ Flow 7.4: 1-Day Urgent\n📧 E7.4 → Vendor CC: Nomos"]
-    D -->|Auction Day| G["⚡ Flow 7.5: Missed\n📧 E7.5 → CEO"]
+    D -->|10 Days Before| E["Reminder to Vendor"]
+    D -->|5 Days Before| F["Reminder with Item List"]
+    D -->|1 Day Before| G["AE Follows Up\nCC: Nomos"]
+    D -->|Missed| H["AE Informs CEO"]
     
-    E --> H[AE Inspects Item]
-    F --> H
+    E --> I[AE Inspects Item]
+    F --> I
     
-    H --> I{"📋 Form F7.2: Handover Form\nItem Match?"}
-    I -->|Yes| J["⚡ Flow 7.7: Complete\nStrongroom + 🔗 DropBox\n📧 E7.7 → Vendor"]
-    I -->|No| K[Consult CEO]
+    I --> J{Matches ICF?}
+    J -->|No| K[CEO Decides Next Steps]
+    K --> L{Cancel?}
+    L -->|Yes| M["📦 Telos: Status = Cancelled\nRemoves from Catalogs\nEmails Nomos — Penalties"]
+    L -->|No| N[CEO Advises]
     
-    G --> L{Cancel?}
-    L -->|Yes| M["⚡ Flow 7.6: Cancelled\n📧 E7.6 → Vendor\nNomos Penalties"]
-    L -->|No| N[CEO Advises Next Steps]
+    J -->|Yes| O["AE Informs 📦 Telos"]
+    O --> P["✍️ Click & Sign\nConfigures Handover Receipt"]
+    P --> Q["Vendor Signs Receipt"]
+    Q --> R["📦 Telos Signs Receipt"]
+    R --> S["✍️ Click & Sign Notifies\nAE, 📦 Telos, Vendor"]
     
-    J --> O([Item Ready for Auction ✓])
-    M --> P([Item Cancelled])
+    S --> T["AE Uploads to\nDropBox 🔗 + Vendor Portal"]
+    T --> U["📦 Telos Places Item\nin Strongroom\nLocation = Strongroom"]
+    
+    H --> K
+    G --> I
+    
+    U --> V([Item Ready for Auction ✓])
+    M --> W([Item Cancelled])
 
     style A fill:#e3f2fd,color:#1565c0
-    style O fill:#e8f5e8,color:#2e7d32
-    style P fill:#ffebee,color:#c62828
-    style B fill:#fff3e0,color:#f57c00
+    style V fill:#e8f5e8,color:#2e7d32
+    style W fill:#ffebee,color:#c62828
+    style P fill:#f3e5f5,color:#7b1fa2
+    style U fill:#e3f2fd,color:#1565c0
             </div>
             
             <div class="key-points">
-                <h4>Section 7 Automation Summary</h4>
+                <h4>Section 7 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 7 Shopify Flows (7.1–7.7) + 3 daily scheduled checks (5d/1d/0d)</li>
-                    <li>📧 7 email templates (E7.1–E7.7): 5 customer-facing, 2 internal</li>
-                    <li>📋 Form F7.1: 6-field Appointment Booking + Form F7.2: 10-field Handover Form</li>
-                    <li>💬 1 SMS template (S5 via Zapier)</li>
+                    <li>✍️ <strong>Click & Sign</strong> for handover receipts (Vendor + Telos sign)</li>
+                    <li>📦 <strong>Telos signs</strong> handover receipts (was AE in V1)</li>
+                    <li>📦 <strong>Telos manages Strongroom</strong> — places item, updates location</li>
+                    <li>🆕 <strong>10-day reminder</strong> added (V1 had 5-day and 1-day only)</li>
+                    <li>🔄 <strong>14-day window</strong> (was 15 in V1)</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section8">
-            <h2>Section 8: Item Handover to Buyer — 4 Flows · 4 Emails · 1 Form</h2>
-            <p class="section-description">7/14 working day framework, CEO consultation for extended delays. Flows 8.1–8.4.</p>
+            <h2>Section 8: Item Handover to Buyer <span class="v2-badge">V2</span></h2>
+            <p class="section-description">5/10 business day windows. Click & Sign for handover + Acknowledgement of Obligation. Telos signs receipts. Certificate of Ownership manual CEO sign. Agent path.</p>
             <a class="cross-ref" target="_blank" href="guide.html#handover-buyer">📖 See Implementation Guide: Item Handover to Buyer Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A(["⚡ Flow 8.1: Certificate Complete\n📧 E8.1 → Buyer: Collect Item\n💬 S4: SMS"]) --> B{Collects in 7 Days?}
+    A([Payment Confirmed]) --> B{Agent Required?}
     
-    B -->|Yes| C["📋 Form F8.1: Handover Form\nAE + Buyer Sign"]
-    B -->|No| D["⚡ Flow 8.2: 7-Day Reminder\n📧 E8.2 → Buyer"]
+    B -->|Yes| C["AE Prepares Acknowledgement\nof Obligation"]
+    C --> D["✍️ Click & Sign\nBuyer Signs AoO"]
+    D --> E["AE Emails Agent\nCC: 📦 Telos"]
+    E --> F["Agent Coordinates\nVendor + Buyer"]
+    F --> G["📦 Telos Location = Agent"]
+    G --> H["External Consultant\nFacilitates Re-registration"]
     
-    D --> E{Collects in 14 Days?}
-    E -->|Yes| C
-    E -->|No| F["⚡ Flow 8.3: CEO Consultation\n📧 E8.3 → CEO"]
+    B -->|No| I["AE Prepares Certificate\nof Ownership"]
+    I --> J["CEO Signs Manually"]
+    J --> K["AE Scans + Uploads\nto DropBox 🔗"]
     
-    C --> G["⚡ Flow 8.4: Collection Complete\n🔗 DropBox + Portal Upload\n📧 E8.4 → Buyer\n🔗 Update Sheets: Location = Buyer"]
+    K --> L["AE Notifies Buyer\nMay Collect Item"]
+    L --> M{Collects in 5 Days?}
     
-    F --> H[CEO: Extend / Storage Fee / Alt Delivery]
+    M -->|Yes| N["AE Obtains Written\nConfirmation from Buyer"]
+    M -->|No| O{Collects in 10 Days?}
+    O -->|No| P["AE Emails Buyer Reminder\nConsults CEO"]
+    O -->|Yes| Q{Buyer Sends Proxy?}
     
-    G --> I([Item Delivered ✓])
+    Q -->|Yes| R["✍️ Click & Sign\nCollector Signs Handover Receipt"]
+    Q -->|No| N
+    
+    R --> S["📦 Telos Signs Receipt"]
+    S --> T["✍️ Click & Sign Notifies\nAE + Collector"]
+    
+    N --> U["AE Informs 📦 Telos\nOpen Strongroom"]
+    T --> U
+    
+    U --> V["📦 Telos Removes from Strongroom\nLocation = Buyer"]
+    V --> W["AE Uploads Receipt\nDropBox 🔗 + Client Portal"]
+    
+    W --> X([Item Delivered ✓])
 
     style A fill:#e3f2fd,color:#1565c0
-    style I fill:#e8f5e8,color:#2e7d32
-    style F fill:#fff3e0,color:#f57c00
+    style X fill:#e8f5e8,color:#2e7d32
+    style P fill:#fff3e0,color:#f57c00
+    style D fill:#f3e5f5,color:#7b1fa2
+    style R fill:#f3e5f5,color:#7b1fa2
+    style V fill:#e3f2fd,color:#1565c0
             </div>
             
             <div class="key-points">
-                <h4>Section 8 Automation Summary</h4>
+                <h4>Section 8 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 4 Shopify Flows (8.1–8.4) + 2 daily scheduled checks (7d/14d)</li>
-                    <li>📧 4 email templates (E8.1–E8.4): 3 customer-facing, 1 internal</li>
-                    <li>📋 Form F8.1: 8-field Buyer Handover Form</li>
-                    <li>💬 1 SMS template (S4 via Zapier)</li>
+                    <li>🔄 <strong>5/10 business days</strong> (was 7/14 working days)</li>
+                    <li>✍️ <strong>Click & Sign</strong> for handover receipts + Acknowledgement of Obligation</li>
+                    <li>📦 <strong>Telos signs</strong> handover receipts, manages strongroom</li>
+                    <li>🆕 <strong>Certificate of Ownership — manual CEO sign</strong> (no digital signing)</li>
+                    <li>🆕 <strong>Acknowledgement of Obligation</strong> — new document for agent path</li>
+                    <li>🆕 <strong>Agent path</strong> — new workflow branch with External Consultant re-registration</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section9">
-            <h2>Section 9: Item Handover to Vendor — 3 Flows · 3 Emails · 1 Form</h2>
-            <p class="section-description">7-day collection window for unsold items, fee invoicing for late collection. Flows 9.1–9.3.</p>
+            <h2>Section 9: Item Handover to Vendor <span class="v2-badge">V2</span></h2>
+            <p class="section-description">10/20 business day windows. Click & Sign for handover receipts. Telos signs, invoices, manages strongroom.</p>
             <a class="cross-ref" target="_blank" href="guide.html#handover-vendor">📖 See Implementation Guide: Item Handover to Vendor Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A(["⚡ Flow 9.1: Auction Closed\nGroup Unsold by Vendor\n📧 E9.1 → Vendors: Collect in 7 Days"]) --> B{Collects in 7 Days?}
+    A(["AE Notifies Vendors\nUnsold Items — Collect in 10 Days"]) --> B{Collects in 10 Days?}
     
-    B -->|Yes| C["📋 Form F9.1: Vendor Handover Form\nAE + Vendor Sign"]
-    B -->|No| D["⚡ Flow 9.2: Collection Overdue\n📧 E9.2 → Vendor: Fees Apply\nCAC Generates Invoice"]
+    B -->|No| C["Notify AE + 📦 Telos\nLate Recollection"]
+    C --> D{Collects in 20 Days?}
+    D -->|No| E["AE Consults CEO"]
+    D -->|Yes| F["📦 Telos Sends Invoice\nApplicable Fees"]
     
-    D --> E{Vendor Pays + Collects?}
-    E -->|Yes| C
-    E -->|No| F([Fee Enforcement])
+    B -->|Yes| F
     
-    C --> G["⚡ Flow 9.3: Collection Complete\n🔗 DropBox + Portal\n📧 E9.3 → Vendor\n🔗 Sheets: Location = Vendor"]
+    F --> G["📦 Telos Opens Strongroom"]
+    G --> H["✍️ Click & Sign\nConfigures Handover Receipt"]
+    H --> I["Vendor Signs Receipt"]
+    I --> J["📦 Telos Signs Receipt"]
+    J --> K["✍️ Click & Sign Notifies\nAE + Vendor"]
     
-    G --> H([Item Returned ✓])
+    K --> L["AE Uploads to\nDropBox 🔗 + Vendor Portal"]
+    L --> M["📦 Telos Removes from Strongroom\nLocation = Vendor"]
+    
+    M --> N([Item Returned ✓])
 
     style A fill:#e3f2fd,color:#1565c0
-    style H fill:#e8f5e8,color:#2e7d32
-    style F fill:#ffebee,color:#c62828
+    style N fill:#e8f5e8,color:#2e7d32
+    style E fill:#fff3e0,color:#f57c00
+    style H fill:#f3e5f5,color:#7b1fa2
+    style M fill:#e3f2fd,color:#1565c0
             </div>
             
             <div class="key-points">
-                <h4>Section 9 Automation Summary</h4>
+                <h4>Section 9 — V2 Changes</h4>
                 <ul>
-                    <li>⚡ 3 Shopify Flows (9.1–9.3) + 1 daily scheduled check</li>
-                    <li>📧 3 email templates (E9.1–E9.3): all customer-facing</li>
-                    <li>📋 Form F9.1: 8-field Vendor Handover Form</li>
+                    <li>🔄 <strong>10/20 business days</strong> (was 7 working days)</li>
+                    <li>✍️ <strong>Click & Sign</strong> for handover receipts</li>
+                    <li>📦 <strong>Telos signs</strong> receipts, sends invoices, manages strongroom</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section10">
-            <h2>Section 10: Complaint Management — 3 Flows · 3 Emails · 1 Form</h2>
-            <p class="section-description">Standardized email subjects, 72-hour auto-escalation to CEO. Flows 10.1–10.3.</p>
+            <h2>Section 10: Complaint Management <span class="v2-badge">V2</span></h2>
+            <p class="section-description">Standardized email subjects, AE → CEO escalation, resolution tracking. 72-hour auto-escalation kept as enhancement.</p>
             <a class="cross-ref" target="_blank" href="guide.html#complaint-mgmt">📖 See Implementation Guide: Complaint Management Flow</a>
             
             <div class="mermaid">
 flowchart TD
-    A(["📋 Form F10.1: Complaint\n6 fields"]) --> B["⚡ Flow 10.1: Registered\n📧 E10.1 → AE"]
-    B --> C["AE Emails CEO\nSubject: Client/Vendor Complaint:\nName, Type, Product"]
-    C --> D[AE Attempts Resolution]
+    A(["Client/Vendor Raises Complaint"]) --> B["AE Communicates with Complainant\nTakes Note of Issue"]
+    B --> C["AE Emails CEO\nCC: All Relevant Parties\n📧 Subject Format: Name, Type, Product"]
+    C --> D["AE Attempts Resolution"]
     D --> E{Resolved?}
     
-    E -->|Yes| F["⚡ Flow 10.2: Resolved\n📧 E10.2 → CEO CC: All Parties"]
-    E -->|No within 72h| G["⚡ Flow 10.3: Auto-Escalation\n📧 E10.3 → CEO: URGENT"]
+    E -->|Yes| F["AE Emails CEO\nResolution Details\nCC: All Parties"]
+    E -->|No within 72h| G["Escalates to CEO\nCC: All Parties"]
     
-    G --> H[CEO Intervenes & Resolves]
-    H --> F
+    G --> H["CEO Reviews + Intervenes\nEnsures Resolution"]
+    H --> I["CEO Confirms Resolution"]
+    I --> F
     
-    F --> I([Complaint Resolved ✓])
+    F --> J([Complaint Resolved ✓])
 
     style A fill:#fff3e0,color:#f57c00
-    style I fill:#e8f5e8,color:#2e7d32
+    style J fill:#e8f5e8,color:#2e7d32
     style G fill:#ffebee,color:#c62828
             </div>
             
             <div class="key-points">
-                <h4>Section 10 Automation Summary</h4>
+                <h4>Section 10 — V2 Notes</h4>
                 <ul>
-                    <li>⚡ 3 Shopify Flows (10.1–10.3) + 1 daily scheduled 72h check</li>
-                    <li>📧 3 email templates (E10.1–E10.3): all internal</li>
-                    <li>📋 Form F10.1: 6-field Complaint Form</li>
-                    <li>Standardized subject: "[Client/Vendor] Complaint: [Name], [Type], [Product]"</li>
+                    <li>✅ <strong>Largely unchanged</strong> from V1</li>
+                    <li>📧 <strong>Subject format:</strong> "Client/Vendor Complaints: Name, Type, Product"</li>
+                    <li>⏰ <strong>72-hour auto-escalation</strong> kept as implementation enhancement</li>
                 </ul>
             </div>
         </div>
 
         <div class="section" id="section11">
-            <h2>Section 11: New Auction Tracker Setup — 2 Flows · 1 Email</h2>
-            <p class="section-description">CEO-GCEO collaboration, template tracker, Tentative status. Flows 11.1–11.2.</p>
+            <h2>Section 11: New Auction Tracker Setup <span class="v2-badge">V2</span></h2>
+            <p class="section-description">CEO-GCEO collaboration, template tracker, Tentative status. Unchanged from V1.</p>
             <a class="cross-ref" target="_blank" href="guide.html#auction-tracker">📖 See Implementation Guide: Auction Tracker Setup Flow</a>
             
             <div class="mermaid">
 flowchart TD
     A([CEO + GCEO Discussion]) --> B[Fill Template Auction Tracker]
-    B --> C["⚡ Flow 11.1: New Auction Created\nSet All Status = Tentative\n📧 E11.1 → AE, CAC\n🔗 Create Google Sheets Tracker"]
+    B --> C["Set All Statuses = Tentative"]
     
     C --> D[Set Parameters]
     D --> E[Auction Start/End DateTime]
     D --> F[Ticket Launch DateTime]
     D --> G[Target/Max Tickets]
+    D --> H[Auction Fee Percentage]
+    D --> I[Ticket Price]
     
-    E --> H["⚡ Flow 11.2: Status Changes\n🔗 Update Google Sheets"]
-    F --> H
-    G --> H
+    E --> J["Status Lifecycle:\nTentative → Preparing → Marketing\n→ Live → Closed → Completed\n(+ On Hold)"]
     
-    H --> I["Tentative → Preparing → Marketing → Live → Closed → Completed"]
-    
-    I --> J([→ Auction Preparation Workflow])
+    J --> K([→ Auction Preparation §5])
 
     style A fill:#e3f2fd,color:#1565c0
-    style J fill:#e8f5e8,color:#2e7d32
-            </div>
-            
-            <div class="key-points">
-                <h4>Section 11 Automation Summary</h4>
-                <ul>
-                    <li>⚡ 2 Shopify Flows (11.1–11.2)</li>
-                    <li>📧 1 email template (E11.1): internal</li>
-                    <li>🔗 Google Sheets: create tracker from template</li>
-                    <li>Status lifecycle: Tentative → Preparing → Marketing → Live → Closed → Completed (+ On Hold)</li>
-                </ul>
+    style K fill:#e8f5e8,color:#2e7d32
             </div>
         </div>
 
         <div class="section" id="integrations">
-            <h2>Technology Integration Architecture</h2>
-            <p class="section-description">Complete integration map: Direct REST APIs for Idenfo, DropBox, Google Sheets. UAE PASS deep links (V1). Zapier for SMS/WhatsApp only (5 zaps).</p>
+            <h2>Technology Integration Architecture <span class="v2-badge">V2</span></h2>
+            <p class="section-description">Click & Sign for all document signing. Telos integration added. DropBox + Google Sheets unchanged.</p>
             <a class="cross-ref" target="_blank" href="guide.html#tech-stack">📖 See Implementation Guide: Technology Stack</a>
             
             <div class="mermaid">
 flowchart LR
     subgraph SHOPIFY["SHOPIFY CORE"]
-        A["Customers\n50 metafields\n24 tags"]
-        B["Products\n48 metafields\n36 tags"]
-        C["Collections\n13 metafields\n4 tags"]
+        A["Customers"]
+        B["Products"]
+        C["Collections"]
         D["Orders & Payments"]
     end
     
-    subgraph ENGINE["⚡ AURELIUS ENGINE (Custom App)"]
-        E["Bid API\nNode.js + PostgreSQL"]
-        F["Metafield Manager\nBulk Updates"]
-        G["Document Signing\nUAE PASS Coordinator"]
-        H["Scheduled Tasks\n14 Daily/Weekly Crons"]
+    subgraph ENGINE["⚡ AURELIUS ENGINE"]
+        E["Bid API"]
+        F["Metafield Manager"]
+        G["Signing Coordinator"]
+        H["Scheduled Tasks"]
     end
     
-    subgraph FLOWS["⚡ SHOPIFY FLOW — 64 FLOWS"]
-        I["50 Event-Driven Flows"]
-        J["14 Scheduled Checks"]
+    subgraph FLOWS["⚡ SHOPIFY FLOW"]
+        I["~50 Event-Driven"]
+        J["~14 Scheduled"]
     end
     
-    subgraph DIRECT["🔗 DIRECT REST APIs"]
-        K["Idenfo KYC\nIdentity · Sanctions · PEP\nDocument Verification"]
-        L["DropBox\nFolders: /Clients /Vendors\n/Items /Auctions\nUpload · Download · Share"]
-        M["Google Sheets\nApps Script Webhook\n7 Actions: consignment,\nauction, inventory, sale,\npayout, status, create"]
+    subgraph DIRECT["🔗 DIRECT APIS"]
+        L["DropBox\nDocument Storage"]
+        M["Google Sheets\nApps Script Webhook"]
     end
     
-    subgraph LINKS["📱 UAE PASS — Deep Links V1"]
-        N["VCA Signing\nICF Signing\nCertificate Signing"]
+    subgraph SIGNING["✍️ CLICK & SIGN"]
+        CS1["VCA Signing (§2)"]
+        CS2["ICF Signing (§3)"]
+        CS3["Handover Receipts (§7,8,9)"]
+        CS4["Acknowledgement of Obligation (§8)"]
     end
 
-    subgraph ZAPIER["💬 ZAPIER — 5 ZAPS ONLY"]
-        O["S1: Auction Live\nS2: Item Won\nS3: Payment Reminder\nS4: Collection Ready\nS5: Handover Reminder"]
+    subgraph ZAPIER["💬 ZAPIER — 5 ZAPS"]
+        O["S1-S5: SMS/WhatsApp"]
     end
     
     A --> I
@@ -741,17 +838,19 @@ flowchart LR
     I --> E
     J --> H
     
-    E --> K
     E --> L
     E --> M
-    G --> N
+    G --> CS1
+    G --> CS2
+    G --> CS3
+    G --> CS4
     H --> O
 
     style SHOPIFY fill:#e8f5e8,color:#2e7d32
     style ENGINE fill:#e3f2fd,color:#1565c0
     style FLOWS fill:#fff3e0,color:#f57c00
     style DIRECT fill:#e3f2fd,color:#1565c0
-    style LINKS fill:#f3e5f5,color:#7b1fa2
+    style SIGNING fill:#f3e5f5,color:#7b1fa2
     style ZAPIER fill:#fff3e0,color:#f57c00
             </div>
             
@@ -760,73 +859,61 @@ flowchart LR
                     <tr>
                         <th>Integration</th>
                         <th>Method</th>
-                        <th>Purpose</th>
-                        <th>Usage Across Sections</th>
+                        <th>V2 Status</th>
+                        <th>Usage</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>Idenfo KYC</code></td>
-                        <td>Direct REST API</td>
-                        <td>Identity, sanctions, PEP, document verification</td>
-                        <td>Sections 1 & 2 — Dual KYC</td>
+                        <td><code>Click & Sign</code></td>
+                        <td>API/Platform</td>
+                        <td>🆕 NEW</td>
+                        <td>Sections 2, 3, 7, 8, 9 — all document signing</td>
+                    </tr>
+                    <tr>
+                        <td><code>Telos</code></td>
+                        <td>Manual/Email + Spreadsheet</td>
+                        <td>🆕 NEW</td>
+                        <td>Sections 1-9 — inventory, financial, strongroom</td>
                     </tr>
                     <tr>
                         <td><code>DropBox</code></td>
                         <td>Direct REST API</td>
-                        <td>Document storage: /Clients, /Vendors, /Items, /Auctions</td>
-                        <td>All 11 sections</td>
+                        <td>✅ Unchanged</td>
+                        <td>All sections — document storage</td>
                     </tr>
                     <tr>
                         <td><code>Google Sheets</code></td>
                         <td>Apps Script Webhook</td>
-                        <td>Tracker updates: 7 action types via doPost handler</td>
-                        <td>Sections 3–11</td>
-                    </tr>
-                    <tr>
-                        <td><code>UAE PASS</code></td>
-                        <td>Deep Links (V1)</td>
-                        <td>Digital signing: VCA, ICF, Certificate of Ownership</td>
-                        <td>Sections 2, 3, 6</td>
+                        <td>✅ Unchanged</td>
+                        <td>Sections 3-11 — tracker updates (Telos manages)</td>
                     </tr>
                     <tr>
                         <td><code>SMS/WhatsApp</code></td>
                         <td>Zapier → Twilio (5 zaps)</td>
-                        <td>External notifications</td>
-                        <td>Sections 6, 7, 8</td>
+                        <td>✅ Unchanged</td>
+                        <td>Sections 6, 7, 8 — external notifications</td>
                     </tr>
-                    <tr>
-                        <td><code>Shopify Flow</code></td>
-                        <td>Native (64 flows)</td>
-                        <td>Internal workflow orchestration</td>
-                        <td>All 11 sections</td>
-                    </tr>
-                    <tr>
-                        <td><code>Custom App</code></td>
-                        <td>Node.js + PostgreSQL</td>
-                        <td>Bidding, metafield mgmt, signing, scheduled tasks</td>
-                        <td>All 11 sections</td>
-                    </tr>
+
                 </tbody>
             </table>
             
             <div class="key-points">
-                <h4>Integration Cost: ~AED 350/month</h4>
+                <h4>V2 Integration Changes</h4>
                 <ul>
-                    <li>Direct APIs reduce cost and improve reliability vs Zapier-for-everything</li>
-                    <li>Shopify Flow handles all internal workflows — no external automation needed</li>
-                    <li>Zapier limited to 5 SMS/WhatsApp zaps only</li>
-                    <li>V2 roadmap: Full UAE PASS API, direct SMS/WhatsApp, Google Drive migration</li>
+                    <li>✍️ <strong>Click & Sign</strong> added — handles all document signing across 5 sections</li>
+                    <li>📦 <strong>Telos</strong> added — manages inventory, financial ops, strongroom (define API vs manual)</li>
+                    <li>✅ <strong>KYC</strong> handled entirely by Nomos manual vetting</li>
                 </ul>
             </div>
         </div>
 
         <div class="document-footer">
-            <p><strong>Version:</strong> 1.1 (Updated with Shopify Blueprint Specifications)</p>
-            <p><strong>Date:</strong> February 2026</p>
+            <p><strong>Version:</strong> 2.0 (Updated to SOP V2 — 05.03.2026)</p>
+            <p><strong>Date:</strong> March 2026</p>
             <p><strong>Status:</strong> Implementation Ready</p>
-            <p><strong>Stats:</strong> 64 Flows · 70 Emails · 10 Forms · 111 Metafields · 64 Tags · 5 Zapier Zaps · ~AED 350/month</p>
-            <p><strong>Reference:</strong> Aurelius Shopify Blueprint v1.0 + CEO-Approved SOP v1 (12.02.2026)</p>
+            <p><strong>Key V2 Changes:</strong> Click & Sign (signing) · Telos (inventory/financial/strongroom) · KYC by Nomos only · CEO before KYC</p>
+            <p><strong>Reference:</strong> Aurelius Auctions Workflow V2 (05.03.2026)</p>
         </div>
     </div>
 
