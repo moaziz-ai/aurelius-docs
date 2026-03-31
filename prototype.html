@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelius Auctions — Platform</title>
+<style>
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: #1a1a26;
+    --bg-hover: #22222e;
+    --bg-input: #16161f;
+    --border: #2a2a3a;
+    --border-light: #333346;
+    --text-primary: #f0f0f5;
+    --text-secondary: #8888a0;
+    --text-muted: #5a5a72;
+    --accent: #6c5ce7;
+    --accent-hover: #7c6cf7;
+    --accent-dim: rgba(108,92,231,0.15);
+    --green: #00b894;
+    --green-dim: rgba(0,184,148,0.15);
+    --red: #e74c3c;
+    --red-dim: rgba(231,76,60,0.15);
+    --orange: #f39c12;
+    --orange-dim: rgba(243,156,18,0.15);
+    --blue: #3498db;
+    --blue-dim: rgba(52,152,219,0.15);
+    --gold: #d4a853;
+    --gold-dim: rgba(212,168,83,0.15);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height:100vh; }
+  
+  /* ── Top Nav ── */
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding: 0 28px; height:56px; background:var(--bg-secondary); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; letter-spacing:0.5px; }
+  .logo svg { width:26px; height:26px; }
+  .logo .dot { color:var(--gold); }
+  .tabs { display:flex; gap:2px; }
+  .tab { padding:8px 18px; border-radius:var(--radius-sm); font-size:13px; font-weight:500; color:var(--text-secondary); cursor:pointer; transition:all .15s; border:none; background:none; }
+  .tab:hover { color:var(--text-primary); background:var(--bg-hover); }
+  .tab.active { color:var(--text-primary); background:var(--accent-dim); color:var(--accent); }
+  .topbar-right { display:flex; align-items:center; gap:14px; }
+  .avatar { width:30px; height:30px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:600; }
+  .notif-bell { position:relative; cursor:pointer; color:var(--text-secondary); }
+  .notif-bell .dot { position:absolute; top:-2px; right:-2px; width:7px; height:7px; background:var(--red); border-radius:50%; }
+
+  /* ── Utility ── */
+  .view { display:none; padding:28px; max-width:1400px; margin:0 auto; }
+  .view.active { display:block; }
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  .card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
+  .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+  .card-title { font-size:14px; font-weight:600; color:var(--text-primary); }
+  .card-subtitle { font-size:12px; color:var(--text-muted); }
+  .stat-card { text-align:left; }
+  .stat-value { font-size:28px; font-weight:700; margin:6px 0 4px; }
+  .stat-label { font-size:12px; color:var(--text-secondary); font-weight:500; text-transform:uppercase; letter-spacing:0.5px; }
+  .stat-change { font-size:11px; font-weight:500; }
+  .stat-change.up { color:var(--green); }
+  .stat-change.down { color:var(--red); }
+  .badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+  .badge-green { background:var(--green-dim); color:var(--green); }
+  .badge-orange { background:var(--orange-dim); color:var(--orange); }
+  .badge-red { background:var(--red-dim); color:var(--red); }
+  .badge-blue { background:var(--blue-dim); color:var(--blue); }
+  .badge-accent { background:var(--accent-dim); color:var(--accent); }
+  .badge-gold { background:var(--gold-dim); color:var(--gold); }
+  .btn { padding:8px 18px; border-radius:var(--radius-sm); font-size:13px; font-weight:600; border:none; cursor:pointer; transition:all .15s; }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { background:var(--accent-hover); }
+  .btn-ghost { background:transparent; color:var(--text-secondary); border:1px solid var(--border); }
+  .btn-ghost:hover { border-color:var(--border-light); color:var(--text-primary); }
+  .btn-green { background:var(--green); color:#fff; }
+  .btn-red { background:var(--red); color:#fff; }
+  .btn-sm { padding:5px 12px; font-size:12px; }
+  .section-title { font-size:18px; font-weight:700; margin-bottom:18px; }
+  .section-sub { font-size:13px; color:var(--text-secondary); margin-bottom:20px; }
+
+  /* ── Tables ── */
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:left; font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; padding:10px 14px; border-bottom:1px solid var(--border); }
+  td { padding:12px 14px; font-size:13px; border-bottom:1px solid var(--border); color:var(--text-secondary); }
+  tr:hover td { background:var(--bg-hover); }
+  td:first-child { color:var(--text-primary); font-weight:500; }
+
+  /* ════════════════════════════════ */
+  /* 1. CLIENT PORTAL               */
+  /* ════════════════════════════════ */
+  .client-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+  .client-header h1 { font-size:22px; font-weight:700; }
+  .client-header .search { background:var(--bg-input); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px 14px; color:var(--text-primary); font-size:13px; width:280px; outline:none; }
+  .client-header .search:focus { border-color:var(--accent); }
+  .filter-bar { display:flex; gap:8px; margin-bottom:22px; }
+  .filter-chip { padding:6px 14px; border-radius:20px; font-size:12px; font-weight:500; background:var(--bg-card); border:1px solid var(--border); color:var(--text-secondary); cursor:pointer; transition:all .15s; }
+  .filter-chip.active, .filter-chip:hover { background:var(--accent-dim); border-color:var(--accent); color:var(--accent); }
+
+  .catalog-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:18px; }
+  .catalog-item { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:all .2s; }
+  .catalog-item:hover { border-color:var(--border-light); transform:translateY(-2px); box-shadow:var(--shadow); }
+  .catalog-img { width:100%; height:200px; background:var(--bg-hover); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:12px; position:relative; }
+  .catalog-img .auth-badge { position:absolute; top:10px; right:10px; background:var(--green); color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:4px; }
+  .catalog-img .lot-num { position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.6); color:#fff; font-size:10px; font-weight:600; padding:3px 8px; border-radius:4px; }
+  .catalog-body { padding:16px; }
+  .catalog-brand { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+  .catalog-name { font-size:14px; font-weight:600; margin-bottom:10px; }
+  .catalog-price-row { display:flex; justify-content:space-between; align-items:baseline; }
+  .catalog-bid { font-size:18px; font-weight:700; color:var(--gold); }
+  .catalog-start { font-size:11px; color:var(--text-muted); }
+  .catalog-timer { font-size:11px; color:var(--orange); margin-top:8px; }
+
+  /* Item Detail Modal */
+  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:200; align-items:center; justify-content:center; }
+  .modal-overlay.show { display:flex; }
+  .modal { background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; width:90%; max-width:800px; max-height:90vh; overflow-y:auto; }
+  .modal-close { float:right; background:none; border:none; color:var(--text-muted); font-size:20px; cursor:pointer; padding:16px; }
+  .modal-content { padding:28px; }
+  .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .modal-img { width:100%; height:320px; background:var(--bg-hover); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:13px; }
+  .modal-details h2 { font-size:20px; font-weight:700; margin-bottom:4px; }
+  .modal-details .brand { font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
+  .modal-meta { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+  .modal-meta-item { }
+  .modal-meta-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; }
+  .modal-meta-value { font-size:16px; font-weight:600; margin-top:2px; }
+  .modal-meta-value.gold { color:var(--gold); }
+  .bid-section { margin-top:20px; display:flex; gap:10px; }
+  .bid-input { flex:1; background:var(--bg-input); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; color:var(--text-primary); font-size:14px; outline:none; }
+  .bid-input:focus { border-color:var(--accent); }
+
+  /* My Account Sub-tab */
+  .client-subtabs { display:flex; gap:0; margin-bottom:24px; border-bottom:1px solid var(--border); }
+  .client-subtab { padding:10px 20px; font-size:13px; font-weight:500; color:var(--text-secondary); cursor:pointer; border-bottom:2px solid transparent; transition:all .15s; background:none; border-top:none; border-left:none; border-right:none; }
+  .client-subtab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .client-subview { display:none; }
+  .client-subview.active { display:block; }
+  .account-grid { display:grid; grid-template-columns:280px 1fr; gap:24px; }
+  .account-sidebar .card { margin-bottom:16px; }
+  .kyc-status { display:flex; align-items:center; gap:10px; margin:12px 0; }
+  .kyc-icon { width:40px; height:40px; border-radius:50%; background:var(--green-dim); display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .won-item { display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); }
+  .won-item:last-child { border:none; }
+  .won-thumb { width:56px; height:56px; background:var(--bg-hover); border-radius:var(--radius-sm); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--text-muted); }
+  .won-info { flex:1; }
+  .won-name { font-size:13px; font-weight:600; }
+  .won-price { font-size:14px; font-weight:700; color:var(--gold); margin-top:2px; }
+  .won-date { font-size:11px; color:var(--text-muted); margin-top:2px; }
+
+  /* ════════════════════════════════ */
+  /* 2. AE DASHBOARD                 */
+  /* ════════════════════════════════ */
+  .ae-layout { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 56px); margin: -28px; }
+  .ae-sidebar { background:var(--bg-secondary); border-right:1px solid var(--border); padding:20px 0; }
+  .ae-sidebar .nav-section { padding:0 16px; margin-bottom:20px; }
+  .ae-sidebar .nav-label { font-size:10px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; padding:0 12px; }
+  .ae-sidebar .nav-item { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:var(--radius-sm); font-size:13px; color:var(--text-secondary); cursor:pointer; margin-bottom:2px; transition:all .12s; }
+  .ae-sidebar .nav-item:hover { background:var(--bg-hover); color:var(--text-primary); }
+  .ae-sidebar .nav-item.active { background:var(--accent-dim); color:var(--accent); }
+  .ae-sidebar .nav-item .icon { width:18px; text-align:center; }
+  .ae-sidebar .nav-item .count { margin-left:auto; font-size:11px; background:var(--bg-hover); padding:1px 7px; border-radius:10px; }
+  .ae-main { padding:28px; overflow-y:auto; }
+  .ae-main .greeting { font-size:22px; font-weight:700; margin-bottom:4px; }
+  .ae-main .greeting-sub { font-size:13px; color:var(--text-secondary); margin-bottom:24px; }
+
+  .kanban { display:grid; grid-template-columns:repeat(5, 1fr); gap:14px; }
+  .kanban-col { }
+  .kanban-header { font-size:12px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; justify-content:space-between; }
+  .kanban-header .count { background:var(--bg-hover); padding:1px 8px; border-radius:10px; font-size:11px; }
+  .kanban-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px; margin-bottom:8px; cursor:pointer; transition:all .15s; }
+  .kanban-card:hover { border-color:var(--border-light); }
+  .kanban-card .k-name { font-size:13px; font-weight:600; margin-bottom:4px; }
+  .kanban-card .k-detail { font-size:11px; color:var(--text-muted); }
+  .kanban-card .k-value { font-size:12px; color:var(--gold); margin-top:6px; font-weight:600; }
+
+  .activity-item { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); align-items:flex-start; }
+  .activity-item:last-child { border:none; }
+  .activity-dot { width:8px; height:8px; border-radius:50%; margin-top:5px; flex-shrink:0; }
+  .activity-text { font-size:13px; color:var(--text-secondary); }
+  .activity-text strong { color:var(--text-primary); font-weight:600; }
+  .activity-time { font-size:11px; color:var(--text-muted); margin-top:2px; }
+
+  .appt-item { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
+  .appt-item:last-child { border:none; }
+  .appt-left { display:flex; gap:12px; align-items:center; }
+  .appt-time { font-size:12px; font-weight:600; color:var(--accent); min-width:50px; }
+  .appt-name { font-size:13px; font-weight:500; }
+  .appt-type { font-size:11px; color:var(--text-muted); }
+
+  /* ════════════════════════════════ */
+  /* 3. CEO MOBILE                   */
+  /* ════════════════════════════════ */
+  .ceo-wrapper { max-width:400px; margin:0 auto; padding:0; }
+  .ceo-phone { background:var(--bg-secondary); border:1px solid var(--border); border-radius:20px; overflow:hidden; min-height:700px; }
+  .ceo-status-bar { display:flex; justify-content:space-between; padding:8px 20px; font-size:11px; color:var(--text-muted); }
+  .ceo-header { padding:20px 20px 16px; }
+  .ceo-header h2 { font-size:20px; font-weight:700; }
+  .ceo-header .date { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .ceo-digest { margin:0 16px 16px; background:var(--accent-dim); border:1px solid rgba(108,92,231,0.25); border-radius:12px; padding:16px; }
+  .ceo-digest .digest-title { font-size:13px; font-weight:600; color:var(--accent); margin-bottom:6px; }
+  .ceo-digest .digest-items { font-size:13px; color:var(--text-secondary); line-height:1.6; }
+  .ceo-section-title { font-size:13px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; padding:0 20px; margin:16px 0 10px; }
+  .ceo-card { margin:0 16px 12px; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .ceo-card .item-row { display:flex; gap:12px; margin-bottom:12px; }
+  .ceo-card .item-thumb { width:52px; height:52px; background:var(--bg-hover); border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--text-muted); }
+  .ceo-card .item-info h4 { font-size:14px; font-weight:600; }
+  .ceo-card .item-info .sub { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .ceo-card .item-info .val { font-size:15px; font-weight:700; color:var(--gold); margin-top:4px; }
+  .ceo-buttons { display:flex; gap:10px; }
+  .ceo-buttons .btn { flex:1; padding:10px; border-radius:10px; font-size:14px; font-weight:700; text-align:center; }
+  .ceo-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px; }
+  .ceo-stat { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+  .ceo-stat .val { font-size:22px; font-weight:700; }
+  .ceo-stat .lbl { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .ceo-home-bar { display:flex; justify-content:center; padding:12px; }
+  .ceo-home-bar .bar { width:120px; height:4px; background:var(--text-muted); border-radius:2px; }
+
+  /* ════════════════════════════════ */
+  /* 4. TELOS OPERATIONS             */
+  /* ════════════════════════════════ */
+  .chart-placeholder { height:200px; background:var(--bg-hover); border-radius:var(--radius); display:flex; align-items:flex-end; justify-content:center; gap:8px; padding:20px; }
+  .chart-bar { width:36px; border-radius:4px 4px 0 0; }
+  .auction-status { display:flex; gap:8px; flex-wrap:wrap; }
+  .auction-badge { display:flex; align-items:center; gap:8px; padding:10px 16px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); }
+  .auction-badge .pulse { width:8px; height:8px; border-radius:50%; }
+  .auction-badge .info { }
+  .auction-badge .name { font-size:13px; font-weight:600; }
+  .auction-badge .detail { font-size:11px; color:var(--text-muted); }
+
+  /* ════════════════════════════════ */
+  /* 5. NOMOS COMPLIANCE             */
+  /* ════════════════════════════════ */
+  .kyc-row { cursor:pointer; }
+  .kyc-row td:last-child { text-align:right; }
+  .expandable-row { display:none; }
+  .expandable-row.show { display:table-row; }
+  .expandable-row td { background:var(--bg-secondary); padding:16px 14px; }
+  .expand-content { display:flex; gap:20px; }
+  .expand-content .doc-list { list-style:none; }
+  .expand-content .doc-list li { padding:4px 0; font-size:12px; color:var(--text-secondary); }
+  .expand-content .doc-list li::before { content:"📄 "; }
+  .escalation-item { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
+  .escalation-item:last-child { border:none; }
+  .esc-left { }
+  .esc-title { font-size:13px; font-weight:600; }
+  .esc-sub { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .audit-row td { font-size:12px; }
+
+  /* ── Responsive ── */
+  @media(max-width:900px) {
+    .grid-4 { grid-template-columns:1fr 1fr; }
+    .kanban { grid-template-columns:1fr 1fr; }
+    .modal-grid { grid-template-columns:1fr; }
+    .ae-layout { grid-template-columns:1fr; }
+    .ae-sidebar { display:none; }
+    .account-grid { grid-template-columns:1fr; }
+  }
+  @media(max-width:600px) {
+    .tabs { display:none; }
+    .grid-2, .grid-3 { grid-template-columns:1fr; }
+    .catalog-grid { grid-template-columns:1fr; }
+  }
+
+  /* Mobile menu */
+  .mobile-menu-btn { display:none; background:none; border:none; color:var(--text-secondary); font-size:20px; cursor:pointer; }
+  @media(max-width:600px) { .mobile-menu-btn { display:block; } }
+  .mobile-dropdown { display:none; position:absolute; top:56px; left:0; right:0; background:var(--bg-secondary); border-bottom:1px solid var(--border); padding:10px; z-index:99; }
+  .mobile-dropdown.show { display:flex; flex-direction:column; gap:4px; }
+  .mobile-dropdown .tab { text-align:left; }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="topbar">
+  <div class="logo">
+    <svg viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="12" stroke="#d4a853" stroke-width="1.5"/><path d="M8 18L13 7L18 18" stroke="#d4a853" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="10" y1="14" x2="16" y2="14" stroke="#d4a853" stroke-width="1.2"/></svg>
+    AURELIUS<span class="dot">.</span>
+  </div>
+  <div class="tabs" id="mainTabs">
+    <button class="tab active" onclick="switchView('client')">Client Portal</button>
+    <button class="tab" onclick="switchView('ae')">AE Dashboard</button>
+    <button class="tab" onclick="switchView('ceo')">CEO Mobile</button>
+    <button class="tab" onclick="switchView('telos')">Telos Ops</button>
+    <button class="tab" onclick="switchView('nomos')">Nomos Compliance</button>
+  </div>
+  <button class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.toggle('show')">☰</button>
+  <div class="topbar-right">
+    <div class="notif-bell">🔔<div class="dot"></div></div>
+    <div class="avatar">MA</div>
+  </div>
+</div>
+<div class="mobile-dropdown" id="mobileMenu">
+  <button class="tab active" onclick="switchView('client');this.parentElement.classList.remove('show')">Client Portal</button>
+  <button class="tab" onclick="switchView('ae');this.parentElement.classList.remove('show')">AE Dashboard</button>
+  <button class="tab" onclick="switchView('ceo');this.parentElement.classList.remove('show')">CEO Mobile</button>
+  <button class="tab" onclick="switchView('telos');this.parentElement.classList.remove('show')">Telos Ops</button>
+  <button class="tab" onclick="switchView('nomos');this.parentElement.classList.remove('show')">Nomos Compliance</button>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 1. CLIENT PORTAL                       -->
+<!-- ═══════════════════════════════════════ -->
+<div class="view active" id="view-client">
+  <div class="client-subtabs">
+    <button class="client-subtab active" onclick="switchClientTab('catalog')">Auction Catalog</button>
+    <button class="client-subtab" onclick="switchClientTab('account')">My Account</button>
+  </div>
+
+  <!-- Catalog View -->
+  <div class="client-subview active" id="client-catalog">
+    <div class="client-header">
+      <h1>Live Auctions</h1>
+      <input type="text" class="search" placeholder="Search items, brands..." />
+    </div>
+    <div class="filter-bar">
+      <span class="filter-chip active">All</span>
+      <span class="filter-chip">Watches</span>
+      <span class="filter-chip">Jewelry</span>
+      <span class="filter-chip">Handbags</span>
+      <span class="filter-chip">Art</span>
+      <span class="filter-chip">Collectibles</span>
+    </div>
+    <div class="catalog-grid">
+      <div class="catalog-item" onclick="openModal()">
+        <div class="catalog-img"><span class="lot-num">Lot 001</span><span class="auth-badge">✓ Authenticated</span>⌚ Watch Photo</div>
+        <div class="catalog-body">
+          <div class="catalog-brand">Rolex</div>
+          <div class="catalog-name">Submariner Date 126610LN — 2024</div>
+          <div class="catalog-price-row"><span class="catalog-bid">AED 52,000</span><span class="catalog-start">Start: AED 38,000</span></div>
+          <div class="catalog-timer">⏱ 2h 14m remaining</div>
+        </div>
+      </div>
+      <div class="catalog-item" onclick="openModal()">
+        <div class="catalog-img"><span class="lot-num">Lot 002</span><span class="auth-badge">✓ Authenticated</span>💎 Jewelry Photo</div>
+        <div class="catalog-body">
+          <div class="catalog-brand">Cartier</div>
+          <div class="catalog-name">Love Bracelet — 18K Rose Gold</div>
+          <div class="catalog-price-row"><span class="catalog-bid">AED 31,500</span><span class="catalog-start">Start: AED 24,000</span></div>
+          <div class="catalog-timer">⏱ 4h 38m remaining</div>
+        </div>
+      </div>
+      <div class="catalog-item" onclick="openModal()">
+        <div class="catalog-img"><span class="lot-num">Lot 003</span>👜 Handbag Photo</div>
+        <div class="catalog-body">
+          <div class="catalog-brand">Hermès</div>
+          <div class="catalog-name">Birkin 30 — Togo Leather, Gold HW</div>
+          <div class="catalog-price-row"><span class="catalog-bid">AED 89,000</span><span class="catalog-start">Start: AED 72,000</span></div>
+          <div class="catalog-timer">⏱ 1d 6h remaining</div>
+        </div>
+      </div>
+      <div class="catalog-item" onclick="openModal()">
+        <div class="catalog-img"><span class="lot-num">Lot 004</span><span class="auth-badge">✓ Authenticated</span>⌚ Watch Photo</div>
+        <div class="catalog-body">
+          <div class="catalog-brand">Audemars Piguet</div>
+          <div class="catalog-name">Royal Oak 15500ST — Blue Dial</div>
+          <div class="catalog-price-row"><span class="catalog-bid">AED 115,000</span><span class="catalog-start">Start: AED 95,000</span></div>
+          <div class="catalog-timer">⏱ 5h 22m remaining</div>
+        </div>
+      </div>
+      <div class="catalog-item" onclick="openModal()">
+        <div class="catalog-img"><span class="lot-num">Lot 005</span>💎 Jewelry Photo</div>
+        <div class="catalog-body">
+          <div class="catalog-brand">Van Cleef & Arpels</div>
+          <div class="catalog-name">Alhambra Necklace — Mother of Pearl</div>
+          <div class="catalog-price-row"><span class="catalog-bid">AED 28,000</span><span class="catalog-start">Start: AED 22,000</span></div>
+          <div class="catalog-timer">⏱ 3h 05m remaining</div>
+        </div>
+      </div>
+      <div class="catalog-item" onclick="openModal()">
+        <div class="catalog-img"><span class="lot-num">Lot 006</span><span class="auth-badge">✓ Authenticated</span>⌚ Watch Photo</div>
+        <div class="catalog-body">
+          <div class="catalog-brand">Patek Philippe</div>
+          <div class="catalog-name">Nautilus 5711/1A — Blue Dial</div>
+          <div class="catalog-price-row"><span class="catalog-bid">AED 298,000</span><span class="catalog-start">Start: AED 260,000</span></div>
+          <div class="catalog-timer">⏱ 1d 12h remaining</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Account View -->
+  <div class="client-subview" id="client-account">
+    <div class="account-grid">
+      <div class="account-sidebar">
+        <div class="card">
+          <div style="text-align:center">
+            <div style="width:64px;height:64px;border-radius:50%;background:var(--accent);display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:10px">FK</div>
+            <div style="font-size:15px;font-weight:600">Fatima Al Khalifa</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Client since Jan 2025</div>
+          </div>
+          <div class="kyc-status">
+            <div class="kyc-icon">✓</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--green)">KYC Verified</div>
+              <div style="font-size:11px;color:var(--text-muted)">Verified 15 Jan 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px">Documents</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)">📄 Emirates ID — Verified</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)">📄 Proof of Address — Verified</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)">📄 Bank Statement — Verified</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;">📄 Trade License — Pending</div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-header">
+            <div class="card-title">Won Items</div>
+            <span class="badge badge-gold">4 items</span>
+          </div>
+          <div class="won-item">
+            <div class="won-thumb">⌚</div>
+            <div class="won-info">
+              <div class="won-name">Rolex Daytona 116500LN</div>
+              <div class="won-price">AED 78,000</div>
+              <div class="won-date">Won 12 Mar 2025 — Collected</div>
+            </div>
+            <span class="badge badge-green">Collected</span>
+          </div>
+          <div class="won-item">
+            <div class="won-thumb">💎</div>
+            <div class="won-info">
+              <div class="won-name">Cartier Panthère Ring</div>
+              <div class="won-price">AED 42,500</div>
+              <div class="won-date">Won 28 Feb 2025 — Awaiting Pickup</div>
+            </div>
+            <span class="badge badge-orange">Pickup</span>
+          </div>
+          <div class="won-item">
+            <div class="won-thumb">👜</div>
+            <div class="won-info">
+              <div class="won-name">Chanel Classic Flap Medium</div>
+              <div class="won-price">AED 19,800</div>
+              <div class="won-date">Won 15 Feb 2025 — Collected</div>
+            </div>
+            <span class="badge badge-green">Collected</span>
+          </div>
+          <div class="won-item">
+            <div class="won-thumb">⌚</div>
+            <div class="won-info">
+              <div class="won-name">Omega Speedmaster Moonwatch</div>
+              <div class="won-price">AED 24,000</div>
+              <div class="won-date">Won 2 Jan 2025 — Collected</div>
+            </div>
+            <span class="badge badge-green">Collected</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Active Bids</div>
+            <span class="badge badge-accent">2 active</span>
+          </div>
+          <table>
+            <thead><tr><th>Item</th><th>Your Bid</th><th>Current</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Rolex Submariner 126610LN</td><td style="color:var(--text-primary)">AED 50,000</td><td style="color:var(--gold)">AED 52,000</td><td><span class="badge badge-red">Outbid</span></td></tr>
+              <tr><td>Cartier Love Bracelet</td><td style="color:var(--text-primary)">AED 31,500</td><td style="color:var(--gold)">AED 31,500</td><td><span class="badge badge-green">Winning</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Item Detail Modal -->
+<div class="modal-overlay" id="itemModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-content">
+      <div class="modal-grid">
+        <div class="modal-img">⌚ High-Resolution Image</div>
+        <div class="modal-details">
+          <div class="brand">Rolex</div>
+          <h2>Submariner Date 126610LN</h2>
+          <div style="margin-top:8px"><span class="badge badge-green">✓ Authenticated</span> <span class="badge badge-accent" style="margin-left:4px">Lot 001</span></div>
+          <div class="modal-meta">
+            <div class="modal-meta-item"><div class="modal-meta-label">Current Bid</div><div class="modal-meta-value gold">AED 52,000</div></div>
+            <div class="modal-meta-item"><div class="modal-meta-label">Starting Price</div><div class="modal-meta-value">AED 38,000</div></div>
+            <div class="modal-meta-item"><div class="modal-meta-label">Buy Now</div><div class="modal-meta-value">AED 62,000</div></div>
+            <div class="modal-meta-item"><div class="modal-meta-label">Rent / Month</div><div class="modal-meta-value">AED 3,200</div></div>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Category: Watches &gt; Luxury &gt; Rolex</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Condition: Excellent — Box &amp; Papers</div>
+          <div style="font-size:13px;color:var(--orange);font-weight:600;margin:12px 0">⏱ 2h 14m 32s remaining</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">12 bids · 47 watchers</div>
+          <div class="bid-section">
+            <input type="text" class="bid-input" placeholder="Enter bid (min AED 53,000)" />
+            <button class="btn btn-primary">Place Bid</button>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn btn-ghost" style="flex:1">Buy Now — AED 62,000</button>
+            <button class="btn btn-ghost" style="flex:1">Rent — AED 3,200/mo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 2. AE DASHBOARD                        -->
+<!-- ═══════════════════════════════════════ -->
+<div class="view" id="view-ae">
+  <div class="ae-layout">
+    <div class="ae-sidebar">
+      <div class="nav-section">
+        <div class="nav-label">Main</div>
+        <div class="nav-item active"><span class="icon">📊</span>Dashboard</div>
+        <div class="nav-item"><span class="icon">👥</span>Leads<span class="count">7</span></div>
+        <div class="nav-item"><span class="icon">📦</span>Pipeline<span class="count">12</span></div>
+        <div class="nav-item"><span class="icon">📅</span>Appointments</div>
+        <div class="nav-item"><span class="icon">💰</span>Commissions</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Tools</div>
+        <div class="nav-item"><span class="icon">📸</span>Item Intake</div>
+        <div class="nav-item"><span class="icon">📋</span>Viewing Forms</div>
+        <div class="nav-item"><span class="icon">📞</span>Call Log</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Account</div>
+        <div class="nav-item"><span class="icon">⚙️</span>Settings</div>
+        <div class="nav-item"><span class="icon">❓</span>Help</div>
+      </div>
+    </div>
+    <div class="ae-main">
+      <div class="greeting">Good morning, Sarah</div>
+      <div class="greeting-sub">Tuesday, March 31 — You have 3 pending actions today</div>
+
+      <div class="grid-4" style="margin-bottom:24px">
+        <div class="card stat-card">
+          <div class="stat-label">Pending Leads</div>
+          <div class="stat-value">7</div>
+          <div class="stat-change up">↑ 3 new today</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Items in Pipeline</div>
+          <div class="stat-value">12</div>
+          <div class="stat-change up">↑ 2 this week</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Upcoming Viewings</div>
+          <div class="stat-value">4</div>
+          <div class="stat-change" style="color:var(--text-muted)">Next: 2:00 PM</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Overdue Actions</div>
+          <div class="stat-value" style="color:var(--red)">2</div>
+          <div class="stat-change down">Needs attention</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:24px">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Pending Leads</div><button class="btn btn-sm btn-ghost">View All</button></div>
+          <table>
+            <thead><tr><th>Name</th><th>Source</th><th>Date</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Ahmed Al Maktoum</td><td>Referral</td><td>31 Mar</td><td><span class="badge badge-orange">New</span></td><td><button class="btn btn-sm btn-primary">Contact</button></td></tr>
+              <tr><td>Priya Sharma</td><td>Website</td><td>30 Mar</td><td><span class="badge badge-blue">Contacted</span></td><td><button class="btn btn-sm btn-ghost">Follow Up</button></td></tr>
+              <tr><td>James Chen</td><td>Instagram</td><td>29 Mar</td><td><span class="badge badge-orange">New</span></td><td><button class="btn btn-sm btn-primary">Contact</button></td></tr>
+              <tr><td>Layla Hassan</td><td>Walk-in</td><td>28 Mar</td><td><span class="badge badge-green">Qualified</span></td><td><button class="btn btn-sm btn-ghost">Schedule</button></td></tr>
+              <tr><td>Omar Bin Rashid</td><td>Referral</td><td>27 Mar</td><td><span class="badge badge-red">Overdue</span></td><td><button class="btn btn-sm btn-red">Urgent</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Upcoming Appointments</div><button class="btn btn-sm btn-ghost">Calendar</button></div>
+          <div class="appt-item"><div class="appt-left"><div class="appt-time">2:00</div><div><div class="appt-name">Ahmed Al Maktoum</div><div class="appt-type">Initial Viewing — DIFC Office</div></div></div><span class="badge badge-accent">Today</span></div>
+          <div class="appt-item"><div class="appt-left"><div class="appt-time">4:30</div><div><div class="appt-name">Priya Sharma</div><div class="appt-type">Item Drop-off — Main Branch</div></div></div><span class="badge badge-accent">Today</span></div>
+          <div class="appt-item"><div class="appt-left"><div class="appt-time">10:00</div><div><div class="appt-name">Layla Hassan</div><div class="appt-type">Consignment Review — Villa Visit</div></div></div><span class="badge badge-blue">Tomorrow</span></div>
+          <div class="appt-item"><div class="appt-left"><div class="appt-time">3:00</div><div><div class="appt-name">James Chen</div><div class="appt-type">Collection Viewing — Warehouse</div></div></div><span class="badge badge-blue">2 Apr</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header"><div class="card-title">Item Pipeline</div><div class="card-subtitle">12 items across stages</div></div>
+        <div class="kanban">
+          <div class="kanban-col">
+            <div class="kanban-header">Submitted <span class="count">3</span></div>
+            <div class="kanban-card"><div class="k-name">Patek Philippe 5167A</div><div class="k-detail">Ahmed Al Maktoum</div><div class="k-value">Est. AED 85,000</div></div>
+            <div class="kanban-card"><div class="k-name">Bulgari Serpenti Necklace</div><div class="k-detail">Layla Hassan</div><div class="k-value">Est. AED 45,000</div></div>
+            <div class="kanban-card"><div class="k-name">LV Keepall 55</div><div class="k-detail">James Chen</div><div class="k-value">Est. AED 8,500</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-header">Viewing <span class="count">2</span></div>
+            <div class="kanban-card"><div class="k-name">Omega Seamaster 300M</div><div class="k-detail">Omar Bin Rashid</div><div class="k-value">Est. AED 22,000</div></div>
+            <div class="kanban-card"><div class="k-name">Tiffany Diamond Ring 2ct</div><div class="k-detail">Priya Sharma</div><div class="k-value">Est. AED 65,000</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-header">CEO Approval <span class="count">3</span></div>
+            <div class="kanban-card" style="border-left:3px solid var(--orange)"><div class="k-name">Richard Mille RM 011</div><div class="k-detail">VIP Client</div><div class="k-value">Est. AED 420,000</div></div>
+            <div class="kanban-card" style="border-left:3px solid var(--orange)"><div class="k-name">Hermès Kelly 28</div><div class="k-detail">Fatima Al Khalifa</div><div class="k-value">Est. AED 95,000</div></div>
+            <div class="kanban-card" style="border-left:3px solid var(--orange)"><div class="k-name">Chopard Happy Diamonds</div><div class="k-detail">Walk-in Client</div><div class="k-value">Est. AED 38,000</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-header">Authentication <span class="count">2</span></div>
+            <div class="kanban-card"><div class="k-name">Rolex GMT-Master II</div><div class="k-detail">Sent to Entrupy</div><div class="k-value">Est. AED 58,000</div></div>
+            <div class="kanban-card"><div class="k-name">Chanel Boy Bag</div><div class="k-detail">In-house review</div><div class="k-value">Est. AED 16,000</div></div>
+          </div>
+          <div class="kanban-col">
+            <div class="kanban-header">Consigned <span class="count">2</span></div>
+            <div class="kanban-card" style="border-left:3px solid var(--green)"><div class="k-name">AP Royal Oak 15500</div><div class="k-detail">Live — 12 bids</div><div class="k-value">Current: AED 115,000</div></div>
+            <div class="kanban-card" style="border-left:3px solid var(--green)"><div class="k-name">Cartier Love Bracelet</div><div class="k-detail">Live — 8 bids</div><div class="k-value">Current: AED 31,500</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Recent Activity</div></div>
+        <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-text"><strong>Fatima Al Khalifa</strong> placed a bid of AED 31,500 on Cartier Love Bracelet</div><div class="activity-time">12 minutes ago</div></div></div>
+        <div class="activity-item"><div class="activity-dot" style="background:var(--accent)"></div><div><div class="activity-text"><strong>Ahmed Al Maktoum</strong> submitted Patek Philippe 5167A for consignment</div><div class="activity-time">1 hour ago</div></div></div>
+        <div class="activity-item"><div class="activity-dot" style="background:var(--orange)"></div><div><div class="activity-text"><strong>Richard Mille RM 011</strong> moved to CEO Approval stage</div><div class="activity-time">2 hours ago</div></div></div>
+        <div class="activity-item"><div class="activity-dot" style="background:var(--blue)"></div><div><div class="activity-text"><strong>Priya Sharma</strong> scheduled item drop-off for today 4:30 PM</div><div class="activity-time">3 hours ago</div></div></div>
+        <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-text"><strong>Rolex GMT-Master II</strong> authentication completed — Passed ✓</div><div class="activity-time">Yesterday</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 3. CEO MOBILE VIEW                     -->
+<!-- ═══════════════════════════════════════ -->
+<div class="view" id="view-ceo">
+  <div class="ceo-wrapper">
+    <div class="ceo-phone">
+      <div class="ceo-status-bar"><span>9:41</span><span>●●● WiFi 🔋</span></div>
+      <div class="ceo-header">
+        <h2>Good Morning ☀️</h2>
+        <div class="date">Tuesday, March 31</div>
+      </div>
+
+      <div class="ceo-digest">
+        <div class="digest-title">📋 Morning Digest</div>
+        <div class="digest-items">
+          • 3 items awaiting your approval<br>
+          • 1 release request from strongroom<br>
+          • 2 new high-value leads (AED 500K+)<br>
+          • Yesterday's auction closed AED 245K
+        </div>
+      </div>
+
+      <div class="ceo-section-title">Approval Queue</div>
+
+      <div class="ceo-card">
+        <div class="item-row">
+          <div class="item-thumb">⌚</div>
+          <div class="item-info">
+            <h4>Richard Mille RM 011</h4>
+            <div class="sub">VIP Client · Submitted by Sarah</div>
+            <div class="val">AED 420,000</div>
+          </div>
+        </div>
+        <div class="ceo-buttons">
+          <button class="btn btn-green">✓ Approve</button>
+          <button class="btn btn-red">✕ Reject</button>
+        </div>
+      </div>
+
+      <div class="ceo-card">
+        <div class="item-row">
+          <div class="item-thumb">👜</div>
+          <div class="item-info">
+            <h4>Hermès Kelly 28</h4>
+            <div class="sub">Fatima Al Khalifa · Consignment</div>
+            <div class="val">AED 95,000</div>
+          </div>
+        </div>
+        <div class="ceo-buttons">
+          <button class="btn btn-green">✓ Approve</button>
+          <button class="btn btn-red">✕ Reject</button>
+        </div>
+      </div>
+
+      <div class="ceo-card">
+        <div class="item-row">
+          <div class="item-thumb">💎</div>
+          <div class="item-info">
+            <h4>Chopard Happy Diamonds</h4>
+            <div class="sub">Walk-in · Needs valuation review</div>
+            <div class="val">AED 38,000</div>
+          </div>
+        </div>
+        <div class="ceo-buttons">
+          <button class="btn btn-green">✓ Approve</button>
+          <button class="btn btn-red">✕ Reject</button>
+        </div>
+      </div>
+
+      <div class="ceo-section-title">Release Request</div>
+      <div class="ceo-card">
+        <div class="item-row">
+          <div class="item-thumb">⌚</div>
+          <div class="item-info">
+            <h4>Rolex Daytona 116500LN</h4>
+            <div class="sub">Won by Fatima Al Khalifa · Paid ✓</div>
+            <div class="val">AED 78,000</div>
+          </div>
+        </div>
+        <div class="ceo-buttons">
+          <button class="btn btn-green">✓ Release</button>
+          <button class="btn btn-ghost" style="flex:1;color:var(--text-secondary)">Hold</button>
+        </div>
+      </div>
+
+      <div class="ceo-section-title">Quick Stats</div>
+      <div class="ceo-stats">
+        <div class="ceo-stat"><div class="val" style="color:var(--gold)">AED 1.2M</div><div class="lbl">Pipeline Value</div></div>
+        <div class="ceo-stat"><div class="val">24</div><div class="lbl">Active Items</div></div>
+        <div class="ceo-stat"><div class="val" style="color:var(--green)">AED 245K</div><div class="lbl">Last Auction</div></div>
+        <div class="ceo-stat"><div class="val">89%</div><div class="lbl">Sell-Through</div></div>
+      </div>
+
+      <div class="ceo-home-bar"><div class="bar"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 4. TELOS OPERATIONS                    -->
+<!-- ═══════════════════════════════════════ -->
+<div class="view" id="view-telos">
+  <div class="section-title">Telos Operations</div>
+  <div class="section-sub">Inventory, strongroom, and financial management</div>
+
+  <div class="grid-4" style="margin-bottom:24px">
+    <div class="card stat-card"><div class="stat-label">Total Inventory</div><div class="stat-value">48</div><div class="stat-change" style="color:var(--text-muted)">items in system</div></div>
+    <div class="card stat-card"><div class="stat-label">In Strongroom</div><div class="stat-value">31</div><div class="stat-change up">Secured</div></div>
+    <div class="card stat-card"><div class="stat-label">Pending Invoices</div><div class="stat-value" style="color:var(--orange)">6</div><div class="stat-change down">AED 182K total</div></div>
+    <div class="card stat-card"><div class="stat-label">Monthly Revenue</div><div class="stat-value" style="color:var(--green)">AED 892K</div><div class="stat-change up">↑ 18% vs last month</div></div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Items by Status</div></div>
+      <div class="chart-placeholder">
+        <div style="text-align:center;width:100%">
+          <div style="display:flex;align-items:flex-end;justify-content:center;gap:12px;height:160px">
+            <div><div class="chart-bar" style="height:120px;background:var(--accent)"></div><div style="font-size:10px;color:var(--text-muted);margin-top:6px">Live<br><strong style="color:var(--text-primary)">8</strong></div></div>
+            <div><div class="chart-bar" style="height:90px;background:var(--orange)"></div><div style="font-size:10px;color:var(--text-muted);margin-top:6px">Auth<br><strong style="color:var(--text-primary)">6</strong></div></div>
+            <div><div class="chart-bar" style="height:140px;background:var(--green)"></div><div style="font-size:10px;color:var(--text-muted);margin-top:6px">Stored<br><strong style="color:var(--text-primary)">14</strong></div></div>
+            <div><div class="chart-bar" style="height:60px;background:var(--blue)"></div><div style="font-size:10px;color:var(--text-muted);margin-top:6px">Sold<br><strong style="color:var(--text-primary)">11</strong></div></div>
+            <div><div class="chart-bar" style="height:50px;background:var(--gold)"></div><div style="font-size:10px;color:var(--text-muted);margin-top:6px">Pending<br><strong style="color:var(--text-primary)">5</strong></div></div>
+            <div><div class="chart-bar" style="height:40px;background:var(--red)"></div><div style="font-size:10px;color:var(--text-muted);margin-top:6px">Return<br><strong style="color:var(--text-primary)">4</strong></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Strongroom Log</div><span class="badge badge-green">Secure</span></div>
+      <table>
+        <thead><tr><th>Item</th><th>Action</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>AP Royal Oak 15500</td><td><span class="badge badge-red">Checkout</span></td><td style="color:var(--text-muted)">10:32 AM</td></tr>
+          <tr><td>Cartier Love Bracelet</td><td><span class="badge badge-green">Check-in</span></td><td style="color:var(--text-muted)">10:15 AM</td></tr>
+          <tr><td>Rolex GMT-Master II</td><td><span class="badge badge-green">Check-in</span></td><td style="color:var(--text-muted)">9:48 AM</td></tr>
+          <tr><td>Bulgari Serpenti</td><td><span class="badge badge-blue">Photo</span></td><td style="color:var(--text-muted)">9:30 AM</td></tr>
+          <tr><td>Patek 5167A</td><td><span class="badge badge-orange">Inspection</span></td><td style="color:var(--text-muted)">Yesterday</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-header"><div class="card-title">Auction Tracker</div></div>
+    <div class="auction-status">
+      <div class="auction-badge"><div class="pulse" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div><div class="info"><div class="name">March Premium Sale</div><div class="detail">Live · 6 lots remaining · Ends 4 PM</div></div></div>
+      <div class="auction-badge"><div class="pulse" style="background:var(--orange)"></div><div class="info"><div class="name">Spring Jewelry Collection</div><div class="detail">Upcoming · 12 lots · Starts 5 Apr</div></div></div>
+      <div class="auction-badge"><div class="pulse" style="background:var(--text-muted)"></div><div class="info"><div class="name">Feb Luxury Timepieces</div><div class="detail">Closed · 18 lots · AED 892K total</div></div></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Pending Invoices</div><span class="badge badge-orange">6 pending</span></div>
+      <table>
+        <thead><tr><th>Client</th><th>Item</th><th>Amount</th><th>Due</th></tr></thead>
+        <tbody>
+          <tr><td>Fatima Al Khalifa</td><td>Cartier Panthère Ring</td><td style="color:var(--gold)">AED 42,500</td><td style="color:var(--orange)">2 Apr</td></tr>
+          <tr><td>Ahmed Al Maktoum</td><td>Consignment Fee</td><td style="color:var(--gold)">AED 8,500</td><td style="color:var(--red)">Overdue</td></tr>
+          <tr><td>James Chen</td><td>Buyer Premium</td><td style="color:var(--gold)">AED 11,500</td><td>5 Apr</td></tr>
+          <tr><td>Priya Sharma</td><td>Storage Fee</td><td style="color:var(--gold)">AED 1,200</td><td>7 Apr</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Upcoming Payouts</div><span class="badge badge-green">3 scheduled</span></div>
+      <table>
+        <thead><tr><th>Consignor</th><th>Item Sold</th><th>Payout</th><th>Date</th></tr></thead>
+        <tbody>
+          <tr><td>Omar Bin Rashid</td><td>Omega Seamaster</td><td style="color:var(--green)">AED 18,700</td><td>3 Apr</td></tr>
+          <tr><td>Layla Hassan</td><td>Chanel Classic Flap</td><td style="color:var(--green)">AED 16,830</td><td>5 Apr</td></tr>
+          <tr><td>VIP Client</td><td>Rolex Daytona</td><td style="color:var(--green)">AED 66,300</td><td>8 Apr</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 5. NOMOS COMPLIANCE                    -->
+<!-- ═══════════════════════════════════════ -->
+<div class="view" id="view-nomos">
+  <div class="section-title">Nomos Compliance</div>
+  <div class="section-sub">KYC reviews, escalations, and audit trail</div>
+
+  <div class="grid-4" style="margin-bottom:24px">
+    <div class="card stat-card"><div class="stat-label">Pending KYC</div><div class="stat-value" style="color:var(--orange)">5</div><div class="stat-change down">2 urgent</div></div>
+    <div class="card stat-card"><div class="stat-label">Verified This Month</div><div class="stat-value" style="color:var(--green)">18</div><div class="stat-change up">↑ 28%</div></div>
+    <div class="card stat-card"><div class="stat-label">Escalations</div><div class="stat-value" style="color:var(--red)">2</div><div class="stat-change down">Action needed</div></div>
+    <div class="card stat-card"><div class="stat-label">Compliance Score</div><div class="stat-value" style="color:var(--green)">96%</div><div class="stat-change up">Excellent</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-header"><div class="card-title">KYC Review Queue</div><button class="btn btn-sm btn-ghost">Export</button></div>
+    <table>
+      <thead><tr><th>Name</th><th>Type</th><th>Documents</th><th>Submitted</th><th>Priority</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr class="kyc-row" onclick="toggleExpand('exp1')"><td>Khalid Al Nahyan</td><td>Client (Buyer)</td><td>4 docs</td><td>31 Mar</td><td><span class="badge badge-red">Urgent</span></td><td><button class="btn btn-sm btn-primary">Review</button></td></tr>
+        <tr class="expandable-row" id="exp1"><td colspan="6"><div class="expand-content"><div><strong style="font-size:12px">Documents:</strong><ul class="doc-list"><li>Emirates ID (front & back)</li><li>Proof of Address — Utility Bill</li><li>Source of Funds Declaration</li><li>Bank Reference Letter</li></ul></div><div><strong style="font-size:12px">Notes:</strong><div style="font-size:12px;color:var(--text-secondary);margin-top:4px">High-value buyer — wants to bid on lots over AED 200K. Requires enhanced due diligence. Source of funds needs manager review.</div><div style="margin-top:10px"><button class="btn btn-sm btn-green">Approve</button> <button class="btn btn-sm btn-red" style="margin-left:4px">Reject</button> <button class="btn btn-sm btn-ghost" style="margin-left:4px">Request More Info</button></div></div></div></td></tr>
+
+        <tr class="kyc-row" onclick="toggleExpand('exp2')"><td>Zara Enterprises LLC</td><td>Vendor (Consignor)</td><td>6 docs</td><td>30 Mar</td><td><span class="badge badge-red">Urgent</span></td><td><button class="btn btn-sm btn-primary">Review</button></td></tr>
+        <tr class="expandable-row" id="exp2"><td colspan="6"><div class="expand-content"><div><strong style="font-size:12px">Documents:</strong><ul class="doc-list"><li>Trade License</li><li>MOA / AOA</li><li>Shareholder Register</li><li>UBO Declaration</li><li>Bank Statement (3 months)</li><li>Proof of Address — Ejari</li></ul></div><div><strong style="font-size:12px">Notes:</strong><div style="font-size:12px;color:var(--text-secondary);margin-top:4px">Corporate consignor. UBO is PEP-adjacent — needs enhanced screening. Multiple items submitted for auction (est. AED 380K total).</div></div></div></td></tr>
+
+        <tr class="kyc-row" onclick="toggleExpand('exp3')"><td>Sofia Martinez</td><td>Client (Buyer)</td><td>3 docs</td><td>29 Mar</td><td><span class="badge badge-orange">Medium</span></td><td><button class="btn btn-sm btn-primary">Review</button></td></tr>
+        <tr class="expandable-row" id="exp3"><td colspan="6"><div class="expand-content"><div><strong style="font-size:12px">Documents:</strong><ul class="doc-list"><li>Passport (Spanish)</li><li>Visa Copy — Dubai Residence</li><li>Bank Statement</li></ul></div><div><strong style="font-size:12px">Notes:</strong><div style="font-size:12px;color:var(--text-secondary);margin-top:4px">Standard buyer KYC. All documents appear in order. No flags.</div></div></div></td></tr>
+
+        <tr class="kyc-row" onclick="toggleExpand('exp4')"><td>Rashid Trading Co.</td><td>Vendor (Consignor)</td><td>5 docs</td><td>28 Mar</td><td><span class="badge badge-orange">Medium</span></td><td><button class="btn btn-sm btn-ghost">Review</button></td></tr>
+        <tr class="expandable-row" id="exp4"><td colspan="6"><div class="expand-content"><div><strong style="font-size:12px">Documents:</strong><ul class="doc-list"><li>Trade License</li><li>MOA</li><li>UBO Declaration</li><li>Bank Reference</li><li>Proof of Address</li></ul></div></div></td></tr>
+
+        <tr class="kyc-row" onclick="toggleExpand('exp5')"><td>Wei Zhang</td><td>Client (Buyer)</td><td>3 docs</td><td>27 Mar</td><td><span class="badge badge-blue">Standard</span></td><td><button class="btn btn-sm btn-ghost">Review</button></td></tr>
+        <tr class="expandable-row" id="exp5"><td colspan="6"><div class="expand-content"><div><strong style="font-size:12px">Documents:</strong><ul class="doc-list"><li>Passport (Chinese)</li><li>UAE Residence Visa</li><li>Salary Certificate</li></ul></div></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Escalation Inbox</div><span class="badge badge-red">2 open</span></div>
+      <div class="escalation-item">
+        <div class="esc-left"><div class="esc-title">🚨 PEP Screening Flag — Zara Enterprises</div><div class="esc-sub">UBO linked to politically exposed person. Enhanced due diligence required. Flagged by automated screening.</div></div>
+        <button class="btn btn-sm btn-red">Review</button>
+      </div>
+      <div class="escalation-item">
+        <div class="esc-left"><div class="esc-title">⚠️ Suspicious Transaction — Khalid Al Nahyan</div><div class="esc-sub">Multiple high-value bids within 24h. Total exposure AED 580K. Pattern flagged for review.</div></div>
+        <button class="btn btn-sm btn-orange" style="background:var(--orange);color:#fff">Investigate</button>
+      </div>
+      <div class="escalation-item">
+        <div class="esc-left"><div class="esc-title" style="color:var(--text-muted)">✅ Resolved — Expired ID (Omar Bin Rashid)</div><div class="esc-sub">Updated Emirates ID received and verified. Case closed 28 Mar.</div></div>
+        <span class="badge badge-green">Resolved</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Decision Log / Audit Trail</div><button class="btn btn-sm btn-ghost">Export</button></div>
+      <table>
+        <thead><tr><th>Date</th><th>Action</th><th>Subject</th><th>By</th></tr></thead>
+        <tbody>
+          <tr class="audit-row"><td>31 Mar</td><td><span class="badge badge-green">Approved</span></td><td>Fatima Al Khalifa — KYC</td><td>Nomos System</td></tr>
+          <tr class="audit-row"><td>30 Mar</td><td><span class="badge badge-orange">Escalated</span></td><td>Zara Enterprises — PEP Flag</td><td>Auto Screen</td></tr>
+          <tr class="audit-row"><td>29 Mar</td><td><span class="badge badge-green">Approved</span></td><td>James Chen — KYC</td><td>Sarah (AE)</td></tr>
+          <tr class="audit-row"><td>28 Mar</td><td><span class="badge badge-green">Resolved</span></td><td>Omar Bin Rashid — ID Update</td><td>Compliance</td></tr>
+          <tr class="audit-row"><td>28 Mar</td><td><span class="badge badge-red">Rejected</span></td><td>Unknown LLC — Insufficient docs</td><td>Nomos System</td></tr>
+          <tr class="audit-row"><td>27 Mar</td><td><span class="badge badge-blue">Requested</span></td><td>Wei Zhang — Additional docs</td><td>Sarah (AE)</td></tr>
+          <tr class="audit-row"><td>26 Mar</td><td><span class="badge badge-green">Approved</span></td><td>Layla Hassan — KYC</td><td>Nomos System</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  document.querySelectorAll('#mainTabs .tab, #mobileMenu .tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#mainTabs .tab, #mobileMenu .tab').forEach(t => {
+    if (t.textContent.toLowerCase().includes(id === 'ae' ? 'ae' : id === 'ceo' ? 'ceo' : id === 'telos' ? 'telos' : id === 'nomos' ? 'nomos' : 'client')) t.classList.add('active');
+  });
+}
+
+function switchClientTab(id) {
+  document.querySelectorAll('.client-subview').forEach(v => v.classList.remove('active'));
+  document.getElementById('client-' + id).classList.add('active');
+  document.querySelectorAll('.client-subtab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function openModal() { document.getElementById('itemModal').classList.add('show'); }
+function closeModal() { document.getElementById('itemModal').classList.remove('show'); }
+document.getElementById('itemModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+function toggleExpand(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>
