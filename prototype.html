@@ -6,39 +6,39 @@
 <title>Aurelius Auctions — Platform</title>
 <style>
   :root {
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #12121a;
-    --bg-card: #1a1a26;
-    --bg-hover: #22222e;
-    --bg-input: #16161f;
-    --border: #2a2a3a;
-    --border-light: #333346;
-    --text-primary: #f0f0f5;
-    --text-secondary: #8888a0;
-    --text-muted: #5a5a72;
+    --bg-primary: #f8f9fb;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-hover: #f3f4f6;
+    --bg-input: #f3f4f6;
+    --border: #e5e7eb;
+    --border-light: #d1d5db;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
     --accent: #6c5ce7;
-    --accent-hover: #7c6cf7;
-    --accent-dim: rgba(108,92,231,0.15);
-    --green: #00b894;
-    --green-dim: rgba(0,184,148,0.15);
-    --red: #e74c3c;
-    --red-dim: rgba(231,76,60,0.15);
-    --orange: #f39c12;
-    --orange-dim: rgba(243,156,18,0.15);
-    --blue: #3498db;
-    --blue-dim: rgba(52,152,219,0.15);
-    --gold: #d4a853;
-    --gold-dim: rgba(212,168,83,0.15);
+    --accent-hover: #5b4bd5;
+    --accent-dim: rgba(108,92,231,0.08);
+    --green: #059669;
+    --green-dim: rgba(5,150,105,0.08);
+    --red: #dc2626;
+    --red-dim: rgba(220,38,38,0.08);
+    --orange: #d97706;
+    --orange-dim: rgba(217,119,6,0.08);
+    --blue: #2563eb;
+    --blue-dim: rgba(37,99,235,0.08);
+    --gold: #b45309;
+    --gold-dim: rgba(180,83,9,0.08);
     --radius: 10px;
     --radius-sm: 6px;
-    --shadow: 0 2px 12px rgba(0,0,0,0.3);
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height:100vh; }
   
   /* ── Top Nav ── */
-  .topbar { display:flex; align-items:center; justify-content:space-between; padding: 0 28px; height:56px; background:var(--bg-secondary); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding: 0 28px; height:56px; background:var(--bg-secondary); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
   .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:17px; letter-spacing:0.5px; }
   .logo svg { width:26px; height:26px; }
   .logo .dot { color:var(--gold); }
@@ -57,7 +57,7 @@
   .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
   .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
   .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
-  .card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
+  .card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); }
   .card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
   .card-title { font-size:14px; font-weight:600; color:var(--text-primary); }
   .card-subtitle { font-size:12px; color:var(--text-muted); }
@@ -75,12 +75,12 @@
   .badge-accent { background:var(--accent-dim); color:var(--accent); }
   .badge-gold { background:var(--gold-dim); color:var(--gold); }
   .btn { padding:8px 18px; border-radius:var(--radius-sm); font-size:13px; font-weight:600; border:none; cursor:pointer; transition:all .15s; }
-  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary { background:var(--accent); color:#fff; box-shadow:0 1px 2px rgba(108,92,231,0.2); }
   .btn-primary:hover { background:var(--accent-hover); }
   .btn-ghost { background:transparent; color:var(--text-secondary); border:1px solid var(--border); }
   .btn-ghost:hover { border-color:var(--border-light); color:var(--text-primary); }
-  .btn-green { background:var(--green); color:#fff; }
-  .btn-red { background:var(--red); color:#fff; }
+  .btn-green { background:var(--green); color:#fff; box-shadow:0 1px 2px rgba(5,150,105,0.2); }
+  .btn-red { background:var(--red); color:#fff; box-shadow:0 1px 2px rgba(220,38,38,0.2); }
   .btn-sm { padding:5px 12px; font-size:12px; }
   .section-title { font-size:18px; font-weight:700; margin-bottom:18px; }
   .section-sub { font-size:13px; color:var(--text-secondary); margin-bottom:20px; }
@@ -104,11 +104,11 @@
   .filter-chip.active, .filter-chip:hover { background:var(--accent-dim); border-color:var(--accent); color:var(--accent); }
 
   .catalog-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:18px; }
-  .catalog-item { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:all .2s; }
-  .catalog-item:hover { border-color:var(--border-light); transform:translateY(-2px); box-shadow:var(--shadow); }
-  .catalog-img { width:100%; height:200px; background:var(--bg-hover); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:12px; position:relative; }
+  .catalog-item { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:all .2s; box-shadow:var(--shadow); }
+  .catalog-item:hover { border-color:var(--border-light); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  .catalog-img { width:100%; height:200px; background:#f0f1f3; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:12px; position:relative; }
   .catalog-img .auth-badge { position:absolute; top:10px; right:10px; background:var(--green); color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:4px; }
-  .catalog-img .lot-num { position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.6); color:#fff; font-size:10px; font-weight:600; padding:3px 8px; border-radius:4px; }
+  .catalog-img .lot-num { position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.55); color:#fff; font-size:10px; font-weight:600; padding:3px 8px; border-radius:4px; }
   .catalog-body { padding:16px; }
   .catalog-brand { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
   .catalog-name { font-size:14px; font-weight:600; margin-bottom:10px; }
@@ -118,13 +118,13 @@
   .catalog-timer { font-size:11px; color:var(--orange); margin-top:8px; }
 
   /* Item Detail Modal */
-  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:200; align-items:center; justify-content:center; }
+  .modal-overlay { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
   .modal-overlay.show { display:flex; }
-  .modal { background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; width:90%; max-width:800px; max-height:90vh; overflow-y:auto; }
+  .modal { background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; width:90%; max-width:800px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.15); }
   .modal-close { float:right; background:none; border:none; color:var(--text-muted); font-size:20px; cursor:pointer; padding:16px; }
   .modal-content { padding:28px; }
   .modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
-  .modal-img { width:100%; height:320px; background:var(--bg-hover); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:13px; }
+  .modal-img { width:100%; height:320px; background:#f0f1f3; border-radius:var(--radius); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:13px; }
   .modal-details h2 { font-size:20px; font-weight:700; margin-bottom:4px; }
   .modal-details .brand { font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:16px; }
   .modal-meta { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
@@ -158,7 +158,7 @@
   /* 2. AE DASHBOARD                 */
   /* ════════════════════════════════ */
   .ae-layout { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 56px); margin: -28px; }
-  .ae-sidebar { background:var(--bg-secondary); border-right:1px solid var(--border); padding:20px 0; }
+  .ae-sidebar { background:var(--bg-primary); border-right:1px solid var(--border); padding:20px 0; }
   .ae-sidebar .nav-section { padding:0 16px; margin-bottom:20px; }
   .ae-sidebar .nav-label { font-size:10px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; padding:0 12px; }
   .ae-sidebar .nav-item { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:var(--radius-sm); font-size:13px; color:var(--text-secondary); cursor:pointer; margin-bottom:2px; transition:all .12s; }
@@ -174,7 +174,7 @@
   .kanban-col { }
   .kanban-header { font-size:12px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px; display:flex; justify-content:space-between; }
   .kanban-header .count { background:var(--bg-hover); padding:1px 8px; border-radius:10px; font-size:11px; }
-  .kanban-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px; margin-bottom:8px; cursor:pointer; transition:all .15s; }
+  .kanban-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px; margin-bottom:8px; cursor:pointer; transition:all .15s; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
   .kanban-card:hover { border-color:var(--border-light); }
   .kanban-card .k-name { font-size:13px; font-weight:600; margin-bottom:4px; }
   .kanban-card .k-detail { font-size:11px; color:var(--text-muted); }
@@ -198,16 +198,16 @@
   /* 4. CEO MOBILE                   */
   /* ════════════════════════════════ */
   .ceo-wrapper { max-width:400px; margin:0 auto; padding:0; }
-  .ceo-phone { background:var(--bg-secondary); border:1px solid var(--border); border-radius:20px; overflow:hidden; min-height:700px; }
+  .ceo-phone { background:var(--bg-secondary); border:1px solid var(--border); border-radius:20px; overflow:hidden; min-height:700px; box-shadow:0 4px 24px rgba(0,0,0,0.08); }
   .ceo-status-bar { display:flex; justify-content:space-between; padding:8px 20px; font-size:11px; color:var(--text-muted); }
   .ceo-header { padding:20px 20px 16px; }
   .ceo-header h2 { font-size:20px; font-weight:700; }
   .ceo-header .date { font-size:12px; color:var(--text-muted); margin-top:2px; }
-  .ceo-digest { margin:0 16px 16px; background:var(--accent-dim); border:1px solid rgba(108,92,231,0.25); border-radius:12px; padding:16px; }
+  .ceo-digest { margin:0 16px 16px; background:var(--accent-dim); border:1px solid rgba(108,92,231,0.15); border-radius:12px; padding:16px; }
   .ceo-digest .digest-title { font-size:13px; font-weight:600; color:var(--accent); margin-bottom:6px; }
   .ceo-digest .digest-items { font-size:13px; color:var(--text-secondary); line-height:1.6; }
   .ceo-section-title { font-size:13px; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; padding:0 20px; margin:16px 0 10px; }
-  .ceo-card { margin:0 16px 12px; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .ceo-card { margin:0 16px 12px; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:16px; box-shadow:var(--shadow); }
   .ceo-card .item-row { display:flex; gap:12px; margin-bottom:12px; }
   .ceo-card .item-thumb { width:52px; height:52px; background:var(--bg-hover); border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--text-muted); }
   .ceo-card .item-info h4 { font-size:14px; font-weight:600; }
@@ -216,7 +216,7 @@
   .ceo-buttons { display:flex; gap:10px; }
   .ceo-buttons .btn { flex:1; padding:10px; border-radius:10px; font-size:14px; font-weight:700; text-align:center; }
   .ceo-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px; }
-  .ceo-stat { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; }
+  .ceo-stat { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:14px; text-align:center; box-shadow:var(--shadow); }
   .ceo-stat .val { font-size:22px; font-weight:700; }
   .ceo-stat .lbl { font-size:11px; color:var(--text-muted); margin-top:2px; }
   .ceo-home-bar { display:flex; justify-content:center; padding:12px; }
@@ -225,10 +225,10 @@
   /* ════════════════════════════════ */
   /* 5. TELOS OPERATIONS             */
   /* ════════════════════════════════ */
-  .chart-placeholder { height:200px; background:var(--bg-hover); border-radius:var(--radius); display:flex; align-items:flex-end; justify-content:center; gap:8px; padding:20px; }
+  .chart-placeholder { height:200px; background:var(--bg-primary); border-radius:var(--radius); display:flex; align-items:flex-end; justify-content:center; gap:8px; padding:20px; border:1px solid var(--border); }
   .chart-bar { width:36px; border-radius:4px 4px 0 0; }
   .auction-status { display:flex; gap:8px; flex-wrap:wrap; }
-  .auction-badge { display:flex; align-items:center; gap:8px; padding:10px 16px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); }
+  .auction-badge { display:flex; align-items:center; gap:8px; padding:10px 16px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
   .auction-badge .pulse { width:8px; height:8px; border-radius:50%; }
   .auction-badge .info { }
   .auction-badge .name { font-size:13px; font-weight:600; }
@@ -241,7 +241,7 @@
   .kyc-row td:last-child { text-align:right; }
   .expandable-row { display:none; }
   .expandable-row.show { display:table-row; }
-  .expandable-row td { background:var(--bg-secondary); padding:16px 14px; }
+  .expandable-row td { background:var(--bg-primary); padding:16px 14px; }
   .expand-content { display:flex; gap:20px; }
   .expand-content .doc-list { list-style:none; }
   .expand-content .doc-list li { padding:4px 0; font-size:12px; color:var(--text-secondary); }
@@ -271,7 +271,7 @@
   /* Mobile menu */
   .mobile-menu-btn { display:none; background:none; border:none; color:var(--text-secondary); font-size:20px; cursor:pointer; }
   @media(max-width:600px) { .mobile-menu-btn { display:block; } }
-  .mobile-dropdown { display:none; position:absolute; top:56px; left:0; right:0; background:var(--bg-secondary); border-bottom:1px solid var(--border); padding:10px; z-index:99; }
+  .mobile-dropdown { display:none; position:absolute; top:56px; left:0; right:0; background:var(--bg-secondary); border-bottom:1px solid var(--border); padding:10px; z-index:99; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
   .mobile-dropdown.show { display:flex; flex-direction:column; gap:4px; }
   .mobile-dropdown .tab { text-align:left; }
 </style>
@@ -281,6 +281,7 @@
 <!-- ═══ TOP BAR ═══ -->
 <div class="topbar">
   <div class="logo">
+    <img src="aurelius-logo-white.svg" alt="Aurelius Auctions" style="max-width: 180px; height: auto; max-height: 40px;">
   </div>
   <div class="tabs" id="mainTabs">
     <button class="tab active" onclick="switchView('client')">Client Portal</button>
@@ -318,6 +319,7 @@
   <div class="client-subview active" id="client-catalog">
     <div class="client-header">
       <div style="display: flex; align-items: center; gap: 16px;">
+        <img src="aurelius-logo-white.svg" alt="Aurelius Auctions" style="max-width: 120px; height: auto; max-height: 28px;">
         <h1>Live Auctions</h1>
       </div>
       <input type="text" class="search" placeholder="Search items, brands..." />
@@ -984,7 +986,7 @@
   <div class="card" style="margin-bottom:24px">
     <div class="card-header"><div class="card-title">Auction Tracker</div></div>
     <div class="auction-status">
-      <div class="auction-badge"><div class="pulse" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div><div class="info"><div class="name">March Premium Sale</div><div class="detail">Live · 6 lots remaining · Ends 4 PM</div></div></div>
+      <div class="auction-badge"><div class="pulse" style="background:var(--green)"></div><div class="info"><div class="name">March Premium Sale</div><div class="detail">Live · 6 lots remaining · Ends 4 PM</div></div></div>
       <div class="auction-badge"><div class="pulse" style="background:var(--orange)"></div><div class="info"><div class="name">Spring Jewelry Collection</div><div class="detail">Upcoming · 12 lots · Starts 5 Apr</div></div></div>
       <div class="auction-badge"><div class="pulse" style="background:var(--text-muted)"></div><div class="info"><div class="name">Feb Luxury Timepieces</div><div class="detail">Closed · 18 lots · AED 892K total</div></div></div>
     </div>
