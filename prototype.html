@@ -195,7 +195,7 @@
   .appt-type { font-size:11px; color:var(--text-muted); }
 
   /* ════════════════════════════════ */
-  /* 3. CEO MOBILE                   */
+  /* 4. CEO MOBILE                   */
   /* ════════════════════════════════ */
   .ceo-wrapper { max-width:400px; margin:0 auto; padding:0; }
   .ceo-phone { background:var(--bg-secondary); border:1px solid var(--border); border-radius:20px; overflow:hidden; min-height:700px; }
@@ -223,7 +223,7 @@
   .ceo-home-bar .bar { width:120px; height:4px; background:var(--text-muted); border-radius:2px; }
 
   /* ════════════════════════════════ */
-  /* 4. TELOS OPERATIONS             */
+  /* 5. TELOS OPERATIONS             */
   /* ════════════════════════════════ */
   .chart-placeholder { height:200px; background:var(--bg-hover); border-radius:var(--radius); display:flex; align-items:flex-end; justify-content:center; gap:8px; padding:20px; }
   .chart-bar { width:36px; border-radius:4px 4px 0 0; }
@@ -235,7 +235,7 @@
   .auction-badge .detail { font-size:11px; color:var(--text-muted); }
 
   /* ════════════════════════════════ */
-  /* 5. NOMOS COMPLIANCE             */
+  /* 6. NOMOS COMPLIANCE             */
   /* ════════════════════════════════ */
   .kyc-row { cursor:pointer; }
   .kyc-row td:last-child { text-align:right; }
@@ -286,6 +286,7 @@
   </div>
   <div class="tabs" id="mainTabs">
     <button class="tab active" onclick="switchView('client')">Client Portal</button>
+    <button class="tab" onclick="switchView('vendor')">Vendor Portal</button>
     <button class="tab" onclick="switchView('ae')">AE Dashboard</button>
     <button class="tab" onclick="switchView('ceo')">CEO Mobile</button>
     <button class="tab" onclick="switchView('telos')">Telos Ops</button>
@@ -299,6 +300,7 @@
 </div>
 <div class="mobile-dropdown" id="mobileMenu">
   <button class="tab active" onclick="switchView('client');this.parentElement.classList.remove('show')">Client Portal</button>
+  <button class="tab" onclick="switchView('vendor');this.parentElement.classList.remove('show')">Vendor Portal</button>
   <button class="tab" onclick="switchView('ae');this.parentElement.classList.remove('show')">AE Dashboard</button>
   <button class="tab" onclick="switchView('ceo');this.parentElement.classList.remove('show')">CEO Mobile</button>
   <button class="tab" onclick="switchView('telos');this.parentElement.classList.remove('show')">Telos Ops</button>
@@ -509,7 +511,214 @@
 </div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- 2. AE DASHBOARD                        -->
+<!-- 2. VENDOR PORTAL                       -->
+<!-- ═══════════════════════════════════════ -->
+<div class="view" id="view-vendor">
+  <div class="ae-layout">
+    <div class="ae-sidebar">
+      <div class="nav-section">
+        <div class="nav-label">Main</div>
+        <div class="nav-item active"><span class="icon">📊</span>Dashboard</div>
+        <div class="nav-item"><span class="icon">📦</span>My Items<span class="count">4</span></div>
+        <div class="nav-item"><span class="icon">📄</span>Documents<span class="count">3</span></div>
+        <div class="nav-item"><span class="icon">📅</span>Appointments</div>
+        <div class="nav-item"><span class="icon">💰</span>Payouts</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Actions</div>
+        <div class="nav-item"><span class="icon">➕</span>Submit Item</div>
+        <div class="nav-item"><span class="icon">👤</span>Profile</div>
+      </div>
+    </div>
+    <div class="ae-main">
+      <div class="greeting">Welcome back, Khalid Al Mansouri</div>
+      <div class="greeting-sub">Tuesday, March 31 — Your items performing well this week</div>
+
+      <div class="grid-4" style="margin-bottom:24px">
+        <div class="card stat-card">
+          <div class="stat-label">Active Consignments</div>
+          <div class="stat-value">4</div>
+          <div class="stat-change up">2 in auction</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Items in Auction</div>
+          <div class="stat-value">2</div>
+          <div class="stat-change up">Live bidding</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Pending Payout</div>
+          <div class="stat-value" style="color:var(--gold)">1</div>
+          <div class="stat-change" style="color:var(--gold)">AED 185,000</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Documents to Sign</div>
+          <div class="stat-value" style="color:var(--orange)">3</div>
+          <div class="stat-change down">Action needed</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="card-header">
+          <div class="card-title">Item Pipeline</div>
+          <div class="card-subtitle">Your consigned items across all stages</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Status</th>
+              <th>Auction</th>
+              <th>Current Bid</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:600">Patek Philippe Nautilus 5711</td>
+              <td><span class="badge badge-green">In Auction</span></td>
+              <td>Spring 2026</td>
+              <td style="color:var(--gold);font-weight:600">AED 320,000</td>
+              <td><button class="btn btn-sm btn-primary">View</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:600">Cartier Santos Medium</td>
+              <td><span class="badge badge-orange">Authentication</span></td>
+              <td>—</td>
+              <td>—</td>
+              <td><button class="btn btn-sm btn-ghost">View</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:600">Hermès Birkin 30 Togo</td>
+              <td><span class="badge badge-blue">Consigned</span></td>
+              <td>Summer 2026</td>
+              <td>—</td>
+              <td><button class="btn btn-sm btn-ghost">View</button></td>
+            </tr>
+            <tr>
+              <td style="color:var(--text-primary);font-weight:600">Rolex Daytona Panda</td>
+              <td><span class="badge badge-accent">Sold</span></td>
+              <td>Spring 2026</td>
+              <td style="color:var(--green);font-weight:600">AED 195,000</td>
+              <td><button class="btn btn-sm btn-green">View Payout</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:24px">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Recent Activity</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background:var(--blue)"></div>
+            <div>
+              <div class="activity-text"><strong>ICF signed</strong> for Cartier Santos</div>
+              <div class="activity-time">2 hours ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background:var(--green)"></div>
+            <div>
+              <div class="activity-text"><strong>Payout processed:</strong> AED 185,000 for Rolex GMT-Master</div>
+              <div class="activity-time">1 day ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background:var(--accent)"></div>
+            <div>
+              <div class="activity-text"><strong>Viewing scheduled:</strong> March 28 at 2:00 PM</div>
+              <div class="activity-time">2 days ago</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot" style="background:var(--gold)"></div>
+            <div>
+              <div class="activity-text"><strong>Item submitted:</strong> Hermès Kelly 28</div>
+              <div class="activity-time">3 days ago</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Upcoming</div>
+            <span class="badge badge-orange">Action Required</span>
+          </div>
+          <div style="padding:14px 0; border-bottom:1px solid var(--border)">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px">
+              <div style="width:8px; height:8px; background:var(--orange); border-radius:50%; flex-shrink:0"></div>
+              <div style="font-size:13px; font-weight:600; color:var(--text-primary)">Next appointment</div>
+            </div>
+            <div style="font-size:13px; color:var(--text-secondary); margin-left:20px">Authentication viewing - Cartier Santos</div>
+            <div style="font-size:12px; color:var(--accent); margin-left:20px; margin-top:2px; font-weight:500">March 29, 10:00 AM</div>
+          </div>
+          <div style="padding:14px 0">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px">
+              <div style="width:8px; height:8px; background:var(--red); border-radius:50%; flex-shrink:0"></div>
+              <div style="font-size:13px; font-weight:600; color:var(--text-primary)">Document pending</div>
+            </div>
+            <div style="font-size:13px; color:var(--text-secondary); margin-left:20px">Sign Item Consignment Form for Hermès Birkin 30</div>
+            <div style="margin-left:20px; margin-top:8px">
+              <button class="btn btn-sm btn-primary">Sign Document</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vendor-specific cards -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Performance Summary</div>
+            <span class="badge badge-green">Excellent</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px">
+            <div>
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase">Avg Sale Price</div>
+              <div style="font-size:18px; font-weight:700; color:var(--gold); margin-top:2px">AED 142,500</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase">Success Rate</div>
+              <div style="font-size:18px; font-weight:700; color:var(--green); margin-top:2px">89%</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase">Total Earnings</div>
+              <div style="font-size:18px; font-weight:700; color:var(--text-primary); margin-top:2px">AED 856,000</div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase">Items Sold</div>
+              <div style="font-size:18px; font-weight:700; color:var(--text-primary); margin-top:2px">6</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Quick Actions</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <button class="btn btn-primary" style="width:100%; text-align:left; padding:12px 16px">
+              <span style="margin-right:8px">➕</span> Submit New Item
+            </button>
+            <button class="btn btn-ghost" style="width:100%; text-align:left; padding:12px 16px">
+              <span style="margin-right:8px">📄</span> View All Documents
+            </button>
+            <button class="btn btn-ghost" style="width:100%; text-align:left; padding:12px 16px">
+              <span style="margin-right:8px">📞</span> Contact Support
+            </button>
+            <button class="btn btn-ghost" style="width:100%; text-align:left; padding:12px 16px">
+              <span style="margin-right:8px">💰</span> Payout History
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- 3. AE DASHBOARD                        -->
 <!-- ═══════════════════════════════════════ -->
 <div class="view" id="view-ae">
   <div class="ae-layout">
@@ -630,7 +839,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- 3. CEO MOBILE VIEW                     -->
+<!-- 4. CEO MOBILE VIEW                     -->
 <!-- ═══════════════════════════════════════ -->
 <div class="view" id="view-ceo">
   <div class="ceo-wrapper">
@@ -728,7 +937,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- 4. TELOS OPERATIONS                    -->
+<!-- 5. TELOS OPERATIONS                    -->
 <!-- ═══════════════════════════════════════ -->
 <div class="view" id="view-telos">
   <div class="section-title">Telos Operations</div>
@@ -809,7 +1018,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════ -->
-<!-- 5. NOMOS COMPLIANCE                    -->
+<!-- 6. NOMOS COMPLIANCE                    -->
 <!-- ═══════════════════════════════════════ -->
 <div class="view" id="view-nomos">
   <div class="section-title">Nomos Compliance</div>
@@ -885,7 +1094,7 @@ function switchView(id) {
   document.getElementById('view-' + id).classList.add('active');
   document.querySelectorAll('#mainTabs .tab, #mobileMenu .tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('#mainTabs .tab, #mobileMenu .tab').forEach(t => {
-    if (t.textContent.toLowerCase().includes(id === 'ae' ? 'ae' : id === 'ceo' ? 'ceo' : id === 'telos' ? 'telos' : id === 'nomos' ? 'nomos' : 'client')) t.classList.add('active');
+    if (t.textContent.toLowerCase().includes(id === 'ae' ? 'ae' : id === 'ceo' ? 'ceo' : id === 'telos' ? 'telos' : id === 'nomos' ? 'nomos' : id === 'vendor' ? 'vendor' : 'client')) t.classList.add('active');
   });
 }
 
