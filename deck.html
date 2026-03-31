@@ -447,6 +447,167 @@
     line-height: 1.5;
   }
 
+  /* ─── Clickable cards ─── */
+  .clickable {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .clickable .card:hover::after {
+    content: "Click to explore →";
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+    opacity: 0.8;
+  }
+  .clickable .product {
+    position: relative;
+  }
+
+  /* ─── Back link ─── */
+  .back-link {
+    position: absolute;
+    top: 32px;
+    left: 80px;
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    z-index: 10;
+  }
+  .back-link:hover {
+    color: var(--cyan);
+    transform: translateX(-4px);
+  }
+
+  /* ─── Detail slide specific styles ─── */
+  .detail-content {
+    max-width: 1000px;
+    width: 100%;
+    text-align: left;
+  }
+  .detail-section {
+    margin-bottom: 32px;
+  }
+  .detail-section h3 {
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+  .detail-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .detail-list li {
+    padding-left: 20px;
+    position: relative;
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .detail-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .detail-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .detail-meta-item {
+    flex: 1;
+  }
+  .detail-meta-item strong {
+    display: block;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .detail-meta-item span {
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  /* ─── Workflow detail grid ─── */
+  .workflow-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .workflow-detail-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s;
+  }
+  .workflow-detail-item:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+  }
+  .workflow-detail-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(108, 92, 231, 0.12);
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .workflow-detail-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .workflow-detail-flow {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .workflow-detail-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .workflow-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .workflow-tag-portal { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .workflow-tag-ops { background: rgba(108,92,231,0.15); color: var(--accent); }
+  .workflow-tag-finance { background: rgba(0,214,143,0.15); color: var(--green); }
+  .workflow-tag-docs { background: rgba(245,158,11,0.15); color: var(--orange); }
+  .workflow-tag-shopify { background: rgba(236,72,153,0.15); color: var(--pink); }
+  .workflow-tag-inventory { background: rgba(6,182,212,0.15); color: var(--cyan); }
+  .workflow-tag-compliance { background: rgba(239,68,68,0.15); color: var(--red); }
+
   /* ─── CTA / Next Steps ─── */
   .steps {
     display: flex;
@@ -666,76 +827,96 @@
       <h2>10 Products, One Platform</h2>
     </div>
     <div class="grid-3 fade-in fade-in-delay-2" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: auto;">
-      <div class="card product">
-        <div class="num">1</div>
-        <div class="info">
-          <div class="name">Customer Portal</div>
-          <div class="users">Shopify · Client, Bidder</div>
+      <a href="#detail-customer-portal" class="clickable">
+        <div class="card product">
+          <div class="num">1</div>
+          <div class="info">
+            <div class="name">Customer Portal</div>
+            <div class="users">Shopify · Client, Bidder</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">2</div>
-        <div class="info">
-          <div class="name">Vendor Portal</div>
-          <div class="users">Next.js · Vendor · vendors.aureliusauctions.com</div>
+      </a>
+      <a href="#detail-vendor-portal" class="clickable">
+        <div class="card product">
+          <div class="num">2</div>
+          <div class="info">
+            <div class="name">Vendor Portal</div>
+            <div class="users">Next.js · Vendor · vendors.aureliusauctions.com</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">3</div>
-        <div class="info">
-          <div class="name">Internal Ops Platform</div>
-          <div class="users">Next.js · AE, CEO, Telos</div>
+      </a>
+      <a href="#detail-ops-platform" class="clickable">
+        <div class="card product">
+          <div class="num">3</div>
+          <div class="info">
+            <div class="name">Internal Ops Platform</div>
+            <div class="users">Next.js · AE, CEO, Telos</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">4</div>
-        <div class="info">
-          <div class="name">Auction Engine</div>
-          <div class="users">Core · AE, CEO</div>
+      </a>
+      <a href="#detail-auction-engine" class="clickable">
+        <div class="card product">
+          <div class="num">4</div>
+          <div class="info">
+            <div class="name">Auction Engine</div>
+            <div class="users">Core · AE, CEO</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">5</div>
-        <div class="info">
-          <div class="name">Document & Signing Hub</div>
-          <div class="users">Integrations · AE, Vendor, Client</div>
+      </a>
+      <a href="#detail-document-hub" class="clickable">
+        <div class="card product">
+          <div class="num">5</div>
+          <div class="info">
+            <div class="name">Document & Signing Hub</div>
+            <div class="users">Integrations · AE, Vendor, Client</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">6</div>
-        <div class="info">
-          <div class="name">Compliance Module</div>
-          <div class="users">Internal · Nomos, AE</div>
+      </a>
+      <a href="#detail-compliance" class="clickable">
+        <div class="card product">
+          <div class="num">6</div>
+          <div class="info">
+            <div class="name">Compliance Module</div>
+            <div class="users">Internal · Nomos, AE</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">7</div>
-        <div class="info">
-          <div class="name">Inventory & Strongroom</div>
-          <div class="users">Internal · Telos, AE</div>
+      </a>
+      <a href="#detail-inventory" class="clickable">
+        <div class="card product">
+          <div class="num">7</div>
+          <div class="info">
+            <div class="name">Inventory & Strongroom</div>
+            <div class="users">Internal · Telos, AE</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">8</div>
-        <div class="info">
-          <div class="name">Financial Operations</div>
-          <div class="users">Internal · Telos, CEO</div>
+      </a>
+      <a href="#detail-finance" class="clickable">
+        <div class="card product">
+          <div class="num">8</div>
+          <div class="info">
+            <div class="name">Financial Operations</div>
+            <div class="users">Internal · Telos, CEO</div>
+          </div>
         </div>
-      </div>
-      <div class="card product">
-        <div class="num">9</div>
-        <div class="info">
-          <div class="name">Notification Engine</div>
-          <div class="users">Platform-wide · All users</div>
+      </a>
+      <a href="#detail-notifications" class="clickable">
+        <div class="card product">
+          <div class="num">9</div>
+          <div class="info">
+            <div class="name">Notification Engine</div>
+            <div class="users">Platform-wide · All users</div>
+          </div>
         </div>
-      </div>
-      <div class="card product" style="grid-column: 2;">
-        <div class="num">10</div>
-        <div class="info">
-          <div class="name">Reporting & Analytics</div>
-          <div class="users">Dashboards · CEO, GCEO, BTP</div>
+      </a>
+      <a href="#detail-analytics" class="clickable" style="grid-column: 2;">
+        <div class="card product">
+          <div class="num">10</div>
+          <div class="info">
+            <div class="name">Reporting & Analytics</div>
+            <div class="users">Dashboards · CEO, GCEO, BTP</div>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
   <span class="slide-num">04 / 10</span>
@@ -833,61 +1014,83 @@
       <h2>The 11 Workflows</h2>
     </div>
     <div class="workflow-list fade-in fade-in-delay-2">
-      <div class="wf-item">
-        <span class="wf-num">01</span>
-        <span class="wf-name">Client Onboarding & Registration</span>
-        <div class="wf-tags"><span class="tag tag-ext">Portal</span><span class="tag tag-int">Compliance</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">02</span>
-        <span class="wf-name">Consignment Intake</span>
-        <div class="wf-tags"><span class="tag tag-ext">Portal</span><span class="tag tag-int">Ops Platform</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">03</span>
-        <span class="wf-name">Inventory & Strongroom</span>
-        <div class="wf-tags"><span class="tag tag-int">Inventory</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">04</span>
-        <span class="wf-name">Auction Setup & Cataloguing</span>
-        <div class="wf-tags"><span class="tag tag-int">Auction Engine</span><span class="tag tag-ext">Shopify</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">05</span>
-        <span class="wf-name">Bidding & Live Auction</span>
-        <div class="wf-tags"><span class="tag tag-ext">Shopify</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">06</span>
-        <span class="wf-name">Post-Auction Settlement</span>
-        <div class="wf-tags"><span class="tag tag-int">Finance</span><span class="tag tag-ext">Portal</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">07</span>
-        <span class="wf-name">Buyer Handover & Collection</span>
-        <div class="wf-tags"><span class="tag tag-int">Ops Platform</span><span class="tag tag-int">Docs</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">08</span>
-        <span class="wf-name">Vendor Settlement</span>
-        <div class="wf-tags"><span class="tag tag-int">Finance</span><span class="tag tag-int">Docs</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">09</span>
-        <span class="wf-name">Complaints & Disputes</span>
-        <div class="wf-tags"><span class="tag tag-int">Ops Platform</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">10</span>
-        <span class="wf-name">Reporting & Analytics</span>
-        <div class="wf-tags"><span class="tag tag-int">Analytics</span></div>
-      </div>
-      <div class="wf-item">
-        <span class="wf-num">11</span>
-        <span class="wf-name">Notifications & Communications</span>
-        <div class="wf-tags"><span class="tag tag-int">Notification Engine</span></div>
-      </div>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">01</span>
+          <span class="wf-name">Client Onboarding & Registration</span>
+          <div class="wf-tags"><span class="tag tag-ext">Portal</span><span class="tag tag-int">Compliance</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">02</span>
+          <span class="wf-name">Consignment Intake</span>
+          <div class="wf-tags"><span class="tag tag-ext">Portal</span><span class="tag tag-int">Ops Platform</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">03</span>
+          <span class="wf-name">Inventory & Strongroom</span>
+          <div class="wf-tags"><span class="tag tag-int">Inventory</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">04</span>
+          <span class="wf-name">Auction Setup & Cataloguing</span>
+          <div class="wf-tags"><span class="tag tag-int">Auction Engine</span><span class="tag tag-ext">Shopify</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">05</span>
+          <span class="wf-name">Bidding & Live Auction</span>
+          <div class="wf-tags"><span class="tag tag-ext">Shopify</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">06</span>
+          <span class="wf-name">Post-Auction Settlement</span>
+          <div class="wf-tags"><span class="tag tag-int">Finance</span><span class="tag tag-ext">Portal</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">07</span>
+          <span class="wf-name">Buyer Handover & Collection</span>
+          <div class="wf-tags"><span class="tag tag-int">Ops Platform</span><span class="tag tag-int">Docs</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">08</span>
+          <span class="wf-name">Vendor Settlement</span>
+          <div class="wf-tags"><span class="tag tag-int">Finance</span><span class="tag tag-int">Docs</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">09</span>
+          <span class="wf-name">Complaints & Disputes</span>
+          <div class="wf-tags"><span class="tag tag-int">Ops Platform</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">10</span>
+          <span class="wf-name">Reporting & Analytics</span>
+          <div class="wf-tags"><span class="tag tag-int">Analytics</span></div>
+        </div>
+      </a>
+      <a href="#detail-workflows" style="text-decoration: none; color: inherit;">
+        <div class="wf-item">
+          <span class="wf-num">11</span>
+          <span class="wf-name">Notifications & Communications</span>
+          <div class="wf-tags"><span class="tag tag-int">Notification Engine</span></div>
+        </div>
+      </a>
     </div>
   </div>
   <span class="slide-num">07 / 10</span>
@@ -994,6 +1197,565 @@
     </div>
   </div>
   <span class="slide-num">10 / 10</span>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- DETAIL SLIDES -->
+<!-- ════════════════════════════════════════════ -->
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Customer Portal -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-customer-portal">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Customer Portal</span> (Shopify)</h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        The public face of Aurelius. Beautiful catalog, bidding, payments.
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Features</h3>
+      <ul class="detail-list">
+        <li>Luxury item catalog with rich media</li>
+        <li>Real-time bidding with countdown</li>
+        <li>Buy/Rent Now option</li>
+        <li>Ticket purchasing</li>
+        <li>Client account with KYC status, bid history, won items</li>
+        <li>Secure payment via Shopify Payments</li>
+      </ul>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Shopify Plus + Custom Shopify App</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>Clients (bidders/buyers)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Vendor Portal -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-vendor-portal">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Vendor Portal</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        Purpose-built vendor experience for managing consignments
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Features</h3>
+      <ul class="detail-list">
+        <li>Item pipeline with real-time status tracking</li>
+        <li>Auction results per item (hammer price, sold/unsold)</li>
+        <li>Payout history with transparent fee breakdown</li>
+        <li>Document library (VCA, ICF, handover receipts)</li>
+        <li>Appointment booking (viewings, handovers)</li>
+        <li>New item submission</li>
+        <li>Release requests</li>
+      </ul>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Next.js + Supabase at vendors.aureliusauctions.com</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>Vendors (consignors)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Internal Ops Platform -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-ops-platform">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Internal Ops Platform</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        The command center for all internal users
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Features</h3>
+      <ul class="detail-list">
+        <li>Role-based dashboards (AE, CEO, Telos, Nomos)</li>
+        <li>Approval workflows with audit trail</li>
+        <li>Activity feed for every entity</li>
+        <li>Document management</li>
+        <li>Deadline tracking with auto-escalation</li>
+        <li>Real-time updates</li>
+      </ul>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Next.js + Supabase</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>AE, CEO, Telos, Nomos, GCEO</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Auction Engine -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-auction-engine">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Auction Engine</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        Manages the entire bidding lifecycle
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Features</h3>
+      <ul class="detail-list">
+        <li>Starting prices set by expert valuation</li>
+        <li>Bid increments with anti-snipe logic</li>
+        <li>Buy/Rent Now at ~2x starting price</li>
+        <li>Real-time bid streaming</li>
+        <li>Winner determination</li>
+        <li>Auction status lifecycle: Tentative → Preparing → Marketing → Live → Closed → Completed</li>
+      </ul>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Custom Shopify App (frontend) + Supabase (backend)</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>Clients bid via Shopify, AE configures, Telos tracks</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Document & Signing Hub -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-document-hub">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Document & Signing Hub</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        Manages every document from creation to signed storage
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Documents Handled</h3>
+      <ul class="detail-list">
+        <li>Vendor Consignment Agreement (VCA)</li>
+        <li>Item Consignment Form (ICF)</li>
+        <li>Item Handover Receipts (3 types)</li>
+        <li>Acknowledgement of Obligation</li>
+        <li>Certificate of Ownership (manual CEO sign)</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h3>Flow</h3>
+      <p style="font-size: 16px; color: var(--text-dim); line-height: 1.6;">
+        Document created → Click & Sign configured → Signers notified → Signed → Stored in DropBox → Available in portals
+      </p>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Click & Sign API + Supabase + DropBox</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>Everyone (different docs for different roles)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Compliance Module -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-compliance">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Compliance Module</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        KYC vetting, compliance decisions, escalation management
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Features</h3>
+      <ul class="detail-list">
+        <li>KYC review queue with document viewer</li>
+        <li>Accept / Reject / Request More Info with mandatory reason</li>
+        <li>Escalation inbox (late payments, penalties)</li>
+        <li>Full audit trail (who, when, what, why)</li>
+        <li>Compliance reporting and export</li>
+      </ul>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Part of Internal Ops Platform (Nomos views)</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>Nomos (primary), CEO (visibility)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Inventory & Strongroom -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-inventory">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Inventory & Strongroom</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        Tracks every physical item — status, location, chain of custody
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Features</h3>
+      <ul class="detail-list">
+        <li>Item registry with full lifecycle history</li>
+        <li>Strongroom check-in / check-out with timestamps</li>
+        <li>Auction tracker (status, catalog, tickets, financial summary)</li>
+        <li>Item status lifecycle: Consigned → Cataloged → In Strongroom → Live → Sold/Unsold → Handed Over</li>
+        <li>Location tracking: Vendor → Strongroom → Buyer/Agent/Vendor</li>
+      </ul>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Part of Internal Ops Platform (Telos views)</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>Telos (primary), AE (visibility)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Financial Operations -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-finance">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Financial Operations</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        Invoicing, payment tracking, fee calculation, vendor payouts
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Features</h3>
+      <ul class="detail-list">
+        <li>Invoice generation (release fees, storage, auction fees)</li>
+        <li>Payment tracking with 2-day and 7-day deadline windows</li>
+        <li>Automatic fee calculation (hammer price × percentage)</li>
+        <li>Vendor payout processing with full breakdown</li>
+        <li>Overdue payment escalation to Nomos</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h3>Key Calculation</h3>
+      <p style="font-size: 16px; color: var(--accent); font-weight: 500; line-height: 1.6;">
+        Buyer Premium + Seller Premium = Revenue<br>
+        Vendor Payout = Hammer Price - Seller Premium
+      </p>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Part of Internal Ops Platform (Telos finance views)</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>Telos (primary), CEO (visibility)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Notification Engine -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-notifications">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Notification Engine</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        Orchestrates ALL communications across all channels
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Channels</h3>
+      <ul class="detail-list">
+        <li>Email (transactional + internal)</li>
+        <li>SMS / WhatsApp (urgent customer notifications)</li>
+        <li>In-app notifications (internal)</li>
+        <li>Click & Sign (signing notifications)</li>
+      </ul>
+    </div>
+
+    <div class="detail-section">
+      <h3>Design Principle</h3>
+      <p style="font-size: 16px; color: var(--accent); font-weight: 500; line-height: 1.6;">
+        Every notification = an event. Events are logged. Templates are versioned. Delivery is tracked.
+      </p>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Supabase Edge Functions + Resend/Postmark + Twilio</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>System-level, serves all personas</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Reporting & Analytics -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-analytics">
+  <a href="#slide-4" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in">
+    <p class="label">Product Deep Dive</p>
+    <h2><span class="highlight">Reporting & Analytics</span></h2>
+    
+    <div class="detail-section">
+      <h3>What it does</h3>
+      <p style="font-size: 18px; color: var(--text-dim); margin-bottom: 24px;">
+        Business intelligence for every stakeholder
+      </p>
+    </div>
+
+    <div class="detail-section">
+      <h3>Reports</h3>
+      <ul class="detail-list">
+        <li>Auction Performance (hammer prices, sell-through, revenue) → CEO, GCEO</li>
+        <li>Pipeline Status (leads, items, upcoming auctions) → AE, CEO</li>
+        <li>Compliance Summary (KYC queue, escalations) → Nomos, CEO</li>
+        <li>Financial Summary (payments, payouts) → Telos, CEO</li>
+        <li>Inventory Status (items by status, strongroom) → Telos</li>
+        <li>Client/Vendor Activity (trends, repeat participation) → CEO, GCEO</li>
+      </ul>
+    </div>
+
+    <div class="detail-meta">
+      <div class="detail-meta-item">
+        <strong>Technology</strong>
+        <span>Supabase + Next.js dashboard views</span>
+      </div>
+      <div class="detail-meta-item">
+        <strong>Primary Users</strong>
+        <span>CEO, GCEO, Telos, AE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────── -->
+<!-- Detail Slide: Workflow Deep Dive -->
+<!-- ────────────────────────────────────────── -->
+<section class="slide" id="detail-workflows">
+  <a href="#slide-7" class="back-link">← Back to Overview</a>
+  <div class="detail-content fade-in" style="max-width: 1200px;">
+    <p class="label">Workflow Deep Dive</p>
+    <h2><span class="highlight">All 11 Workflows</span> with Product Integration</h2>
+    
+    <div class="workflow-detail-grid">
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">01</div>
+        <div class="workflow-detail-name">Client Onboarding</div>
+        <div class="workflow-detail-flow">Lead → CEO approval → KYC (Nomos) → Active bidder</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-portal">Portal</span>
+          <span class="workflow-tag workflow-tag-compliance">Compliance</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">02</div>
+        <div class="workflow-detail-name">Vendor Onboarding</div>
+        <div class="workflow-detail-flow">Lead → CEO approval → KYC → VCA signing → Active vendor</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-portal">Portal</span>
+          <span class="workflow-tag workflow-tag-docs">Docs</span>
+          <span class="workflow-tag workflow-tag-compliance">Compliance</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">03</div>
+        <div class="workflow-detail-name">Item Consignment</div>
+        <div class="workflow-detail-flow">Submit → AE review → CEO approval → Expert auth → ICF signing → Inventory</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-portal">Portal</span>
+          <span class="workflow-tag workflow-tag-ops">Ops Platform</span>
+          <span class="workflow-tag workflow-tag-docs">Docs</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">04</div>
+        <div class="workflow-detail-name">Item Release</div>
+        <div class="workflow-detail-flow">Vendor request → CEO approval → Fees/invoice → Released</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-portal">Portal</span>
+          <span class="workflow-tag workflow-tag-finance">Finance</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">05</div>
+        <div class="workflow-detail-name">Auction Preparation</div>
+        <div class="workflow-detail-flow">Catalog → Tracker → Marketing → Ticketing → Countdown</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-ops">Ops Platform</span>
+          <span class="workflow-tag workflow-tag-shopify">Shopify</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">06</div>
+        <div class="workflow-detail-name">Auction Execution</div>
+        <div class="workflow-detail-flow">Launch → Bids → Sale → Payment → Fee deduction → Vendor payout</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-shopify">Shopify</span>
+          <span class="workflow-tag workflow-tag-finance">Finance</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">07</div>
+        <div class="workflow-detail-name">Handover to Aurelius</div>
+        <div class="workflow-detail-flow">Appointment → Inspection → Receipt signing → Strongroom</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-ops">Ops Platform</span>
+          <span class="workflow-tag workflow-tag-docs">Docs</span>
+          <span class="workflow-tag workflow-tag-inventory">Inventory</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">08</div>
+        <div class="workflow-detail-name">Handover to Buyer</div>
+        <div class="workflow-detail-flow">Collection notice → 5/10 day windows → Receipt → Strongroom release</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-ops">Ops Platform</span>
+          <span class="workflow-tag workflow-tag-docs">Docs</span>
+          <span class="workflow-tag workflow-tag-inventory">Inventory</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">09</div>
+        <div class="workflow-detail-name">Handover to Vendor</div>
+        <div class="workflow-detail-flow">Unsold notice → 10/20 day windows → Invoice → Receipt → Release</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-finance">Finance</span>
+          <span class="workflow-tag workflow-tag-docs">Docs</span>
+          <span class="workflow-tag workflow-tag-inventory">Inventory</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">10</div>
+        <div class="workflow-detail-name">Complaint Management</div>
+        <div class="workflow-detail-flow">Log → Track → 72hr escalation → Resolution</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-ops">Ops Platform</span>
+          <span class="workflow-tag workflow-tag-compliance">Compliance</span>
+        </div>
+      </div>
+
+      <div class="workflow-detail-item">
+        <div class="workflow-detail-num">11</div>
+        <div class="workflow-detail-name">Auction Tracker Setup</div>
+        <div class="workflow-detail-flow">CEO + GCEO → Template → Tentative → Lifecycle</div>
+        <div class="workflow-detail-tags">
+          <span class="workflow-tag workflow-tag-ops">Ops Platform</span>
+          <span class="workflow-tag workflow-tag-inventory">Inventory</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
