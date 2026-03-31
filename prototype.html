@@ -164,7 +164,8 @@
   .ae-sidebar .nav-item { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:var(--radius-sm); font-size:13px; color:var(--text-secondary); cursor:pointer; margin-bottom:2px; transition:all .12s; }
   .ae-sidebar .nav-item:hover { background:var(--bg-hover); color:var(--text-primary); }
   .ae-sidebar .nav-item.active { background:var(--accent-dim); color:var(--accent); }
-  .ae-sidebar .nav-item .icon { width:18px; text-align:center; }
+  .ae-sidebar .nav-item .icon { width:18px; text-align:center; display:inline-flex; align-items:center; justify-content:center; }
+  .ae-sidebar .nav-item .icon svg { width:16px; height:16px; }
   .ae-sidebar .nav-item .count { margin-left:auto; font-size:11px; background:var(--bg-hover); padding:1px 7px; border-radius:10px; }
   .ae-main { padding:28px; overflow-y:auto; }
   .ae-main .greeting { font-size:22px; font-weight:700; margin-bottom:4px; }
@@ -245,7 +246,7 @@
   .expand-content { display:flex; gap:20px; }
   .expand-content .doc-list { list-style:none; }
   .expand-content .doc-list li { padding:4px 0; font-size:12px; color:var(--text-secondary); }
-  .expand-content .doc-list li::before { content:"📄 "; }
+  .expand-content .doc-list li::before { content:""; display:inline-block; width:16px; height:16px; margin-right:4px; vertical-align:middle; background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2716%27 height=%2716%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%236b7280%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpath d=%27M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z%27/%3E%3Cpolyline points=%2714 2 14 8 20 8%27/%3E%3C/svg%3E"); background-size:contain; background-repeat:no-repeat; }
   .escalation-item { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
   .escalation-item:last-child { border:none; }
   .esc-left { }
@@ -291,9 +292,9 @@
     <button class="tab" onclick="switchView('telos')">Telos Ops</button>
     <button class="tab" onclick="switchView('nomos')">Nomos Compliance</button>
   </div>
-  <button class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.toggle('show')">☰</button>
+  <button class="mobile-menu-btn" onclick="document.getElementById('mobileMenu').classList.toggle('show')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
   <div class="topbar-right">
-    <div class="notif-bell">🔔<div class="dot"></div></div>
+    <div class="notif-bell"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="dot"></div></div>
     <div class="avatar">MA</div>
   </div>
 </div>
@@ -334,57 +335,57 @@
     </div>
     <div class="catalog-grid">
       <div class="catalog-item" onclick="openModal()">
-        <div class="catalog-img"><span class="lot-num">Lot 001</span><span class="auth-badge">✓ Authenticated</span>⌚ Watch Photo</div>
+        <div class="catalog-img"><span class="lot-num">Lot 001</span><span class="auth-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Authenticated</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg> Watch Photo</div>
         <div class="catalog-body">
           <div class="catalog-brand">Rolex</div>
           <div class="catalog-name">Submariner Date 126610LN — 2024</div>
           <div class="catalog-price-row"><span class="catalog-bid">AED 52,000</span><span class="catalog-start">Start: AED 38,000</span></div>
-          <div class="catalog-timer">⏱ 2h 14m remaining</div>
+          <div class="catalog-timer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2"/><path d="M19 3l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 2h 14m remaining</div>
         </div>
       </div>
       <div class="catalog-item" onclick="openModal()">
-        <div class="catalog-img"><span class="lot-num">Lot 002</span><span class="auth-badge">✓ Authenticated</span>💎 Jewelry Photo</div>
+        <div class="catalog-img"><span class="lot-num">Lot 002</span><span class="auth-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Authenticated</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/></svg> Jewelry Photo</div>
         <div class="catalog-body">
           <div class="catalog-brand">Cartier</div>
           <div class="catalog-name">Love Bracelet — 18K Rose Gold</div>
           <div class="catalog-price-row"><span class="catalog-bid">AED 31,500</span><span class="catalog-start">Start: AED 24,000</span></div>
-          <div class="catalog-timer">⏱ 4h 38m remaining</div>
+          <div class="catalog-timer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2"/><path d="M19 3l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 4h 38m remaining</div>
         </div>
       </div>
       <div class="catalog-item" onclick="openModal()">
-        <div class="catalog-img"><span class="lot-num">Lot 003</span>👜 Handbag Photo</div>
+        <div class="catalog-img"><span class="lot-num">Lot 003</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Handbag Photo</div>
         <div class="catalog-body">
           <div class="catalog-brand">Hermès</div>
           <div class="catalog-name">Birkin 30 — Togo Leather, Gold HW</div>
           <div class="catalog-price-row"><span class="catalog-bid">AED 89,000</span><span class="catalog-start">Start: AED 72,000</span></div>
-          <div class="catalog-timer">⏱ 1d 6h remaining</div>
+          <div class="catalog-timer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2"/><path d="M19 3l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 1d 6h remaining</div>
         </div>
       </div>
       <div class="catalog-item" onclick="openModal()">
-        <div class="catalog-img"><span class="lot-num">Lot 004</span><span class="auth-badge">✓ Authenticated</span>⌚ Watch Photo</div>
+        <div class="catalog-img"><span class="lot-num">Lot 004</span><span class="auth-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Authenticated</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg> Watch Photo</div>
         <div class="catalog-body">
           <div class="catalog-brand">Audemars Piguet</div>
           <div class="catalog-name">Royal Oak 15500ST — Blue Dial</div>
           <div class="catalog-price-row"><span class="catalog-bid">AED 115,000</span><span class="catalog-start">Start: AED 95,000</span></div>
-          <div class="catalog-timer">⏱ 5h 22m remaining</div>
+          <div class="catalog-timer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2"/><path d="M19 3l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 5h 22m remaining</div>
         </div>
       </div>
       <div class="catalog-item" onclick="openModal()">
-        <div class="catalog-img"><span class="lot-num">Lot 005</span>💎 Jewelry Photo</div>
+        <div class="catalog-img"><span class="lot-num">Lot 005</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/></svg> Jewelry Photo</div>
         <div class="catalog-body">
           <div class="catalog-brand">Van Cleef & Arpels</div>
           <div class="catalog-name">Alhambra Necklace — Mother of Pearl</div>
           <div class="catalog-price-row"><span class="catalog-bid">AED 28,000</span><span class="catalog-start">Start: AED 22,000</span></div>
-          <div class="catalog-timer">⏱ 3h 05m remaining</div>
+          <div class="catalog-timer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2"/><path d="M19 3l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 3h 05m remaining</div>
         </div>
       </div>
       <div class="catalog-item" onclick="openModal()">
-        <div class="catalog-img"><span class="lot-num">Lot 006</span><span class="auth-badge">✓ Authenticated</span>⌚ Watch Photo</div>
+        <div class="catalog-img"><span class="lot-num">Lot 006</span><span class="auth-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Authenticated</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg> Watch Photo</div>
         <div class="catalog-body">
           <div class="catalog-brand">Patek Philippe</div>
           <div class="catalog-name">Nautilus 5711/1A — Blue Dial</div>
           <div class="catalog-price-row"><span class="catalog-bid">AED 298,000</span><span class="catalog-start">Start: AED 260,000</span></div>
-          <div class="catalog-timer">⏱ 1d 12h remaining</div>
+          <div class="catalog-timer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2"/><path d="M19 3l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 1d 12h remaining</div>
         </div>
       </div>
     </div>
@@ -401,7 +402,7 @@
             <div style="font-size:12px;color:var(--text-muted);margin-top:2px">Client since Jan 2025</div>
           </div>
           <div class="kyc-status">
-            <div class="kyc-icon">✓</div>
+            <div class="kyc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div>
               <div style="font-size:13px;font-weight:600;color:var(--green)">KYC Verified</div>
               <div style="font-size:11px;color:var(--text-muted)">Verified 15 Jan 2025</div>
@@ -410,10 +411,10 @@
         </div>
         <div class="card">
           <div class="card-title" style="margin-bottom:12px">Documents</div>
-          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)">📄 Emirates ID — Verified</div>
-          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)">📄 Proof of Address — Verified</div>
-          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)">📄 Bank Statement — Verified</div>
-          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;">📄 Trade License — Pending</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Emirates ID — Verified</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Proof of Address — Verified</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;border-bottom:1px solid var(--border)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Bank Statement — Verified</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding:6px 0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Trade License — Pending</div>
         </div>
       </div>
       <div>
@@ -423,7 +424,7 @@
             <span class="badge badge-gold">4 items</span>
           </div>
           <div class="won-item">
-            <div class="won-thumb">⌚</div>
+            <div class="won-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg></div>
             <div class="won-info">
               <div class="won-name">Rolex Daytona 116500LN</div>
               <div class="won-price">AED 78,000</div>
@@ -432,7 +433,7 @@
             <span class="badge badge-green">Collected</span>
           </div>
           <div class="won-item">
-            <div class="won-thumb">💎</div>
+            <div class="won-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/></svg></div>
             <div class="won-info">
               <div class="won-name">Cartier Panthère Ring</div>
               <div class="won-price">AED 42,500</div>
@@ -441,7 +442,7 @@
             <span class="badge badge-orange">Pickup</span>
           </div>
           <div class="won-item">
-            <div class="won-thumb">👜</div>
+            <div class="won-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
             <div class="won-info">
               <div class="won-name">Chanel Classic Flap Medium</div>
               <div class="won-price">AED 19,800</div>
@@ -450,7 +451,7 @@
             <span class="badge badge-green">Collected</span>
           </div>
           <div class="won-item">
-            <div class="won-thumb">⌚</div>
+            <div class="won-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg></div>
             <div class="won-info">
               <div class="won-name">Omega Speedmaster Moonwatch</div>
               <div class="won-price">AED 24,000</div>
@@ -480,14 +481,14 @@
 <!-- Item Detail Modal -->
 <div class="modal-overlay" id="itemModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" onclick="closeModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <div class="modal-content">
       <div class="modal-grid">
-        <div class="modal-img">⌚ High-Resolution Image</div>
+        <div class="modal-img"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg> High-Resolution Image</div>
         <div class="modal-details">
           <div class="brand">Rolex</div>
           <h2>Submariner Date 126610LN</h2>
-          <div style="margin-top:8px"><span class="badge badge-green">✓ Authenticated</span> <span class="badge badge-accent" style="margin-left:4px">Lot 001</span></div>
+          <div style="margin-top:8px"><span class="badge badge-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Authenticated</span> <span class="badge badge-accent" style="margin-left:4px">Lot 001</span></div>
           <div class="modal-meta">
             <div class="modal-meta-item"><div class="modal-meta-label">Current Bid</div><div class="modal-meta-value gold">AED 52,000</div></div>
             <div class="modal-meta-item"><div class="modal-meta-label">Starting Price</div><div class="modal-meta-value">AED 38,000</div></div>
@@ -496,7 +497,7 @@
           </div>
           <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Category: Watches &gt; Luxury &gt; Rolex</div>
           <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">Condition: Excellent — Box &amp; Papers</div>
-          <div style="font-size:13px;color:var(--orange);font-weight:600;margin:12px 0">⏱ 2h 14m 32s remaining</div>
+          <div style="font-size:13px;color:var(--orange);font-weight:600;margin:12px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3l-2 2"/><path d="M19 3l2 2"/><line x1="12" y1="1" x2="12" y2="3"/></svg> 2h 14m 32s remaining</div>
           <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px">12 bids · 47 watchers</div>
           <div class="bid-section">
             <input type="text" class="bid-input" placeholder="Enter bid (min AED 53,000)" />
@@ -520,16 +521,16 @@
     <div class="ae-sidebar">
       <div class="nav-section">
         <div class="nav-label">Main</div>
-        <div class="nav-item active"><span class="icon">📊</span>Dashboard</div>
-        <div class="nav-item"><span class="icon">📦</span>My Items<span class="count">4</span></div>
-        <div class="nav-item"><span class="icon">📄</span>Documents<span class="count">3</span></div>
-        <div class="nav-item"><span class="icon">📅</span>Appointments</div>
-        <div class="nav-item"><span class="icon">💰</span>Payouts</div>
+        <div class="nav-item active"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Dashboard</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>My Items<span class="count">4</span></div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>Documents<span class="count">3</span></div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Appointments</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Payouts</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Actions</div>
-        <div class="nav-item"><span class="icon">➕</span>Submit Item</div>
-        <div class="nav-item"><span class="icon">👤</span>Profile</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>Submit Item</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Profile</div>
       </div>
     </div>
     <div class="ae-main">
@@ -701,16 +702,16 @@
           </div>
           <div style="display:flex; flex-direction:column; gap:8px">
             <button class="btn btn-primary" style="width:100%; text-align:left; padding:12px 16px">
-              <span style="margin-right:8px">➕</span> Submit New Item
+              <span style="margin-right:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span> Submit New Item
             </button>
             <button class="btn btn-ghost" style="width:100%; text-align:left; padding:12px 16px">
-              <span style="margin-right:8px">📄</span> View All Documents
+              <span style="margin-right:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> View All Documents
             </button>
             <button class="btn btn-ghost" style="width:100%; text-align:left; padding:12px 16px">
-              <span style="margin-right:8px">📞</span> Contact Support
+              <span style="margin-right:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span> Contact Support
             </button>
             <button class="btn btn-ghost" style="width:100%; text-align:left; padding:12px 16px">
-              <span style="margin-right:8px">💰</span> Payout History
+              <span style="margin-right:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Payout History
             </button>
           </div>
         </div>
@@ -727,22 +728,22 @@
     <div class="ae-sidebar">
       <div class="nav-section">
         <div class="nav-label">Main</div>
-        <div class="nav-item active"><span class="icon">📊</span>Dashboard</div>
-        <div class="nav-item"><span class="icon">👥</span>Leads<span class="count">7</span></div>
-        <div class="nav-item"><span class="icon">📦</span>Pipeline<span class="count">12</span></div>
-        <div class="nav-item"><span class="icon">📅</span>Appointments</div>
-        <div class="nav-item"><span class="icon">💰</span>Commissions</div>
+        <div class="nav-item active"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>Dashboard</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Leads<span class="count">7</span></div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>Pipeline<span class="count">12</span></div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>Appointments</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Commissions</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Tools</div>
-        <div class="nav-item"><span class="icon">📸</span>Item Intake</div>
-        <div class="nav-item"><span class="icon">📋</span>Viewing Forms</div>
-        <div class="nav-item"><span class="icon">📞</span>Call Log</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>Item Intake</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span>Viewing Forms</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>Call Log</div>
       </div>
       <div class="nav-section">
         <div class="nav-label">Account</div>
-        <div class="nav-item"><span class="icon">⚙️</span>Settings</div>
-        <div class="nav-item"><span class="icon">❓</span>Help</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>Settings</div>
+        <div class="nav-item"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>Help</div>
       </div>
     </div>
     <div class="ae-main">
@@ -834,7 +835,7 @@
         <div class="activity-item"><div class="activity-dot" style="background:var(--accent)"></div><div><div class="activity-text"><strong>Ahmed Al Maktoum</strong> submitted Patek Philippe 5167A for consignment</div><div class="activity-time">1 hour ago</div></div></div>
         <div class="activity-item"><div class="activity-dot" style="background:var(--orange)"></div><div><div class="activity-text"><strong>Richard Mille RM 011</strong> moved to CEO Approval stage</div><div class="activity-time">2 hours ago</div></div></div>
         <div class="activity-item"><div class="activity-dot" style="background:var(--blue)"></div><div><div class="activity-text"><strong>Priya Sharma</strong> scheduled item drop-off for today 4:30 PM</div><div class="activity-time">3 hours ago</div></div></div>
-        <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-text"><strong>Rolex GMT-Master II</strong> authentication completed — Passed ✓</div><div class="activity-time">Yesterday</div></div></div>
+        <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-text"><strong>Rolex GMT-Master II</strong> authentication completed — Passed <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg></div><div class="activity-time">Yesterday</div></div></div>
       </div>
     </div>
   </div>
@@ -846,14 +847,14 @@
 <div class="view" id="view-ceo">
   <div class="ceo-wrapper">
     <div class="ceo-phone">
-      <div class="ceo-status-bar"><span>9:41</span><span>●●● WiFi 🔋</span></div>
+      <div class="ceo-status-bar"><span>9:41</span><span>●●● WiFi <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><rect x="1" y="6" width="18" height="12" rx="2" ry="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg></span></div>
       <div class="ceo-header">
-        <h2>Good Morning ☀️</h2>
+        <h2>Good Morning <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></h2>
         <div class="date">Tuesday, March 31</div>
       </div>
 
       <div class="ceo-digest">
-        <div class="digest-title">📋 Morning Digest</div>
+        <div class="digest-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> Morning Digest</div>
         <div class="digest-items">
           • 3 items awaiting your approval<br>
           • 1 release request from strongroom<br>
@@ -866,7 +867,7 @@
 
       <div class="ceo-card">
         <div class="item-row">
-          <div class="item-thumb">⌚</div>
+          <div class="item-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg></div>
           <div class="item-info">
             <h4>Richard Mille RM 011</h4>
             <div class="sub">VIP Client · Submitted by Sarah</div>
@@ -874,14 +875,14 @@
           </div>
         </div>
         <div class="ceo-buttons">
-          <button class="btn btn-green">✓ Approve</button>
-          <button class="btn btn-red">✕ Reject</button>
+          <button class="btn btn-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Approve</button>
+          <button class="btn btn-red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Reject</button>
         </div>
       </div>
 
       <div class="ceo-card">
         <div class="item-row">
-          <div class="item-thumb">👜</div>
+          <div class="item-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
           <div class="item-info">
             <h4>Hermès Kelly 28</h4>
             <div class="sub">Fatima Al Khalifa · Consignment</div>
@@ -889,14 +890,14 @@
           </div>
         </div>
         <div class="ceo-buttons">
-          <button class="btn btn-green">✓ Approve</button>
-          <button class="btn btn-red">✕ Reject</button>
+          <button class="btn btn-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Approve</button>
+          <button class="btn btn-red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Reject</button>
         </div>
       </div>
 
       <div class="ceo-card">
         <div class="item-row">
-          <div class="item-thumb">💎</div>
+          <div class="item-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M2 9h20"/></svg></div>
           <div class="item-info">
             <h4>Chopard Happy Diamonds</h4>
             <div class="sub">Walk-in · Needs valuation review</div>
@@ -904,23 +905,23 @@
           </div>
         </div>
         <div class="ceo-buttons">
-          <button class="btn btn-green">✓ Approve</button>
-          <button class="btn btn-red">✕ Reject</button>
+          <button class="btn btn-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Approve</button>
+          <button class="btn btn-red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Reject</button>
         </div>
       </div>
 
       <div class="ceo-section-title">Release Request</div>
       <div class="ceo-card">
         <div class="item-row">
-          <div class="item-thumb">⌚</div>
+          <div class="item-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="7"/><polyline points="12 9 12 12 13.5 13.5"/><path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"/></svg></div>
           <div class="item-info">
             <h4>Rolex Daytona 116500LN</h4>
-            <div class="sub">Won by Fatima Al Khalifa · Paid ✓</div>
+            <div class="sub">Won by Fatima Al Khalifa · Paid <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div class="val">AED 78,000</div>
           </div>
         </div>
         <div class="ceo-buttons">
-          <button class="btn btn-green">✓ Release</button>
+          <button class="btn btn-green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Release</button>
           <button class="btn btn-ghost" style="flex:1;color:var(--text-secondary)">Hold</button>
         </div>
       </div>
@@ -1060,15 +1061,15 @@
     <div class="card">
       <div class="card-header"><div class="card-title">Escalation Inbox</div><span class="badge badge-red">2 open</span></div>
       <div class="escalation-item">
-        <div class="esc-left"><div class="esc-title">🚨 PEP Screening Flag — Zara Enterprises</div><div class="esc-sub">UBO linked to politically exposed person. Enhanced due diligence required. Flagged by automated screening.</div></div>
+        <div class="esc-left"><div class="esc-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> PEP Screening Flag — Zara Enterprises</div><div class="esc-sub">UBO linked to politically exposed person. Enhanced due diligence required. Flagged by automated screening.</div></div>
         <button class="btn btn-sm btn-red">Review</button>
       </div>
       <div class="escalation-item">
-        <div class="esc-left"><div class="esc-title">⚠️ Suspicious Transaction — Khalid Al Nahyan</div><div class="esc-sub">Multiple high-value bids within 24h. Total exposure AED 580K. Pattern flagged for review.</div></div>
+        <div class="esc-left"><div class="esc-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Suspicious Transaction — Khalid Al Nahyan</div><div class="esc-sub">Multiple high-value bids within 24h. Total exposure AED 580K. Pattern flagged for review.</div></div>
         <button class="btn btn-sm btn-orange" style="background:var(--orange);color:#fff">Investigate</button>
       </div>
       <div class="escalation-item">
-        <div class="esc-left"><div class="esc-title" style="color:var(--text-muted)">✅ Resolved — Expired ID (Omar Bin Rashid)</div><div class="esc-sub">Updated Emirates ID received and verified. Case closed 28 Mar.</div></div>
+        <div class="esc-left"><div class="esc-title" style="color:var(--text-muted)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg> Resolved — Expired ID (Omar Bin Rashid)</div><div class="esc-sub">Updated Emirates ID received and verified. Case closed 28 Mar.</div></div>
         <span class="badge badge-green">Resolved</span>
       </div>
     </div>
